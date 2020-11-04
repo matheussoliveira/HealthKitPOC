@@ -7,19 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F53042A2553362500680A70 /* HealthKitSetupAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5304292553362500680A70 /* HealthKitSetupAssistant.swift */; };
 		2FA6699B2553105F00854180 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA6699A2553105F00854180 /* AppDelegate.swift */; };
 		2FA6699D2553105F00854180 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA6699C2553105F00854180 /* SceneDelegate.swift */; };
-		2FA6699F2553105F00854180 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA6699E2553105F00854180 /* ViewController.swift */; };
+		2FA6699F2553105F00854180 /* HomeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA6699E2553105F00854180 /* HomeTableViewController.swift */; };
 		2FA669A22553105F00854180 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FA669A02553105F00854180 /* Main.storyboard */; };
 		2FA669A42553106100854180 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FA669A32553106100854180 /* Assets.xcassets */; };
 		2FA669A72553106100854180 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FA669A52553106100854180 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2F5304292553362500680A70 /* HealthKitSetupAssistant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitSetupAssistant.swift; sourceTree = "<group>"; };
 		2FA669972553105F00854180 /* HealthKitPOC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HealthKitPOC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FA6699A2553105F00854180 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2FA6699C2553105F00854180 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		2FA6699E2553105F00854180 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		2FA6699E2553105F00854180 /* HomeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewController.swift; sourceTree = "<group>"; };
 		2FA669A12553105F00854180 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2FA669A32553106100854180 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2FA669A62553106100854180 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -37,6 +39,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2F5304282553360F00680A70 /* HealthKit */ = {
+			isa = PBXGroup;
+			children = (
+				2F5304292553362500680A70 /* HealthKitSetupAssistant.swift */,
+			);
+			path = HealthKit;
+			sourceTree = "<group>";
+		};
 		2FA6698E2553105F00854180 = {
 			isa = PBXGroup;
 			children = (
@@ -56,8 +66,9 @@
 		2FA669992553105F00854180 /* HealthKitPOC */ = {
 			isa = PBXGroup;
 			children = (
+				2F5304282553360F00680A70 /* HealthKit */,
 				2FA669B1255317D400854180 /* iOS */,
-				2FA6699E2553105F00854180 /* ViewController.swift */,
+				2FA6699E2553105F00854180 /* HomeTableViewController.swift */,
 				2FA669A02553105F00854180 /* Main.storyboard */,
 				2FA669A32553106100854180 /* Assets.xcassets */,
 				2FA669A52553106100854180 /* LaunchScreen.storyboard */,
@@ -145,7 +156,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2FA6699F2553105F00854180 /* ViewController.swift in Sources */,
+				2FA6699F2553105F00854180 /* HomeTableViewController.swift in Sources */,
+				2F53042A2553362500680A70 /* HealthKitSetupAssistant.swift in Sources */,
 				2FA6699B2553105F00854180 /* AppDelegate.swift in Sources */,
 				2FA6699D2553105F00854180 /* SceneDelegate.swift in Sources */,
 			);
