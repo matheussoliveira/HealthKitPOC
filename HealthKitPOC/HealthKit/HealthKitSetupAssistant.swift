@@ -21,13 +21,13 @@ class HealthKitSetupAssistant {
           return
         }
         
-        guard   let dateOfBirth = HKObjectType.characteristicType(forIdentifier: .dateOfBirth),
-                let bloodType = HKObjectType.characteristicType(forIdentifier: .bloodType),
-                let biologicalSex = HKObjectType.characteristicType(forIdentifier: .biologicalSex),
-                let bodyMassIndex = HKObjectType.quantityType(forIdentifier: .bodyMassIndex),
-                let height = HKObjectType.quantityType(forIdentifier: .height),
-                let bodyMass = HKObjectType.quantityType(forIdentifier: .bodyMass),
-                let stepCount = HKObjectType.quantityType(forIdentifier: .stepCount) else {
+        guard let dateOfBirth = HKObjectType.characteristicType(forIdentifier: .dateOfBirth),
+              let bloodType = HKObjectType.characteristicType(forIdentifier: .bloodType),
+              let biologicalSex = HKObjectType.characteristicType(forIdentifier: .biologicalSex),
+              let bodyMassIndex = HKObjectType.quantityType(forIdentifier: .bodyMassIndex),
+              let height = HKObjectType.quantityType(forIdentifier: .height),
+              let bodyMass = HKObjectType.quantityType(forIdentifier: .bodyMass),
+              let stepCount = HKObjectType.quantityType(forIdentifier: .stepCount) else {
                 
                 completion(false, HealthKitSetupError.dataTypeNotAvailable)
                 return
