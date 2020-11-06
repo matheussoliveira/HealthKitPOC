@@ -93,6 +93,7 @@
 		C4E2ADB62555BABF0006E1BF /* watchOS-heartrate WatchKit Extension.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "watchOS-heartrate WatchKit Extension.entitlements"; sourceTree = "<group>"; };
 		C4E2ADBA2555C1020006E1BF /* WatchHealthKitPOC Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "WatchHealthKitPOC Extension.entitlements"; sourceTree = "<group>"; };
 		C4E2ADBC2555C1030006E1BF /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS7.0.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
+		C4E2ADCA2555C3610006E1BF /* HealthKitPOC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HealthKitPOC.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +147,7 @@
 		2FA669992553105F00854180 /* HealthKitPOC */ = {
 			isa = PBXGroup;
 			children = (
+				C4E2ADCA2555C3610006E1BF /* HealthKitPOC.entitlements */,
 				2F5304282553360F00680A70 /* HealthKit */,
 				2FA669B1255317D400854180 /* iOS */,
 				2FA6699E2553105F00854180 /* HomeTableViewController.swift */,
@@ -513,6 +515,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = HealthKitPOC/HealthKitPOC.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NZC6LC8NWM;
 				INFOPLIST_FILE = HealthKitPOC/Info.plist;
@@ -520,7 +523,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.poc.HealthKitPOC;
+				PRODUCT_BUNDLE_IDENTIFIER = com.poc.HealthKitPOC2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -532,6 +535,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = HealthKitPOC/HealthKitPOC.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NZC6LC8NWM;
 				INFOPLIST_FILE = HealthKitPOC/Info.plist;
@@ -539,7 +543,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.poc.HealthKitPOC;
+				PRODUCT_BUNDLE_IDENTIFIER = com.poc.HealthKitPOC2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -556,7 +560,7 @@
 				DEVELOPMENT_TEAM = NZC6LC8NWM;
 				IBSC_MODULE = WatchHealthKitPOC_Extension;
 				INFOPLIST_FILE = WatchHealthKitPOC/Info.plist;
-				PRODUCT_BUNDLE_IDENTIFIER = com.poc.HealthKitPOC.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.poc.HealthKitPOC2.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -576,7 +580,7 @@
 				DEVELOPMENT_TEAM = NZC6LC8NWM;
 				IBSC_MODULE = WatchHealthKitPOC_Extension;
 				INFOPLIST_FILE = WatchHealthKitPOC/Info.plist;
-				PRODUCT_BUNDLE_IDENTIFIER = com.poc.HealthKitPOC.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.poc.HealthKitPOC2.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -599,7 +603,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.poc.HealthKitPOC.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.poc.HealthKitPOC2.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -622,7 +626,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.poc.HealthKitPOC.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.poc.HealthKitPOC2.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
