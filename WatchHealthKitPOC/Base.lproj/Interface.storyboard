@@ -11,17 +11,6 @@
             <objects>
                 <controller id="3Sc-v4-Gw2" customClass="InterfaceController" customModule="WatchHealthKitPOC" customModuleProvider="target">
                     <items>
-                        <group width="1" alignment="center" verticalAlignment="center" id="JWv-RJ-Xzu">
-                            <items>
-                                <label alignment="center" verticalAlignment="center" textAlignment="center" id="UKe-ji-FJW">
-                                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                    <fontDescription key="font" style="UICTFontTextStyleBody"/>
-                                </label>
-                                <label alignment="right" verticalAlignment="bottom" text="cal" textAlignment="right" id="OJr-b0-5lZ">
-                                    <color key="textColor" red="0.94170006224482927" green="1" blue="0.99880540801279527" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </label>
-                            </items>
-                        </group>
                         <group width="1" alignment="center" verticalAlignment="center" id="HBA-bo-jrt">
                             <items>
                                 <label alignment="center" verticalAlignment="center" textAlignment="center" id="JUx-dm-sLj">

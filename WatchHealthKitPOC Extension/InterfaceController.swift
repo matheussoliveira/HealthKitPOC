@@ -15,7 +15,7 @@ class InterfaceController: WKInterfaceController {
 	@IBOutlet weak var label: WKInterfaceLabel!
 	@IBOutlet weak var button: WKInterfaceButton!
 
-	let fontSize = UIFont.systemFont(ofSize: 80)
+	let fontSize = UIFont.systemFont(ofSize: 60)
 
 	let healthStore = HKHealthStore()
 	let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
