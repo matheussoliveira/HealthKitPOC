@@ -22,6 +22,11 @@ class InterfaceController: WKInterfaceController {
 	let heartRateUnit = HKUnit(from: "count/min")
 	var heartRateQuery: HKQuery?
 
+//	let healthStore = HKHealthStore()
+//	let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
+//	let heartRateUnit = HKUnit(from: "count/min")
+//	var heartRateQuery: HKQuery?
+
 	var workoutSession: HKWorkoutSession?
 
 	override func awake(withContext context: Any?) {
