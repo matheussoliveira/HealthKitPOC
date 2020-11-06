@@ -10,8 +10,18 @@ import HealthKit
 import UserNotifications
 import WatchConnectivity
 
-    
-    
+private enum ProfileDataError: Error {
+  
+    case missingBodyMassIndex
+  
+    var localizedDescription: String {
+        switch self {
+            case .missingBodyMassIndex:
+            return "Unable to calculate body mass index with available profile data."
+        }
+    }
+}
+
 class HomeTableViewController: UITableViewController, WCSessionDelegate, UNUserNotificationCenterDelegate {
     
     @IBOutlet weak var userName: UILabel!
@@ -208,6 +218,21 @@ class HomeTableViewController: UITableViewController, WCSessionDelegate, UNUserN
         }
         
         userName.text = name
+    }
+    
+    // MARK: - Calculate BMI
+    
+    @IBAction func calculateBMI(_ sender: Any) {
+        
+        guard let bodyMassIndex = userHealthProfile.bodyMassIndex else {
+          displayAlert(for: ProfileDataError.missingBodyMassIndex)
+          return
+        }
+            
+        ProfileDataStore.saveBodyMassIndexSample(bodyMassIndex: bodyMassIndex,
+                                                 date: Date())
+        
+        
     }
     
     // MARK: - HealthKit authorization

@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="DUa-d8-WYo">
-                            <rect key="frame" x="0.0" y="219" width="414" height="44"/>
+                            <rect key="frame" x="0.0" y="503" width="414" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <state key="normal" title="Button"/>
                             <connections>
@@ -265,7 +265,13 @@
                             <outlet property="delegate" destination="f78-LP-Y8W" id="SNj-0f-Am3"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Home" id="u1C-rH-1GC"/>
+                    <navigationItem key="navigationItem" title="Home" id="u1C-rH-1GC">
+                        <barButtonItem key="rightBarButtonItem" title="Calcular IMC" id="FZM-At-Yeh">
+                            <connections>
+                                <action selector="calculateBMI:" destination="f78-LP-Y8W" id="FNO-4L-Gr8"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="userAge" destination="xkm-om-HK5" id="e18-Ka-bom"/>
                         <outlet property="userBiologicalSex" destination="mUt-da-KGr" id="gk1-5w-N1a"/>
