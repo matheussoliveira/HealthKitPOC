@@ -11,6 +11,9 @@ import UserNotifications
 import WatchConnectivity
 
     
+    
+class HomeTableViewController: UITableViewController, WCSessionDelegate, UNUserNotificationCenterDelegate {
+    
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var userAge: UILabel!
     @IBOutlet weak var userBloodType: UILabel!
@@ -22,8 +25,6 @@ import WatchConnectivity
     private let userHealthProfile: UserHealthProfile = UserHealthProfile()
     
     let name = "Matheus Oliveira"
-    
-class HomeTableViewController: UITableViewController, WCSessionDelegate, UNUserNotificationCenterDelegate {
 
 	var wcSession : WCSession! = nil
 
