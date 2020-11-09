@@ -70,6 +70,45 @@ class ProfileDataStore {
         HKHealthStore().execute(sampleQuery)
     }
     
+    
+    class func getMostRecentCategorySample(for sampleType: HKSampleType,
+                                   completion: @escaping ([HKSample]?,
+                                                          Error?) -> Swift.Void) {
+        
+        //   Get the start of the day
+        let date = Date()
+        let cal = Calendar(identifier: Calendar.Identifier.gregorian)
+        let newDate = cal.startOfDay(for: date)
+      
+        let mostRecentPredicate = HKQuery.predicateForSamples(withStart: newDate,
+                                                              end: date,
+                                                              options: .strictStartDate)
+        
+        let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate,
+                                              ascending: false)
+        
+        let limit: Int = 30
+                
+        let sampleQuery = HKSampleQuery(sampleType: sampleType,
+                                        predicate: mostRecentPredicate,
+                                        limit: limit,
+                                        sortDescriptors: [sortDescriptor]) { (query, samples, error) in
+            
+
+            DispatchQueue.main.async {
+                    
+                guard let samples = samples else {
+                        completion(nil, error)
+                        return
+                }
+                
+                completion(samples, nil)
+            }
+        }
+         
+        HKHealthStore().execute(sampleQuery)
+    }
+    
     class func saveBodyMassIndexSample(bodyMassIndex: Double, date: Date) {
       
         guard let bodyMassIndexType = HKQuantityType.quantityType(forIdentifier: .bodyMassIndex) else {

@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="DUa-d8-WYo">
-                            <rect key="frame" x="0.0" y="503" width="414" height="44"/>
+                            <rect key="frame" x="0.0" y="574" width="414" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <state key="normal" title="Button"/>
                             <connections>
@@ -257,6 +257,39 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="71" id="u3K-oE-z5e">
+                                        <rect key="frame" x="20" y="485" width="374" height="71"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="u3K-oE-z5e" id="NbG-1K-pbj">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="71"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="WBB-li-7Wa">
+                                                    <rect key="frame" x="28" y="19" width="318" height="33"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sono:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PLy-S7-vWw">
+                                                            <rect key="frame" x="0.0" y="0.0" width="44" height="33"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R8d-VJ-YVe">
+                                                            <rect key="frame" x="276.5" y="0.0" width="41.5" height="33"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="WBB-li-7Wa" firstAttribute="top" secondItem="NbG-1K-pbj" secondAttribute="topMargin" constant="8" id="3Na-DM-D2y"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="WBB-li-7Wa" secondAttribute="trailing" constant="8" id="iEC-Ng-oo0"/>
+                                                <constraint firstItem="WBB-li-7Wa" firstAttribute="leading" secondItem="NbG-1K-pbj" secondAttribute="leadingMargin" constant="8" id="z0G-L2-VOB"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="WBB-li-7Wa" secondAttribute="bottom" constant="8" id="zFC-Ay-Ree"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -273,6 +306,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="sleep" destination="R8d-VJ-YVe" id="58h-ZI-SBd"/>
                         <outlet property="userAge" destination="xkm-om-HK5" id="e18-Ka-bom"/>
                         <outlet property="userBiologicalSex" destination="mUt-da-KGr" id="gk1-5w-N1a"/>
                         <outlet property="userBloodType" destination="b68-BE-bFx" id="TAS-q1-4zg"/>

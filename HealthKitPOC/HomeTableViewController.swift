@@ -31,6 +31,7 @@ class HomeTableViewController: UITableViewController, WCSessionDelegate, UNUserN
     @IBOutlet weak var userBiologicalSex: UILabel!
     @IBOutlet weak var userWeight: UILabel!
     @IBOutlet weak var userBodyMassIndex: UILabel!
+    @IBOutlet weak var sleep: UILabel!
     
     private let userHealthProfile: UserHealthProfile = UserHealthProfile()
     
@@ -83,6 +84,7 @@ class HomeTableViewController: UITableViewController, WCSessionDelegate, UNUserN
         loadAndDisplayMostRecentWeight()
         loadAndDisplayMostRecentHeight()
         loadAndDisplayMostRecentBMI()
+        loadMostRecentSleepinfo()
 
 		wcSession = WCSession.default
 		wcSession.delegate = self
@@ -179,8 +181,52 @@ class HomeTableViewController: UITableViewController, WCSessionDelegate, UNUserN
             let bodyMassIndex = sample.quantity.doubleValue(for: HKUnit.count())
             self.userHealthProfile.bodyMassIndex = bodyMassIndex
             self.updateLabels()
-            
         }
+    }
+    
+    private func loadMostRecentSleepinfo() {
+        guard let sleepAnalysis = HKObjectType.categoryType(forIdentifier: .sleepAnalysis) else {
+            print("Sleep Analysis is not available")
+            return
+        }
+        
+        ProfileDataStore.getMostRecentCategorySample(for: sleepAnalysis) { [self] (samples, error) in
+            guard let samples = samples else {
+                if let error = error {
+                    self.displayAlert(for: error)
+                }
+                return
+            }
+            
+            self.loadAndUpdateLastNightSleepHours(samples: samples)
+        }
+    }
+    
+    
+    private func loadAndUpdateLastNightSleepHours(samples: [HKSample]) {
+        
+        var totalHours: Int = 0
+        var totalMinutes: Int = 0
+        
+        for sample in samples {
+            if let sample = sample as? HKCategorySample {
+                if sample.value == HKCategoryValueSleepAnalysis.asleep.rawValue {
+                    let diffComponents = Calendar.current.dateComponents([.hour, .minute],
+                                                                         from: sample.startDate,
+                                                                         to: sample.endDate)
+                    let hours = diffComponents.hour
+                    let minutes = diffComponents.minute
+                    totalHours += hours ?? 0
+                    totalMinutes += minutes ?? 0
+                }
+            }
+        }
+        
+        let hours = totalMinutes / 60
+        totalHours += hours
+        totalMinutes -= hours * 60
+        self.userHealthProfile.lastnightSleepDuration = "\(totalHours) horas e \(totalMinutes) minutos"
+        self.updateLabels()
     }
     
     // MARK: - Update labels
@@ -215,6 +261,10 @@ class HomeTableViewController: UITableViewController, WCSessionDelegate, UNUserN
             numberFormatter.roundingMode = NumberFormatter.RoundingMode.halfUp
             numberFormatter.maximumFractionDigits = 2
             userBodyMassIndex.text = numberFormatter.string(from: NSNumber(value: bodyMassIndex))
+        }
+        
+        if let lastnightSleepDuration = userHealthProfile.lastnightSleepDuration {
+            sleep.text = String(lastnightSleepDuration)
         }
         
         userName.text = name
