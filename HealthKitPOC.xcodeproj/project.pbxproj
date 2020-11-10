@@ -127,6 +127,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2F17C6612559A35000A85BA3 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				2F53042F2553389C00680A70 /* HealthKit.framework */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		2F5304282553360F00680A70 /* HealthKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -134,14 +142,6 @@
 				2F530432255338BC00680A70 /* ProfileDataStore.swift */,
 			);
 			path = HealthKit;
-			sourceTree = "<group>";
-		};
-		2F53042E2553389C00680A70 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				2F53042F2553389C00680A70 /* HealthKit.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		2F9687842554615700EC0EF6 /* Models */ = {
@@ -169,6 +169,7 @@
 				C4E2AD922555B7AF0006E1BF /* WatchHealthKitPOC Extension */,
 				2FA669982553105F00854180 /* Products */,
 				C4E2ADBB2555C1030006E1BF /* Frameworks */,
+				2F17C6612559A35000A85BA3 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};

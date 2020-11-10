@@ -9,33 +9,54 @@ import HealthKit
 
 class ProfileDataStore {
     
-    class func getAgeSexAndBloodType() throws -> (age: Int,
-                                                  biologicalSex: HKBiologicalSex,
-                                                  bloodType: HKBloodType) {
-        
+    /// Retrieve user blood type from HealthKit.
+    /// - Returns: User unwrapped blood type. Ex: O+
+    class func getBloodType() throws -> HKBloodType {
         let healthKitStore = HKHealthStore()
         
         do {
-        
-            let birthdayComponents = try healthKitStore.dateOfBirthComponents()
-            let biologicalSex = try healthKitStore.biologicalSex()
             let bloodType = try healthKitStore.bloodType()
-            
+            let unwrappedBlodType = bloodType.bloodType
+            return unwrappedBlodType
+        }
+    }
+    
+    /// Retrieve user birthday information from HealthKit
+    /// and calculates his/her age.
+    /// - Returns: User age.
+    class func getAge() throws -> Int {
+        let healthKitStore = HKHealthStore()
+        
+        do {
+            let birthdayComponents = try healthKitStore.dateOfBirthComponents()
             let today = Date()
             let calendar = Calendar.current
             let todayDateComponents = calendar.dateComponents([.year],
                                                                 from: today)
-            let thisYear = todayDateComponents.year!
-            let age = thisYear - birthdayComponents.year!
-             
-            let unwrappedBiologicalSex = biologicalSex.biologicalSex
-            let unwrappedBloodType = bloodType.bloodType
-              
-            return (age, unwrappedBiologicalSex, unwrappedBloodType)
+            guard let thisYear = todayDateComponents.year,
+                  let birthdayYear = birthdayComponents.year else {
+                return 0
+            }
+            
+            let age = thisYear - birthdayYear
+            return age
         }
     }
     
+    /// Retrieve user biological sex from HealthKit.
+    /// - Returns: User unwrapped biological sex. Ex: Masculino.
+    class func getBiologicalSex() throws -> HKBiologicalSex {
+        let healthKitStore = HKHealthStore()
+        
+        do {
+            let biologicalSex = try healthKitStore.biologicalSex()
+            let unwrappedBiologicalSex = biologicalSex.biologicalSex
+            return unwrappedBiologicalSex
+        }
+    }
     
+    /// Query the lastest information of a given sample type
+    /// Limited by a single information.
     class func getMostRecentSample(for sampleType: HKSampleType,
                                    completion: @escaping (HKQuantitySample?,
                                                           Error?) -> Swift.Void) {
@@ -70,15 +91,15 @@ class ProfileDataStore {
         HKHealthStore().execute(sampleQuery)
     }
     
-    
-    class func getMostRecentCategorySample(for sampleType: HKSampleType,
-                                   completion: @escaping ([HKSample]?,
+    /// Query informations from a day before of a given sample type
+    /// Limited by 30 informations.
+    class func getDayBeforeSample(for sampleType: HKSampleType,
+                                           completion: @escaping ([HKSample]?,
                                                           Error?) -> Swift.Void) {
         
         //   Get the start of the day
         let date = Date()
-        let cal = Calendar(identifier: Calendar.Identifier.gregorian)
-        let newDate = cal.startOfDay(for: date)
+        let newDate = date.dayBefore
       
         let mostRecentPredicate = HKQuery.predicateForSamples(withStart: newDate,
                                                               end: date,
@@ -94,7 +115,6 @@ class ProfileDataStore {
                                         limit: limit,
                                         sortDescriptors: [sortDescriptor]) { (query, samples, error) in
             
-
             DispatchQueue.main.async {
                     
                 guard let samples = samples else {
@@ -109,6 +129,9 @@ class ProfileDataStore {
         HKHealthStore().execute(sampleQuery)
     }
     
+    /// Saves BMI to user's health information.
+    /// - Parameter bodyMassIndex: BMI value.
+    /// - Parameter date: Date that the BMI was calculated.
     class func saveBodyMassIndexSample(bodyMassIndex: Double, date: Date) {
       
         guard let bodyMassIndexType = HKQuantityType.quantityType(forIdentifier: .bodyMassIndex) else {
@@ -130,5 +153,15 @@ class ProfileDataStore {
                 print("Successfully saved BMI Sample")
             }
         }
+    }
+}
+
+extension Date {
+    var dayAfter: Date {
+        return Calendar.current.date(byAdding: .day, value: 1, to: self)!
+    }
+
+    var dayBefore: Date {
+        return Calendar.current.date(byAdding: .day, value: -1, to: self)!
     }
 }

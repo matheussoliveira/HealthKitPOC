@@ -36,7 +36,7 @@ class HomeTableViewController: UITableViewController, WCSessionDelegate, UNUserN
     private let userHealthProfile: UserHealthProfile = UserHealthProfile()
     
     let name = "Matheus Oliveira"
-
+    
 	var wcSession : WCSession! = nil
 
 	func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
@@ -84,7 +84,7 @@ class HomeTableViewController: UITableViewController, WCSessionDelegate, UNUserN
         loadAndDisplayMostRecentWeight()
         loadAndDisplayMostRecentHeight()
         loadAndDisplayMostRecentBMI()
-        loadMostRecentSleepinfo()
+        loadMostRecentSleepInfo()
 
 		wcSession = WCSession.default
 		wcSession.delegate = self
@@ -105,19 +105,24 @@ class HomeTableViewController: UITableViewController, WCSessionDelegate, UNUserN
 		}
 	}
     
+    // MARK: - Load and display HealthKit information
+    
+    /// Retrieve age, biological sex and blood type from
+    /// HealthKit and update labels.
     private func loadAndDisplayAgeSexAndBloodType() {
         
         do {
-            let userAgeSexAndBloodType = try ProfileDataStore.getAgeSexAndBloodType()
-            userHealthProfile.age = userAgeSexAndBloodType.age
-            userHealthProfile.biologicalSex = userAgeSexAndBloodType.biologicalSex
-            userHealthProfile.bloodType = userAgeSexAndBloodType.bloodType
-            updateLabels()
+            userHealthProfile.age = try ProfileDataStore.getAge()
+            userHealthProfile.biologicalSex = try ProfileDataStore.getBiologicalSex()
+            userHealthProfile.bloodType = try ProfileDataStore.getBloodType()
         } catch let error {
             self.displayAlert(for: error)
         }
+        self.updateLabels()
     }
     
+    /// Query last height information from HealthKit and
+    /// uptade labels.
     private func loadAndDisplayMostRecentHeight() {
         
         guard let heightSampleType = HKSampleType.quantityType(forIdentifier: .height) else {
@@ -142,6 +147,8 @@ class HomeTableViewController: UITableViewController, WCSessionDelegate, UNUserN
         }
     }
     
+    /// Query last weight information from HealthKit and
+    /// uptade labels.
     private func loadAndDisplayMostRecentWeight() {
         
         guard let weightSampleType = HKSampleType.quantityType(forIdentifier: .bodyMass) else {
@@ -165,6 +172,8 @@ class HomeTableViewController: UITableViewController, WCSessionDelegate, UNUserN
         }
     }
     
+    /// Query last BMI information from HealthKit and
+    /// uptade labels.
     private func loadAndDisplayMostRecentBMI() {
         guard let bmiSampleType = HKSampleType.quantityType(forIdentifier: .bodyMassIndex) else {
             print("Body mass is not available")
@@ -184,13 +193,14 @@ class HomeTableViewController: UITableViewController, WCSessionDelegate, UNUserN
         }
     }
     
-    private func loadMostRecentSleepinfo() {
+    /// Query last night sleep information from HealthKit
+    private func loadMostRecentSleepInfo() {
         guard let sleepAnalysis = HKObjectType.categoryType(forIdentifier: .sleepAnalysis) else {
             print("Sleep Analysis is not available")
             return
         }
         
-        ProfileDataStore.getMostRecentCategorySample(for: sleepAnalysis) { [self] (samples, error) in
+        ProfileDataStore.getDayBeforeSample(for: sleepAnalysis) { [self] (samples, error) in
             guard let samples = samples else {
                 if let error = error {
                     self.displayAlert(for: error)
@@ -198,13 +208,14 @@ class HomeTableViewController: UITableViewController, WCSessionDelegate, UNUserN
                 return
             }
             
-            self.loadAndUpdateLastNightSleepHours(samples: samples)
+            self.buildAndUpdateSleepInfo(samples: samples)
         }
     }
     
-    
-    private func loadAndUpdateLastNightSleepHours(samples: [HKSample]) {
-        
+    /// Transform sleep information on a redable string and update labels
+    /// - Parameter samples: An array of samples containing sleep
+    /// information with inBed and asleep values.
+    private func buildAndUpdateSleepInfo(samples: [HKSample]) {
         var totalHours: Int = 0
         var totalMinutes: Int = 0
         
@@ -230,7 +241,10 @@ class HomeTableViewController: UITableViewController, WCSessionDelegate, UNUserN
     }
     
     // MARK: - Update labels
+    
+    /// Update all labels with loaded HealthKit information
     private func updateLabels() {
+        userName.text = name
         
         if let age = userHealthProfile.age {
           userAge.text = "\(age)"
@@ -266,14 +280,10 @@ class HomeTableViewController: UITableViewController, WCSessionDelegate, UNUserN
         if let lastnightSleepDuration = userHealthProfile.lastnightSleepDuration {
             sleep.text = String(lastnightSleepDuration)
         }
-        
-        userName.text = name
     }
     
     // MARK: - Calculate BMI
-    
     @IBAction func calculateBMI(_ sender: Any) {
-        
         guard let bodyMassIndex = userHealthProfile.bodyMassIndex else {
           displayAlert(for: ProfileDataError.missingBodyMassIndex)
           return
@@ -281,13 +291,10 @@ class HomeTableViewController: UITableViewController, WCSessionDelegate, UNUserN
             
         ProfileDataStore.saveBodyMassIndexSample(bodyMassIndex: bodyMassIndex,
                                                  date: Date())
-        
-        
     }
     
     // MARK: - HealthKit authorization
     private func requestHKAutorization() {
-        
         HealthKitSetupAssistant.authorizeHealthKit { (authorized, error) in
               
           guard authorized else {
@@ -308,13 +315,14 @@ class HomeTableViewController: UITableViewController, WCSessionDelegate, UNUserN
     }
     
     // MARK: - Display alerts
+    
     private func displayAlert(for error: Error) {
       
       let alert = UIAlertController(title: nil,
                                     message: error.localizedDescription,
                                     preferredStyle: .alert)
       
-      alert.addAction(UIAlertAction(title: "O.K.",
+      alert.addAction(UIAlertAction(title: "Ok",
                                     style: .default,
                                     handler: nil))
       
