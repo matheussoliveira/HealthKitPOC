@@ -9,12 +9,13 @@ import WatchKit
 import Foundation
 import HealthKit
 import UserNotifications
+import WatchConnectivity
 
 class InterfaceController: WKInterfaceController {
 
 //	MARK: - IBOutlets
-	@IBOutlet weak var label: WKInterfaceLabel!
-	@IBOutlet weak var button: WKInterfaceButton!
+	@IBOutlet weak var heartRateLabel: WKInterfaceLabel!
+	@IBOutlet weak var startButton: WKInterfaceButton!
 
 	//	MARK: - IBActions
 	@IBAction func requestLocalNotification() {
@@ -30,7 +31,7 @@ class InterfaceController: WKInterfaceController {
 				self.workoutSession = try HKWorkoutSession(healthStore: healthStore, configuration: config)
 				self.workoutSession?.delegate = self
 				self.workoutSession?.startActivity(with: nil)
-				label.setText("loading...")
+				heartRateLabel.setText("loading...")
 			}
 			catch let e {
 				print(e)
@@ -42,7 +43,7 @@ class InterfaceController: WKInterfaceController {
 	}
 
 //	MARK: - Variables
-	let fontSize = UIFont.systemFont(ofSize: 60)
+//	let fontSize = UIFont.systemFont(ofSize: 60)
 
 	let healthStore = HKHealthStore()
 	let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
@@ -51,14 +52,18 @@ class InterfaceController: WKInterfaceController {
 
 	var workoutSession: HKWorkoutSession?
 
+//	let walkingSpeed: HKQuantityTypeIdentifier
+//	let mps = HKUnit.meter().unitDivided(by: HKUnit.second())
+//	let mpsFromString = HKUnit(from: "m/s")
+	var workoutSession2 = WorkoutManager()
+
 //	MARK: - Life Cycle
 	override func awake(withContext context: Any?) {
 		super.awake(withContext: context)
-		// Configure interface objects here.
 		print(#function)
 
 		guard HKHealthStore.isHealthDataAvailable() else {
-			label.setText("HealthKit is not available ")
+			heartRateLabel.setText("HealthKit is not available ")
 			print("HealthKit is not available on this device.")
 			return
 		}
@@ -66,7 +71,7 @@ class InterfaceController: WKInterfaceController {
 		let dataTypes = Set([heartRateType])
 		self.healthStore.requestAuthorization(toShare: nil, read: dataTypes) { (success, error) in
 			guard success else {
-				self.label.setText("Requests permission is not allowed.")
+				self.heartRateLabel.setText("Requests permission is not allowed.")
 				print("Requests permission is not allowed.")
 				return
 			}
@@ -74,10 +79,13 @@ class InterfaceController: WKInterfaceController {
 
 		setupNotifications()
 		reminderNotification()
+
+		print("---------------------")
+		print("\(workoutSession2.activeCalories) cal")
+		print("\(workoutSession2.distance) m")
 	}
 
 	override func willActivate() {
-		// This method is called when watch view controller is about to be visible to user
 		super.willActivate()
 		print(#function)
 	}
@@ -164,9 +172,12 @@ extension InterfaceController {
 		guard let quantity = samples.last?.quantity else { return }
 
 		let text = String(quantity.doubleValue(for: self.heartRateUnit))
-		let attrStr = NSAttributedString(string: text, attributes:[NSAttributedString.Key.font:self.fontSize])
+
+		let attrStr = NSAttributedString(string: text)
 		DispatchQueue.main.async {
-			self.label.setAttributedText(attrStr)
+			self.heartRateLabel.setAttributedText(attrStr)
+			print("\(self.workoutSession2.activeCalories) cal")
+			print("\(self.workoutSession2.distance) m")
 		}
 	}
 }
@@ -200,7 +211,7 @@ extension InterfaceController: HKWorkoutSessionDelegate {
 		heartRateQuery = self.createStreamingQuery()
 		healthStore.execute(self.heartRateQuery!)
 		DispatchQueue.main.async {
-			self.button.setTitle("Stop")
+			self.startButton.setTitle("Stop")
 		}
 	}
 
@@ -209,8 +220,8 @@ extension InterfaceController: HKWorkoutSessionDelegate {
 		healthStore.stop(self.heartRateQuery!)
 		heartRateQuery = nil
 		DispatchQueue.main.async {
-			self.button.setTitle("Start")
-			self.label.setText("")
+			self.startButton.setTitle("Start")
+			self.heartRateLabel.setText("")
 		}
 	}
 }
