@@ -1,5 +1,5 @@
 //
-//  InterfaceController.swift
+//  WorkoutManager.swift
 //  WatchHealthKitPOC Extension
 //
 //  Created by Joao Flores on 06/11/20.

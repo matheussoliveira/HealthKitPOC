@@ -68,6 +68,32 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate, HKLi
 		super.didDeactivate()
 	}
 
+//
+//	fileprivate func singleNotification() {
+//		print("single notification pressed")
+//		let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+//		let content = UNMutableNotificationContent()
+//		content.title = NSLocalizedString("Beba Água", comment: "Local Notification Title")
+//		content.body = NSLocalizedString("Atalinha recomenda 2 litros de água diariamente", comment: "Local Notification Body")
+//		content.categoryIdentifier = "Local"
+//
+//		let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+//
+//		UNUserNotificationCenter.current().add(request)
+//	}
+//
+//	fileprivate func setupNotifications() {
+//		UNUserNotificationCenter.current()
+//
+//		let center = UNUserNotificationCenter.current()
+//		center.requestAuthorization(options: [.alert, .sound, .badge, .provisional]) { granted, error in
+//
+//			if let error = error {
+//				print(error.localizedDescription)
+//			}
+//		}
+//	}
+
 //	MARK: - Workout
 	// Set up and start the timer.
 	func setUpTimer() {
