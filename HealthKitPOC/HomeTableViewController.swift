@@ -197,7 +197,7 @@ extension HomeTableViewController: HealthKitManagerDelegate {
         self.userHealthProfile.age = age
         self.userHealthProfile.biologicalSex = biologicalSex
         self.userHealthProfile.bloodType = bloodType
-        userAge.text = "\(age)"
+        userAge.text = "\(age) anos"
         userBiologicalSex.text = biologicalSex.stringRepresentation
         userBloodType.text = bloodType.stringRepresentation
     }
