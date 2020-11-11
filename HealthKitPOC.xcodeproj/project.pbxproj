@@ -214,8 +214,8 @@
 			children = (
 				C46BD4D1255B6D760047C9BC /* WorkoutSession.swift */,
 				C46BD4C7255B6BC50047C9BC /* Workout.swift */,
-				C46BD4F4255B933D0047C9BC /* NotificationsHandle.swift */,
 				C474C000255B99DD002F33BA /* WorkoutManager.swift */,
+				C46BD4F4255B933D0047C9BC /* NotificationsHandle.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";

@@ -67,16 +67,7 @@ class InterfaceController: WKInterfaceController {
 	var session = WorkoutSession()
 	var timeCurrent = 0
 
-	let typesToShare: Set = [
-		HKQuantityType.workoutType()
-	]
-
-	// The quantity types to read from the health store.
-	let typesToRead: Set = [
-		HKQuantityType.quantityType(forIdentifier: .heartRate)!,
-		HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
-		HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
-	]
+	var workoutManager = WorkoutManager()
 
 //	MARK: - Life Cycle
 	override func awake(withContext context: Any?) {
@@ -98,14 +89,14 @@ class InterfaceController: WKInterfaceController {
 			}
 		}
 
-		healthStore.requestAuthorization(toShare: typesToShare, read: typesToRead) { (success, error) in
-			// Handle error.
-		}
-
 		setupNotifications()
 		reminderNotification()
 
 		session.clear()
+
+		workoutManager.requestAuthorization()
+		workoutManager.startWorkout()
+
 	}
 
 	private lazy var startTimeFormatter: DateFormatter = {

@@ -116,6 +116,7 @@ class WorkoutManager: NSObject, ObservableObject {
         session.startActivity(with: Date())
         builder.beginCollection(withStart: Date()) { (success, error) in
             // The workout has started.
+			print("1")
         }
     }
     
@@ -219,7 +220,7 @@ extension WorkoutManager: HKWorkoutSessionDelegate {
 // MARK: - HKLiveWorkoutBuilderDelegate
 extension WorkoutManager: HKLiveWorkoutBuilderDelegate {
     func workoutBuilderDidCollectEvent(_ workoutBuilder: HKLiveWorkoutBuilder) {
-        
+		print("2")
     }
     
     func workoutBuilder(_ workoutBuilder: HKLiveWorkoutBuilder, didCollectDataOf collectedTypes: Set<HKSampleType>) {
@@ -234,5 +235,13 @@ extension WorkoutManager: HKLiveWorkoutBuilderDelegate {
             // Update the published values.
             updateForStatistics(statistics)
         }
+		print("4")
+
+		print("----------------------------")
+		print(heartrate)
+		print(activeCalories)
+		print(distance)
+		print(elapsedSeconds)
+		print("----------------------------")
     }
 }
