@@ -22,6 +22,7 @@
 		C46BD4C8255B6BC50047C9BC /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46BD4C7255B6BC50047C9BC /* Workout.swift */; };
 		C46BD4D2255B6D760047C9BC /* WorkoutSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46BD4D1255B6D760047C9BC /* WorkoutSession.swift */; };
 		C46BD4F5255B933D0047C9BC /* NotificationsHandle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46BD4F4255B933D0047C9BC /* NotificationsHandle.swift */; };
+		C474C001255B99DD002F33BA /* WorkoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C474C000255B99DD002F33BA /* WorkoutManager.swift */; };
 		C4E2AD862555B7AC0006E1BF /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4E2AD842555B7AC0006E1BF /* Interface.storyboard */; };
 		C4E2AD882555B7AE0006E1BF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4E2AD872555B7AE0006E1BF /* Assets.xcassets */; };
 		C4E2AD8F2555B7AF0006E1BF /* WatchHealthKitPOC Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C4E2AD8E2555B7AF0006E1BF /* WatchHealthKitPOC Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -95,6 +96,7 @@
 		C46BD4C7255B6BC50047C9BC /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
 		C46BD4D1255B6D760047C9BC /* WorkoutSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSession.swift; sourceTree = "<group>"; };
 		C46BD4F4255B933D0047C9BC /* NotificationsHandle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsHandle.swift; sourceTree = "<group>"; };
+		C474C000255B99DD002F33BA /* WorkoutManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutManager.swift; sourceTree = "<group>"; };
 		C4E2AD822555B7AC0006E1BF /* WatchHealthKitPOC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchHealthKitPOC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4E2AD852555B7AC0006E1BF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		C4E2AD872555B7AE0006E1BF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 				C46BD4D1255B6D760047C9BC /* WorkoutSession.swift */,
 				C46BD4C7255B6BC50047C9BC /* Workout.swift */,
 				C46BD4F4255B933D0047C9BC /* NotificationsHandle.swift */,
+				C474C000255B99DD002F33BA /* WorkoutManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -434,6 +437,7 @@
 				C46BD4F5255B933D0047C9BC /* NotificationsHandle.swift in Sources */,
 				C46BD4C8255B6BC50047C9BC /* Workout.swift in Sources */,
 				C46BD4D2255B6D760047C9BC /* WorkoutSession.swift in Sources */,
+				C474C001255B99DD002F33BA /* WorkoutManager.swift in Sources */,
 				C4E2AD962555B7AF0006E1BF /* ExtensionDelegate.swift in Sources */,
 				C4E2AD942555B7AF0006E1BF /* InterfaceController.swift in Sources */,
 			);

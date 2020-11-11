@@ -67,6 +67,17 @@ class InterfaceController: WKInterfaceController {
 	var session = WorkoutSession()
 	var timeCurrent = 0
 
+	let typesToShare: Set = [
+		HKQuantityType.workoutType()
+	]
+
+	// The quantity types to read from the health store.
+	let typesToRead: Set = [
+		HKQuantityType.quantityType(forIdentifier: .heartRate)!,
+		HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
+		HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
+	]
+
 //	MARK: - Life Cycle
 	override func awake(withContext context: Any?) {
 		super.awake(withContext: context)
@@ -85,6 +96,10 @@ class InterfaceController: WKInterfaceController {
 				print("Requests permission is not allowed.")
 				return
 			}
+		}
+
+		healthStore.requestAuthorization(toShare: typesToShare, read: typesToRead) { (success, error) in
+			// Handle error.
 		}
 
 		setupNotifications()
@@ -145,8 +160,8 @@ class InterfaceController: WKInterfaceController {
 		let now = Date()
 		var components = gregorian.dateComponents([.year, .month, .day, .hour, .minute, .second], from: now)
 
-		components.hour = 18
-		components.minute = 0
+		components.hour = 00
+		components.minute = 49
 		components.second = 0
 
 		let date = gregorian.date(from: components)!
