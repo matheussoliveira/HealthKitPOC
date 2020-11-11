@@ -24,7 +24,7 @@ class InterfaceController: WKInterfaceController {
 	}
 
 	@IBAction func startAction() {
-		startStopButtonPressed()
+//		startStopButtonPressed()
 		print(#function)
 		if self.workoutSession == nil {
 			let config = HKWorkoutConfiguration()
@@ -46,9 +46,6 @@ class InterfaceController: WKInterfaceController {
 			guard let currentWorkout = session.completeWorkout else {
 				fatalError("Shouldn't be able to press the done button without a saved workout.")
 			}
-			WorkoutDataStore.save(prancerciseWorkout: currentWorkout) { (success, error) in
-				print("erro!!!!!!")
-			}
 			print("totalEnergyBurned")
 			print(currentWorkout.totalEnergyBurned)
 			print("-----------------")
@@ -59,41 +56,16 @@ class InterfaceController: WKInterfaceController {
 			self.cronometerLabel.setText(String(self.timeCurrent))
 		}
 	}
-
-	private class func samples(for workout: PrancerciseWorkout) -> [HKSample] {
-		//1. Verify that the energy quantity type is still available to HealthKit.
-		guard let energyQuantityType = HKSampleType.quantityType(
-				forIdentifier: .activeEnergyBurned) else {
-			fatalError("*** Energy Burned Type Not Available ***")
-		}
-
-		//2. Create a sample for each PrancerciseWorkoutInterval
-		let samples: [HKSample] = workout.intervals.map { interval in
-			let calorieQuantity = HKQuantity(unit: .kilocalorie(),
-											 doubleValue: interval.totalEnergyBurned)
-
-			return HKCumulativeQuantitySeriesSample(type: energyQuantityType,
-													quantity: calorieQuantity,
-													start: interval.start,
-													end: interval.end)
-		}
-
-		return samples
-	}
 	
 //	MARK: - Variables
-
 	let healthStore = HKHealthStore()
 	let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
 	let heartRateUnit = HKUnit(from: "count/min")
 	var heartRateQuery: HKQuery?
 
 	var workoutSession: HKWorkoutSession?
-
-	private var timer: Timer!
-
+	var timer: Timer!
 	var session = WorkoutSession()
-
 	var timeCurrent = 0
 
 //	MARK: - Life Cycle
@@ -142,15 +114,15 @@ class InterfaceController: WKInterfaceController {
 	func finishWorkout() {
 		session.end()
 	}
-
-	func startStopButtonPressed() {
-		switch session.state {
-			case .notStarted, .finished:
-				print("asd")
-			case .active:
-				finishWorkout()
-		}
-	}
+//
+//	func startStopButtonPressed() {
+//		switch session.state {
+//			case .notStarted, .finished:
+//				print("asd")
+//			case .active:
+//				finishWorkout()
+//		}
+//	}
 
 	override func willActivate() {
 		super.willActivate()
@@ -173,7 +145,6 @@ class InterfaceController: WKInterfaceController {
 		let now = Date()
 		var components = gregorian.dateComponents([.year, .month, .day, .hour, .minute, .second], from: now)
 
-		// Change the time to 7:00:00 in your locale
 		components.hour = 18
 		components.minute = 0
 		components.second = 0
