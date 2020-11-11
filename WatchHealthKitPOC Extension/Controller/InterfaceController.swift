@@ -24,7 +24,6 @@ class InterfaceController: WKInterfaceController {
 	}
 
 	@IBAction func startAction() {
-//		startStopButtonPressed()
 		print(#function)
 		if self.workoutSession == nil {
 			let config = HKWorkoutConfiguration()
@@ -90,6 +89,7 @@ class InterfaceController: WKInterfaceController {
 
 		setupNotifications()
 		reminderNotification()
+
 		session.clear()
 	}
 

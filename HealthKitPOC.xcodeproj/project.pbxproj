@@ -21,6 +21,7 @@
 		2FA669A72553106100854180 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FA669A52553106100854180 /* LaunchScreen.storyboard */; };
 		C46BD4C8255B6BC50047C9BC /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46BD4C7255B6BC50047C9BC /* Workout.swift */; };
 		C46BD4D2255B6D760047C9BC /* WorkoutSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46BD4D1255B6D760047C9BC /* WorkoutSession.swift */; };
+		C46BD4F5255B933D0047C9BC /* NotificationsHandle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46BD4F4255B933D0047C9BC /* NotificationsHandle.swift */; };
 		C4E2AD862555B7AC0006E1BF /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4E2AD842555B7AC0006E1BF /* Interface.storyboard */; };
 		C4E2AD882555B7AE0006E1BF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4E2AD872555B7AE0006E1BF /* Assets.xcassets */; };
 		C4E2AD8F2555B7AF0006E1BF /* WatchHealthKitPOC Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C4E2AD8E2555B7AF0006E1BF /* WatchHealthKitPOC Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -93,6 +94,7 @@
 		2FA669A82553106100854180 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C46BD4C7255B6BC50047C9BC /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
 		C46BD4D1255B6D760047C9BC /* WorkoutSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSession.swift; sourceTree = "<group>"; };
+		C46BD4F4255B933D0047C9BC /* NotificationsHandle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsHandle.swift; sourceTree = "<group>"; };
 		C4E2AD822555B7AC0006E1BF /* WatchHealthKitPOC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchHealthKitPOC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4E2AD852555B7AC0006E1BF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		C4E2AD872555B7AE0006E1BF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -205,6 +207,42 @@
 			path = iOS;
 			sourceTree = "<group>";
 		};
+		C46BD4ED255B92520047C9BC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C46BD4D1255B6D760047C9BC /* WorkoutSession.swift */,
+				C46BD4C7255B6BC50047C9BC /* Workout.swift */,
+				C46BD4F4255B933D0047C9BC /* NotificationsHandle.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C46BD4EE255B92580047C9BC /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C46BD4EF255B925F0047C9BC /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				C4E2AD932555B7AF0006E1BF /* InterfaceController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		C46BD4F0255B92660047C9BC /* Others */ = {
+			isa = PBXGroup;
+			children = (
+				C4E2AD9E2555B7B20006E1BF /* PushNotificationPayload.apns */,
+				C4E2AD952555B7AF0006E1BF /* ExtensionDelegate.swift */,
+				C4E2AD972555B7AF0006E1BF /* NotificationController.swift */,
+				C4E2AD992555B7AF0006E1BF /* ComplicationController.swift */,
+			);
+			path = Others;
+			sourceTree = "<group>";
+		};
 		C4E2AD832555B7AC0006E1BF /* WatchHealthKitPOC */ = {
 			isa = PBXGroup;
 			children = (
@@ -218,16 +256,13 @@
 		C4E2AD922555B7AF0006E1BF /* WatchHealthKitPOC Extension */ = {
 			isa = PBXGroup;
 			children = (
+				C46BD4F0255B92660047C9BC /* Others */,
+				C46BD4EF255B925F0047C9BC /* Controller */,
+				C46BD4EE255B92580047C9BC /* View */,
+				C46BD4ED255B92520047C9BC /* Model */,
 				C4E2ADBA2555C1020006E1BF /* WatchHealthKitPOC Extension.entitlements */,
-				C4E2AD932555B7AF0006E1BF /* InterfaceController.swift */,
-				C4E2AD952555B7AF0006E1BF /* ExtensionDelegate.swift */,
-				C4E2AD972555B7AF0006E1BF /* NotificationController.swift */,
-				C4E2AD992555B7AF0006E1BF /* ComplicationController.swift */,
 				C4E2AD9B2555B7B20006E1BF /* Assets.xcassets */,
 				C4E2AD9D2555B7B20006E1BF /* Info.plist */,
-				C4E2AD9E2555B7B20006E1BF /* PushNotificationPayload.apns */,
-				C46BD4D1255B6D760047C9BC /* WorkoutSession.swift */,
-				C46BD4C7255B6BC50047C9BC /* Workout.swift */,
 			);
 			path = "WatchHealthKitPOC Extension";
 			sourceTree = "<group>";
@@ -396,6 +431,7 @@
 			files = (
 				C4E2AD982555B7AF0006E1BF /* NotificationController.swift in Sources */,
 				C4E2AD9A2555B7AF0006E1BF /* ComplicationController.swift in Sources */,
+				C46BD4F5255B933D0047C9BC /* NotificationsHandle.swift in Sources */,
 				C46BD4C8255B6BC50047C9BC /* Workout.swift in Sources */,
 				C46BD4D2255B6D760047C9BC /* WorkoutSession.swift in Sources */,
 				C4E2AD962555B7AF0006E1BF /* ExtensionDelegate.swift in Sources */,
