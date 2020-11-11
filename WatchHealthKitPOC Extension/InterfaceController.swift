@@ -16,6 +16,7 @@ class InterfaceController: WKInterfaceController {
 //	MARK: - IBOutlets
 	@IBOutlet weak var heartRateLabel: WKInterfaceLabel!
 	@IBOutlet weak var startButton: WKInterfaceButton!
+	@IBOutlet weak var cronometerLabel: WKInterfaceLabel!
 
 	//	MARK: - IBActions
 	@IBAction func requestLocalNotification() {
@@ -23,6 +24,7 @@ class InterfaceController: WKInterfaceController {
 	}
 
 	@IBAction func startAction() {
+		startStopButtonPressed()
 		print(#function)
 		if self.workoutSession == nil {
 			let config = HKWorkoutConfiguration()
@@ -36,14 +38,50 @@ class InterfaceController: WKInterfaceController {
 			catch let e {
 				print(e)
 			}
+			beginWorkout()
 		}
 		else {
 			self.workoutSession?.stopActivity(with: nil)
+			finishWorkout()
+			guard let currentWorkout = session.completeWorkout else {
+				fatalError("Shouldn't be able to press the done button without a saved workout.")
+			}
+			WorkoutDataStore.save(prancerciseWorkout: currentWorkout) { (success, error) in
+				print("erro!!!!!!")
+			}
+			print("totalEnergyBurned")
+			print(currentWorkout.totalEnergyBurned)
+			print("-----------------")
+		}
+		cronometerLabel.setText("0")
+		timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+			self.timeCurrent += 1
+			self.cronometerLabel.setText(String(self.timeCurrent))
 		}
 	}
 
+	private class func samples(for workout: PrancerciseWorkout) -> [HKSample] {
+		//1. Verify that the energy quantity type is still available to HealthKit.
+		guard let energyQuantityType = HKSampleType.quantityType(
+				forIdentifier: .activeEnergyBurned) else {
+			fatalError("*** Energy Burned Type Not Available ***")
+		}
+
+		//2. Create a sample for each PrancerciseWorkoutInterval
+		let samples: [HKSample] = workout.intervals.map { interval in
+			let calorieQuantity = HKQuantity(unit: .kilocalorie(),
+											 doubleValue: interval.totalEnergyBurned)
+
+			return HKCumulativeQuantitySeriesSample(type: energyQuantityType,
+													quantity: calorieQuantity,
+													start: interval.start,
+													end: interval.end)
+		}
+
+		return samples
+	}
+	
 //	MARK: - Variables
-//	let fontSize = UIFont.systemFont(ofSize: 60)
 
 	let healthStore = HKHealthStore()
 	let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
@@ -52,10 +90,11 @@ class InterfaceController: WKInterfaceController {
 
 	var workoutSession: HKWorkoutSession?
 
-//	let walkingSpeed: HKQuantityTypeIdentifier
-//	let mps = HKUnit.meter().unitDivided(by: HKUnit.second())
-//	let mpsFromString = HKUnit(from: "m/s")
-	var workoutSession2 = WorkoutManager()
+	private var timer: Timer!
+
+	var session = WorkoutSession()
+
+	var timeCurrent = 0
 
 //	MARK: - Life Cycle
 	override func awake(withContext context: Any?) {
@@ -79,10 +118,38 @@ class InterfaceController: WKInterfaceController {
 
 		setupNotifications()
 		reminderNotification()
+		session.clear()
+	}
 
-		print("---------------------")
-		print("\(workoutSession2.activeCalories) cal")
-		print("\(workoutSession2.distance) m")
+	private lazy var startTimeFormatter: DateFormatter = {
+		let formatter = DateFormatter()
+		formatter.dateFormat = "HH:mm"
+		return formatter
+	}()
+
+	private lazy var durationFormatter: DateComponentsFormatter = {
+		let formatter = DateComponentsFormatter()
+		formatter.unitsStyle = .positional
+		formatter.allowedUnits = [.minute, .second]
+		formatter.zeroFormattingBehavior = [.pad]
+		return formatter
+	}()
+
+	func beginWorkout() {
+		session.start()
+	}
+
+	func finishWorkout() {
+		session.end()
+	}
+
+	func startStopButtonPressed() {
+		switch session.state {
+			case .notStarted, .finished:
+				print("asd")
+			case .active:
+				finishWorkout()
+		}
 	}
 
 	override func willActivate() {
@@ -176,8 +243,6 @@ extension InterfaceController {
 		let attrStr = NSAttributedString(string: text)
 		DispatchQueue.main.async {
 			self.heartRateLabel.setAttributedText(attrStr)
-			print("\(self.workoutSession2.activeCalories) cal")
-			print("\(self.workoutSession2.distance) m")
 		}
 	}
 }

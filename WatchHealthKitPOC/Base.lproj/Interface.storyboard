@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="17156" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="3Sc-v4-Gw2">
+    <device id="watch38"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="17035"/>
@@ -12,6 +13,7 @@
                     <items>
                         <group width="1" alignment="left" layout="vertical" id="NhG-hf-SDs">
                             <items>
+                                <label alignment="left" text="Label" id="lne-R0-ddR"/>
                                 <label alignment="left" text="HeartRate" id="fVd-gB-tKk"/>
                             </items>
                             <edgeInsets key="margins" left="0.0" right="0.0" top="20" bottom="0.0"/>
@@ -33,6 +35,7 @@
                         </button>
                     </items>
                     <connections>
+                        <outlet property="cronometerLabel" destination="lne-R0-ddR" id="ZYB-zA-ROX"/>
                         <outlet property="heartRateLabel" destination="fVd-gB-tKk" id="YOp-kL-Gzz"/>
                         <outlet property="startButton" destination="TCJ-FT-fKX" id="Dwm-3T-TqT"/>
                     </connections>
