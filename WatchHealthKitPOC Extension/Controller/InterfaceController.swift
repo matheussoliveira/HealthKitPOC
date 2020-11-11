@@ -10,8 +10,11 @@ import Foundation
 import HealthKit
 import UserNotifications
 import WatchConnectivity
+import Foundation
+import HealthKit
+import Combine
 
-class InterfaceController: WKInterfaceController {
+class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDelegate {
 
 //	MARK: - IBOutlets
 	@IBOutlet weak var heartRateLabel: WKInterfaceLabel!
@@ -25,34 +28,12 @@ class InterfaceController: WKInterfaceController {
 
 	@IBAction func startAction() {
 		print(#function)
-		if self.workoutSession == nil {
-			let config = HKWorkoutConfiguration()
-			config.activityType = .other
-			do {
-				self.workoutSession = try HKWorkoutSession(healthStore: healthStore, configuration: config)
-				self.workoutSession?.delegate = self
-				self.workoutSession?.startActivity(with: nil)
-				heartRateLabel.setText("loading...")
-			}
-			catch let e {
-				print(e)
-			}
-			beginWorkout()
-		}
-		else {
-			self.workoutSession?.stopActivity(with: nil)
-			finishWorkout()
-			guard let currentWorkout = session.completeWorkout else {
-				fatalError("Shouldn't be able to press the done button without a saved workout.")
-			}
-			print("totalEnergyBurned")
-			print(currentWorkout.totalEnergyBurned)
-			print("-----------------")
-		}
+
 		cronometerLabel.setText("0")
 		timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
 			self.timeCurrent += 1
 			self.cronometerLabel.setText(String(self.timeCurrent))
+			
 		}
 	}
 	
@@ -64,10 +45,10 @@ class InterfaceController: WKInterfaceController {
 
 	var workoutSession: HKWorkoutSession?
 	var timer: Timer!
-	var session = WorkoutSession()
+	var session: HKWorkoutSession!
 	var timeCurrent = 0
 
-	var workoutManager = WorkoutManager()
+//	var workoutManager = WorkoutManager()
 
 //	MARK: - Life Cycle
 	override func awake(withContext context: Any?) {
@@ -80,55 +61,12 @@ class InterfaceController: WKInterfaceController {
 			return
 		}
 
-		let dataTypes = Set([heartRateType])
-		self.healthStore.requestAuthorization(toShare: nil, read: dataTypes) { (success, error) in
-			guard success else {
-				self.heartRateLabel.setText("Requests permission is not allowed.")
-				print("Requests permission is not allowed.")
-				return
-			}
-		}
-
 		setupNotifications()
 		reminderNotification()
 
-		session.clear()
-
-		workoutManager.requestAuthorization()
-		workoutManager.startWorkout()
-
+		requestAuthorization()
+		startWorkout()
 	}
-
-	private lazy var startTimeFormatter: DateFormatter = {
-		let formatter = DateFormatter()
-		formatter.dateFormat = "HH:mm"
-		return formatter
-	}()
-
-	private lazy var durationFormatter: DateComponentsFormatter = {
-		let formatter = DateComponentsFormatter()
-		formatter.unitsStyle = .positional
-		formatter.allowedUnits = [.minute, .second]
-		formatter.zeroFormattingBehavior = [.pad]
-		return formatter
-	}()
-
-	func beginWorkout() {
-		session.start()
-	}
-
-	func finishWorkout() {
-		session.end()
-	}
-//
-//	func startStopButtonPressed() {
-//		switch session.state {
-//			case .notStarted, .finished:
-//				print("asd")
-//			case .active:
-//				finishWorkout()
-//		}
-//	}
 
 	override func willActivate() {
 		super.willActivate()
@@ -194,76 +132,233 @@ class InterfaceController: WKInterfaceController {
 			}
 		}
 	}
-}
 
-extension InterfaceController {
 
-	private func createStreamingQuery() -> HKQuery {
-		print(#function)
-		let predicate = HKQuery.predicateForSamples(withStart: Date(), end: nil, options: [])
-		let query = HKAnchoredObjectQuery(type: heartRateType, predicate: predicate, anchor: nil, limit: Int(HKObjectQueryNoLimit)) { (query, samples, deletedObjects, anchor, error) in
-			self.addSamples(samples: samples)
-		}
-		query.updateHandler = { (query, samples, deletedObjects, anchor, error) in
-			self.addSamples(samples: samples)
-		}
-		return query
+	/// - Tag: DeclareSessionBuilder
+//	let healthStore = HKHealthStore()
+//	var session: HKWorkoutSession!
+	var builder: HKLiveWorkoutBuilder!
+
+	// Publish the following:
+	// - heartrate
+	// - active calories
+	// - distance moved
+	// - elapsed time
+
+	/// - Tag: Publishers
+	@Published var heartrate: Double = 0
+	@Published var activeCalories: Double = 0
+	@Published var distance: Double = 0
+	@Published var elapsedSeconds: Int = 0
+
+	// The app's workout state.
+	var running: Bool = false
+
+	/// - Tag: TimerSetup
+	// The cancellable holds the timer publisher.
+	var start: Date = Date()
+	var cancellable: Cancellable?
+	var accumulatedTime: Int = 0
+
+	// Set up and start the timer.
+	func setUpTimer() {
+		start = Date()
+		cancellable = Timer.publish(every: 0.1, on: .main, in: .default)
+			.autoconnect()
+			.sink { [weak self] _ in
+				guard let self = self else { return }
+				self.elapsedSeconds = self.incrementElapsedTime()
+			}
 	}
 
-	private func addSamples(samples: [HKSample]?) {
-		print(#function)
-		guard let samples = samples as? [HKQuantitySample] else { return }
-		guard let quantity = samples.last?.quantity else { return }
+	// Calculate the elapsed time.
+	func incrementElapsedTime() -> Int {
+		let runningTime: Int = Int(-1 * (self.start.timeIntervalSinceNow))
+		return self.accumulatedTime + runningTime
+	}
 
-		let text = String(quantity.doubleValue(for: self.heartRateUnit))
+	// Request authorization to access HealthKit.
+	func requestAuthorization() {
+		// Requesting authorization.
+		/// - Tag: RequestAuthorization
+		// The quantity type to write to the health store.
+		let typesToShare: Set = [
+			HKQuantityType.workoutType()
+		]
 
-		let attrStr = NSAttributedString(string: text)
+		// The quantity types to read from the health store.
+		let typesToRead: Set = [
+			HKQuantityType.quantityType(forIdentifier: .heartRate)!,
+			HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
+			HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
+		]
+
+		// Request authorization for those quantity types.
+		healthStore.requestAuthorization(toShare: typesToShare, read: typesToRead) { (success, error) in
+			// Handle error.
+		}
+	}
+
+	// Provide the workout configuration.
+	func workoutConfiguration() -> HKWorkoutConfiguration {
+		/// - Tag: WorkoutConfiguration
+		let configuration = HKWorkoutConfiguration()
+		configuration.activityType = .running
+		configuration.locationType = .outdoor
+
+		return configuration
+	}
+
+	// Start the workout.
+	func startWorkout() {
+		// Start the timer.
+		setUpTimer()
+		self.running = true
+
+		// Create the session and obtain the workout builder.
+		/// - Tag: CreateWorkout
+		do {
+			session = try HKWorkoutSession(healthStore: healthStore, configuration: self.workoutConfiguration())
+			builder = session.associatedWorkoutBuilder()
+		} catch {
+			// Handle any exceptions.
+			return
+		}
+
+		// Setup session and builder.
+		session.delegate = self
+		builder.delegate = self
+
+		// Set the workout builder's data source.
+		/// - Tag: SetDataSource
+		builder.dataSource = HKLiveWorkoutDataSource(healthStore: healthStore,
+													 workoutConfiguration: workoutConfiguration())
+
+		// Start the workout session and begin data collection.
+		/// - Tag: StartSession
+		session.startActivity(with: Date())
+		builder.beginCollection(withStart: Date()) { (success, error) in
+			// The workout has started.
+			print("1")
+		}
+	}
+
+	// MARK: - State Control
+	func togglePause() {
+		// If you have a timer, then the workout is in progress, so pause it.
+		if running == true {
+			self.pauseWorkout()
+		} else {// if session.state == .paused { // Otherwise, resume the workout.
+			resumeWorkout()
+		}
+	}
+
+	func pauseWorkout() {
+		// Pause the workout.
+		session.pause()
+		// Stop the timer.
+		cancellable?.cancel()
+		// Save the elapsed time.
+		accumulatedTime = elapsedSeconds
+		running = false
+	}
+
+	func resumeWorkout() {
+		// Resume the workout.
+		session.resume()
+		// Start the timer.
+		setUpTimer()
+		running = true
+	}
+
+	func endWorkout() {
+		// End the workout session.
+		session.end()
+		cancellable?.cancel()
+	}
+
+	func resetWorkout() {
+		// Reset the published values.
 		DispatchQueue.main.async {
-			self.heartRateLabel.setAttributedText(attrStr)
+			self.elapsedSeconds = 0
+			self.activeCalories = 0
+			self.heartrate = 0
+			self.distance = 0
 		}
 	}
-}
 
-extension InterfaceController: HKWorkoutSessionDelegate {
+	// MARK: - Update the UI
+	// Update the published values.
+	func updateForStatistics(_ statistics: HKStatistics?) {
+		guard let statistics = statistics else { return }
 
-	func workoutSession(_ workoutSession: HKWorkoutSession, didChangeTo toState: HKWorkoutSessionState, from fromState: HKWorkoutSessionState, date: Date) {
-		print(#function)
-		switch toState {
-			case .running:
-				print("Session status to running")
-				self.startQuery()
-			case .stopped:
-				print("Session status to stopped")
-				self.stopQuery()
-				self.workoutSession?.end()
-			case .ended:
-				print("Session status to ended")
-				self.workoutSession = nil
-			default:
-				print("Other status \(toState.rawValue)")
+		DispatchQueue.main.async {
+			switch statistics.quantityType {
+				case HKQuantityType.quantityType(forIdentifier: .heartRate):
+					/// - Tag: SetLabel
+					let heartRateUnit = HKUnit.count().unitDivided(by: HKUnit.minute())
+					let value = statistics.mostRecentQuantity()?.doubleValue(for: heartRateUnit)
+					let roundedValue = Double( round( 1 * value! ) / 1 )
+					self.heartrate = roundedValue
+				case HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned):
+					let energyUnit = HKUnit.kilocalorie()
+					let value = statistics.sumQuantity()?.doubleValue(for: energyUnit)
+					self.activeCalories = Double( round( 1 * value! ) / 1 )
+					return
+				case HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning):
+					let meterUnit = HKUnit.meter()
+					let value = statistics.sumQuantity()?.doubleValue(for: meterUnit)
+					let roundedValue = Double( round( 1 * value! ) / 1 )
+					self.distance = roundedValue
+					return
+				default:
+					return
+			}
+		}
+	}
+
+	func workoutSession(_ workoutSession: HKWorkoutSession, didChangeTo toState: HKWorkoutSessionState,
+						from fromState: HKWorkoutSessionState, date: Date) {
+		// Wait for the session to transition states before ending the builder.
+		/// - Tag: SaveWorkout
+		if toState == .ended {
+			print("The workout has now ended.")
+			builder.endCollection(withEnd: Date()) { (success, error) in
+				self.builder.finishWorkout { (workout, error) in
+					// Optionally display a workout summary to the user.
+					self.resetWorkout()
+				}
+			}
 		}
 	}
 
 	func workoutSession(_ workoutSession: HKWorkoutSession, didFailWithError error: Error) {
-		print("workoutSession delegate didFailWithError \(error.localizedDescription)")
+
 	}
 
-	func startQuery() {
-		print(#function)
-		heartRateQuery = self.createStreamingQuery()
-		healthStore.execute(self.heartRateQuery!)
-		DispatchQueue.main.async {
-			self.startButton.setTitle("Stop")
+	func workoutBuilder(_ workoutBuilder: HKLiveWorkoutBuilder, didCollectDataOf collectedTypes: Set<HKSampleType>) {
+		for type in collectedTypes {
+			guard let quantityType = type as? HKQuantityType else {
+				return // Nothing to do.
+			}
+
+			/// - Tag: GetStatistics
+			let statistics = workoutBuilder.statistics(for: quantityType)
+
+			// Update the published values.
+			updateForStatistics(statistics)
 		}
+		print("4")
+
+		print("----------------------------")
+		print("heartrate \(heartrate)")
+		print("activeCalories \(activeCalories)")
+		print("distance \(distance)")
+		print("elapsedSeconds \(elapsedSeconds)")
+		print("----------------------------")
 	}
 
-	func stopQuery() {
-		print(#function)
-		healthStore.stop(self.heartRateQuery!)
-		heartRateQuery = nil
-		DispatchQueue.main.async {
-			self.startButton.setTitle("Start")
-			self.heartRateLabel.setText("")
-		}
+	func workoutBuilderDidCollectEvent(_ workoutBuilder: HKLiveWorkoutBuilder) {
+		print("2")
 	}
 }
