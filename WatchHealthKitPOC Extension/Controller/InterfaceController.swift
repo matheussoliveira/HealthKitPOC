@@ -16,7 +16,7 @@ import Combine
 
 class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDelegate {
 
-//	MARK: - IBOutlets
+	//	MARK: - IBOutlets
 	@IBOutlet weak var heartrateLabel: WKInterfaceLabel!
 	@IBOutlet weak var activeCaloriesLabel: WKInterfaceLabel!
 	@IBOutlet weak var distanceLabel: WKInterfaceLabel!
@@ -24,13 +24,28 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate, HKLi
 
 	//	MARK: - IBActions
 	@IBAction func requestLocalNotification() {
-		singleNotification()
+		NotificationManager().singleNotification()
 	}
 
-//	MARK: - Life Cycle
+	//	MARK: - Variables
+	let healthStore = HKHealthStore()
+	var session: HKWorkoutSession!
+	var builder: HKLiveWorkoutBuilder!
+
+	var heartrate: Double = 0
+	var activeCalories: Double = 0
+	var distance: Double = 0
+	var elapsedSeconds: Int = 0
+
+	var running: Bool = false
+
+	var start: Date = Date()
+	var cancellable: Cancellable?
+	var accumulatedTime: Int = 0
+
+	//	MARK: - Life Cycle
 	override func awake(withContext context: Any?) {
 		super.awake(withContext: context)
-		print(#function)
 
 		guard HKHealthStore.isHealthDataAvailable() else {
 			heartrateLabel.setText("HealthKit is not available ")
@@ -38,105 +53,22 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate, HKLi
 			return
 		}
 
-		setupNotifications()
-		reminderNotification()
+		NotificationManager().setupNotifications()
+		NotificationManager().setReminderNotification()
 
 		requestAuthorization()
 		startWorkout()
 	}
 
 	override func willActivate() {
-		super.willActivate()
 		print(#function)
 	}
 
 	override func didDeactivate() {
 		super.didDeactivate()
-		print(#function)
 	}
 
-//	MARK: - Notifications
-	fileprivate func reminderNotification() {
-		let content = UNMutableNotificationContent()
-		content.title = "Beba Água"
-		content.body = "Atalinha recomenda 2 litros de água diariamente"
-		content.sound = UNNotificationSound.default
-
-		let gregorian = Calendar(identifier: .gregorian)
-		let now = Date()
-		var components = gregorian.dateComponents([.year, .month, .day, .hour, .minute, .second], from: now)
-
-		components.hour = 00
-		components.minute = 49
-		components.second = 0
-
-		let date = gregorian.date(from: components)!
-
-		let triggerDaily = Calendar.current.dateComponents([.hour,.minute,.second,], from: date)
-		let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDaily, repeats: true)
-
-
-		let request = UNNotificationRequest(identifier: "reminder", content: content, trigger: trigger)
-		print("INSIDE NOTIFICATION")
-
-		UNUserNotificationCenter.current().add(request, withCompletionHandler: {(error) in
-			if let error = error {
-				print("SOMETHING WENT WRONG")
-			}
-		})
-	}
-
-	fileprivate func singleNotification() {
-		let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
-		let content = UNMutableNotificationContent()
-		content.title = NSLocalizedString("Beba Água", comment: "Local Notification Title")
-		content.body = NSLocalizedString("Atalinha recomenda 2 litros de água diariamente", comment: "Local Notification Body")
-		content.categoryIdentifier = "Local"
-
-		let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-
-		UNUserNotificationCenter.current().add(request)
-	}
-
-	fileprivate func setupNotifications() {
-		UNUserNotificationCenter.current()
-
-		let center = UNUserNotificationCenter.current()
-		center.requestAuthorization(options: [.alert, .sound, .badge, .provisional]) { granted, error in
-
-			if let error = error {
-				print(error.localizedDescription)
-			}
-		}
-	}
-
-
-	/// - Tag: DeclareSessionBuilder
-	let healthStore = HKHealthStore()
-	var session: HKWorkoutSession!
-	var builder: HKLiveWorkoutBuilder!
-
-	// Publish the following:
-	// - heartrate
-	// - active calories
-	// - distance moved
-	// - elapsed time
-
-	/// - Tag: Publishers
-	@Published var heartrate: Double = 0
-	@Published var activeCalories: Double = 0
-	@Published var distance: Double = 0
-	@Published var elapsedSeconds: Int = 0
-
-	// The app's workout state.
-	var running: Bool = false
-
-	/// - Tag: TimerSetup
-	// The cancellable holds the timer publisher.
-	var start: Date = Date()
-	var cancellable: Cancellable?
-	var accumulatedTime: Int = 0
-
+//	MARK: - Workout
 	// Set up and start the timer.
 	func setUpTimer() {
 		start = Date()
@@ -309,9 +241,7 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate, HKLi
 		}
 	}
 
-	func workoutSession(_ workoutSession: HKWorkoutSession, didFailWithError error: Error) {
-
-	}
+	func workoutSession(_ workoutSession: HKWorkoutSession, didFailWithError error: Error) { }
 
 	func workoutBuilder(_ workoutBuilder: HKLiveWorkoutBuilder, didCollectDataOf collectedTypes: Set<HKSampleType>) {
 		for type in collectedTypes {
@@ -330,7 +260,6 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate, HKLi
 		activeCaloriesLabel.setText("\(activeCalories) cal")
 		distanceLabel.setText("\(distance) m")
 		timerLabel.setText(secondsToHoursMinutesSeconds(seconds: elapsedSeconds))
-
 	}
 
 	func workoutBuilderDidCollectEvent(_ workoutBuilder: HKLiveWorkoutBuilder) { }
