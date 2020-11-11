@@ -17,24 +17,14 @@ import Combine
 class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDelegate {
 
 //	MARK: - IBOutlets
-	@IBOutlet weak var heartRateLabel: WKInterfaceLabel!
-	@IBOutlet weak var startButton: WKInterfaceButton!
-	@IBOutlet weak var cronometerLabel: WKInterfaceLabel!
+	@IBOutlet weak var heartrateLabel: WKInterfaceLabel!
+	@IBOutlet weak var activeCaloriesLabel: WKInterfaceLabel!
+	@IBOutlet weak var distanceLabel: WKInterfaceLabel!
+	@IBOutlet weak var timerLabel: WKInterfaceLabel!
 
 	//	MARK: - IBActions
 	@IBAction func requestLocalNotification() {
 		singleNotification()
-	}
-
-	@IBAction func startAction() {
-		print(#function)
-
-		cronometerLabel.setText("0")
-		timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
-			self.timeCurrent += 1
-			self.cronometerLabel.setText(String(self.timeCurrent))
-			
-		}
 	}
 	
 //	MARK: - Variables
@@ -56,7 +46,7 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate, HKLi
 		print(#function)
 
 		guard HKHealthStore.isHealthDataAvailable() else {
-			heartRateLabel.setText("HealthKit is not available ")
+			heartrateLabel.setText("HealthKit is not available ")
 			print("HealthKit is not available on this device.")
 			return
 		}
@@ -356,6 +346,11 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate, HKLi
 		print("distance \(distance)")
 		print("elapsedSeconds \(elapsedSeconds)")
 		print("----------------------------")
+
+		heartrateLabel.setText("\(heartrate) bpm")
+		activeCaloriesLabel.setText("\(activeCalories) cal")
+		distanceLabel.setText("\(distance) m")
+		timerLabel.setText("\(elapsedSeconds) seg")
 	}
 
 	func workoutBuilderDidCollectEvent(_ workoutBuilder: HKLiveWorkoutBuilder) {

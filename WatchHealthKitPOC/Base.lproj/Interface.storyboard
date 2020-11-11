@@ -13,31 +13,24 @@
                     <items>
                         <group width="1" alignment="left" layout="vertical" id="NhG-hf-SDs">
                             <items>
-                                <label alignment="left" text="Label" id="lne-R0-ddR"/>
-                                <label alignment="left" text="HeartRate" id="fVd-gB-tKk"/>
+                                <label alignment="left" text="0.0 bpm" id="lne-R0-ddR"/>
+                                <label alignment="left" text="0.0 cal" id="fVd-gB-tKk"/>
+                                <label alignment="left" text="0.0 m" id="Xqi-mc-hyK"/>
+                                <label alignment="left" text="0,0 seg" id="Z5X-KY-4TJ"/>
                             </items>
-                            <edgeInsets key="margins" left="0.0" right="0.0" top="20" bottom="0.0"/>
+                            <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="20"/>
                         </group>
-                        <group width="1" alignment="left" id="ozn-ew-Yfo">
-                            <items>
-                                <button width="1" alignment="center" verticalAlignment="bottom" title="Start" id="TCJ-FT-fKX">
-                                    <connections>
-                                        <action selector="startAction" destination="3Sc-v4-Gw2" id="dw8-Au-XVb"/>
-                                    </connections>
-                                </button>
-                            </items>
-                            <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
-                        </group>
-                        <button width="1" alignment="left" title="Reminder" id="9Kg-Nh-FyO">
+                        <button width="1" alignment="left" title="Notificação" id="9Kg-Nh-FyO">
                             <connections>
                                 <action selector="requestLocalNotification" destination="3Sc-v4-Gw2" id="dB0-ng-kcs"/>
                             </connections>
                         </button>
                     </items>
                     <connections>
-                        <outlet property="cronometerLabel" destination="lne-R0-ddR" id="ZYB-zA-ROX"/>
-                        <outlet property="heartRateLabel" destination="fVd-gB-tKk" id="YOp-kL-Gzz"/>
-                        <outlet property="startButton" destination="TCJ-FT-fKX" id="Dwm-3T-TqT"/>
+                        <outlet property="activeCaloriesLabel" destination="fVd-gB-tKk" id="fJW-nl-7RC"/>
+                        <outlet property="distanceLabel" destination="Xqi-mc-hyK" id="xWH-Yv-0ff"/>
+                        <outlet property="heartrateLabel" destination="lne-R0-ddR" id="Sfl-7U-PMz"/>
+                        <outlet property="timerLabel" destination="Z5X-KY-4TJ" id="inE-oe-VfV"/>
                     </connections>
                 </controller>
             </objects>
