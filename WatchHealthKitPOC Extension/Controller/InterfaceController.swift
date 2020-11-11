@@ -26,19 +26,6 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate, HKLi
 	@IBAction func requestLocalNotification() {
 		singleNotification()
 	}
-	
-//	MARK: - Variables
-	let healthStore = HKHealthStore()
-	let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
-	let heartRateUnit = HKUnit(from: "count/min")
-	var heartRateQuery: HKQuery?
-
-	var workoutSession: HKWorkoutSession?
-	var timer: Timer!
-	var session: HKWorkoutSession!
-	var timeCurrent = 0
-
-//	var workoutManager = WorkoutManager()
 
 //	MARK: - Life Cycle
 	override func awake(withContext context: Any?) {
@@ -125,8 +112,8 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate, HKLi
 
 
 	/// - Tag: DeclareSessionBuilder
-//	let healthStore = HKHealthStore()
-//	var session: HKWorkoutSession!
+	let healthStore = HKHealthStore()
+	var session: HKWorkoutSession!
 	var builder: HKLiveWorkoutBuilder!
 
 	// Publish the following:
@@ -338,22 +325,21 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate, HKLi
 			// Update the published values.
 			updateForStatistics(statistics)
 		}
-		print("4")
-
-		print("----------------------------")
-		print("heartrate \(heartrate)")
-		print("activeCalories \(activeCalories)")
-		print("distance \(distance)")
-		print("elapsedSeconds \(elapsedSeconds)")
-		print("----------------------------")
 
 		heartrateLabel.setText("\(heartrate) bpm")
 		activeCaloriesLabel.setText("\(activeCalories) cal")
 		distanceLabel.setText("\(distance) m")
-		timerLabel.setText("\(elapsedSeconds) seg")
+		timerLabel.setText(secondsToHoursMinutesSeconds(seconds: elapsedSeconds))
+
 	}
 
-	func workoutBuilderDidCollectEvent(_ workoutBuilder: HKLiveWorkoutBuilder) {
-		print("2")
+	func workoutBuilderDidCollectEvent(_ workoutBuilder: HKLiveWorkoutBuilder) { }
+
+	func secondsToHoursMinutesSeconds (seconds : Int) -> String {
+
+		let hours = String(format: "%02d", seconds / 3600)
+		let minuts = String(format: "%02d", (seconds % 3600) / 60)
+		let seconds = String(format: "%02d", (seconds % 3600) % 60)
+		return hours + ":" + minuts + ":" + seconds
 	}
 }

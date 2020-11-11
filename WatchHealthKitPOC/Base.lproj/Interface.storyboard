@@ -16,7 +16,7 @@
                                 <label alignment="left" text="0.0 bpm" id="lne-R0-ddR"/>
                                 <label alignment="left" text="0.0 cal" id="fVd-gB-tKk"/>
                                 <label alignment="left" text="0.0 m" id="Xqi-mc-hyK"/>
-                                <label alignment="left" text="0,0 seg" id="Z5X-KY-4TJ"/>
+                                <label alignment="left" text="00:00:00" id="Z5X-KY-4TJ"/>
                             </items>
                             <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="20"/>
                         </group>
