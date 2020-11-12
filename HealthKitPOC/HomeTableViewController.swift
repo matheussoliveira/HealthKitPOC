@@ -32,6 +32,7 @@ class HomeTableViewController: UITableViewController, WCSessionDelegate, UNUserN
     @IBOutlet weak var userWeight: UILabel!
     @IBOutlet weak var userBodyMassIndex: UILabel!
     @IBOutlet weak var sleep: UILabel!
+    @IBOutlet weak var steps: UILabel!
     
     private let userHealthProfile: UserHealthProfile = UserHealthProfile()
     
@@ -88,6 +89,8 @@ class HomeTableViewController: UITableViewController, WCSessionDelegate, UNUserN
         healthKitManager.querryWeight()
         healthKitManager.querrySleepIformation()
         healthKitManager.querryBodyMassIndex()
+        healthKitManager.querryIrregularHeartRhythm()
+        healthKitManager.querrySteps()
         requestHKAutorization()
 		wcSession = WCSession.default
 		wcSession.delegate = self
@@ -220,5 +223,13 @@ extension HomeTableViewController: HealthKitManagerDelegate {
     func getSleepInformation(sleepInformation: String) {
         self.userHealthProfile.lastnightSleepDuration = sleepInformation
         sleep.text = sleepInformation
+    }
+    
+    func getIrregularHearthRhythm(rhythm: Double) {
+        print("aaaaaaaa \(rhythm)")
+    }
+    
+    func getSteps(steps: Int) {
+        self.steps.text = "\(steps) passos"
     }
 }

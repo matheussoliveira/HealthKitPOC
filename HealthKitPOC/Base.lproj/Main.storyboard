@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="DUa-d8-WYo">
-                            <rect key="frame" x="0.0" y="574" width="414" height="44"/>
+                            <rect key="frame" x="0.0" y="645" width="414" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <state key="normal" title="Button"/>
                             <connections>
@@ -290,6 +290,39 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="71" id="9tb-Ga-enF">
+                                        <rect key="frame" x="20" y="556" width="374" height="71"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9tb-Ga-enF" id="Z0z-AD-DAf">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="71"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="exC-nR-vgT">
+                                                    <rect key="frame" x="28" y="19" width="318" height="33"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Passos:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fZT-6D-CSV">
+                                                            <rect key="frame" x="0.0" y="0.0" width="58.5" height="33"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tGS-Y6-PD9">
+                                                            <rect key="frame" x="276.5" y="0.0" width="41.5" height="33"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="exC-nR-vgT" secondAttribute="trailing" constant="8" id="481-lY-J3h"/>
+                                                <constraint firstItem="exC-nR-vgT" firstAttribute="top" secondItem="Z0z-AD-DAf" secondAttribute="topMargin" constant="8" id="4it-gY-joP"/>
+                                                <constraint firstItem="exC-nR-vgT" firstAttribute="leading" secondItem="Z0z-AD-DAf" secondAttribute="leadingMargin" constant="8" id="LKE-gu-MqP"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="exC-nR-vgT" secondAttribute="bottom" constant="8" id="VJJ-Kp-EqP"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -307,6 +340,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="sleep" destination="R8d-VJ-YVe" id="58h-ZI-SBd"/>
+                        <outlet property="steps" destination="tGS-Y6-PD9" id="uIK-uE-RHu"/>
                         <outlet property="userAge" destination="xkm-om-HK5" id="e18-Ka-bom"/>
                         <outlet property="userBiologicalSex" destination="mUt-da-KGr" id="gk1-5w-N1a"/>
                         <outlet property="userBloodType" destination="b68-BE-bFx" id="TAS-q1-4zg"/>

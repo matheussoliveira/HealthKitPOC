@@ -16,6 +16,8 @@ protocol HealthKitManagerDelegate: class {
     func getWeight(weight: Double)
     func getBodyMassIndex(bodyMassIndex: Double)
     func getSleepInformation(sleepInformation: String)
+    func getIrregularHearthRhythm(rhythm: Double)
+    func getSteps(steps: Int)
 }
 
 class HealthKitManager {
@@ -151,5 +153,49 @@ class HealthKitManager {
         totalMinutes -= hours * 60
         let sleepInformation = "\(totalHours) horas e \(totalMinutes) minutos"
         self.delegate?.getSleepInformation(sleepInformation: sleepInformation)
+    }
+    
+    public func querryIrregularHeartRhythm() {
+        
+        guard let irregularRhythm = HKObjectType.categoryType(forIdentifier: .irregularHeartRhythmEvent) else {
+            print("Irregular Hearth Rhythm is not available")
+            return
+        }
+        
+        ProfileDataStore.getMostRecentSample(for: irregularRhythm) { (sample, error) in
+            guard let sample = sample else {
+                if let error = error {
+                    self.delegate?.displayError(error: error)
+                }
+                return
+            }
+            
+            let irregularRhythm = sample.quantity.doubleValue(for: HKUnit.count())
+            self.delegate?.getIrregularHearthRhythm(rhythm: irregularRhythm)
+        }
+    }
+    
+    public func querrySteps() {
+        guard let stepsCount = HKSampleType.quantityType(forIdentifier: .stepCount) else {
+            print("Step count is not available")
+            return
+        }
+        
+        ProfileDataStore.getDayBeforeSample(for: stepsCount) { (samples, error) in
+            guard let samples = samples else {
+                if let error = error {
+                    self.delegate?.displayError(error: error)
+                }
+                return
+            }
+            
+            var steps: Int = 0
+            for sample in samples {
+                if let sample = sample as? HKQuantitySample {
+                    steps += Int(sample.quantity.doubleValue(for: HKUnit.count()))
+                }
+            }
+            self.delegate?.getSteps(steps: steps)
+        }
     }
 }

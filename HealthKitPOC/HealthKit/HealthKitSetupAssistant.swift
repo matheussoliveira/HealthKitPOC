@@ -28,7 +28,8 @@ class HealthKitSetupAssistant {
               let height = HKObjectType.quantityType(forIdentifier: .height),
               let bodyMass = HKObjectType.quantityType(forIdentifier: .bodyMass),
               let stepCount = HKObjectType.quantityType(forIdentifier: .stepCount),
-              let sleepAnalysis = HKObjectType.categoryType(forIdentifier: .sleepAnalysis) else {
+              let sleepAnalysis = HKObjectType.categoryType(forIdentifier: .sleepAnalysis),
+              let irregularHearthRhythm = HKObjectType.categoryType(forIdentifier: .irregularHeartRhythmEvent)  else {
                 
                 completion(false, HealthKitSetupError.dataTypeNotAvailable)
                 return
@@ -44,7 +45,8 @@ class HealthKitSetupAssistant {
                                                       height,
                                                       bodyMass,
                                                       stepCount,
-                                                      sleepAnalysis]
+                                                      sleepAnalysis,
+                                                      irregularHearthRhythm]
         
         HKHealthStore().requestAuthorization(toShare: healthKitTypesToWrite,
                                              read: healthKitTypesToRead) { (success, error) in
