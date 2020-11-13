@@ -13,6 +13,7 @@ import WatchConnectivity
 import Foundation
 import HealthKit
 import Combine
+import CoreMotion
 
 class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDelegate {
 
@@ -21,7 +22,8 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate, HKLi
 	@IBOutlet weak var activeCaloriesLabel: WKInterfaceLabel!
 	@IBOutlet weak var distanceLabel: WKInterfaceLabel!
 	@IBOutlet weak var timerLabel: WKInterfaceLabel!
-
+    @IBOutlet weak var stepCounter: WKInterfaceLabel!
+    
 	//	MARK: - IBActions
 	@IBAction func requestLocalNotification() {
 		NotificationManager().singleNotification()
@@ -41,7 +43,9 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate, HKLi
 
 	var start: Date = Date()
 	var cancellable: Cancellable?
-//	var accumulatedTime: Int = 0
+	var accumulatedTime: Int = 0
+    
+    let pedometer = CMPedometer()
 
 	//	MARK: - Life Cycle
 	override func awake(withContext context: Any?) {
@@ -58,6 +62,11 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate, HKLi
 
 		requestAuthorization()
 		startWorkout()
+        
+        
+        pedometer.startUpdates(from: Date()) { (data, error) in
+            self.stepCounter.setText("\(data?.numberOfSteps ?? 0) passos")
+        }
 	}
 
 	override func willActivate() {

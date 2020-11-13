@@ -16,6 +16,7 @@
                                 <label alignment="left" text="0.0 bpm" id="lne-R0-ddR"/>
                                 <label alignment="left" text="0.0 cal" id="fVd-gB-tKk"/>
                                 <label alignment="left" text="0.0 m" id="Xqi-mc-hyK"/>
+                                <label alignment="left" text="0 passos" id="WmN-Tw-Ddc"/>
                                 <label alignment="left" text="00:00:00" id="Z5X-KY-4TJ"/>
                             </items>
                             <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="20"/>
@@ -30,6 +31,7 @@
                         <outlet property="activeCaloriesLabel" destination="fVd-gB-tKk" id="fJW-nl-7RC"/>
                         <outlet property="distanceLabel" destination="Xqi-mc-hyK" id="xWH-Yv-0ff"/>
                         <outlet property="heartrateLabel" destination="lne-R0-ddR" id="Sfl-7U-PMz"/>
+                        <outlet property="stepCounter" destination="WmN-Tw-Ddc" id="dZS-YU-3mz"/>
                         <outlet property="timerLabel" destination="Z5X-KY-4TJ" id="inE-oe-VfV"/>
                     </connections>
                 </controller>
