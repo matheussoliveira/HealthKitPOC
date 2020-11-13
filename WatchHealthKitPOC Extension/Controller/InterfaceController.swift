@@ -41,7 +41,7 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate, HKLi
 
 	var start: Date = Date()
 	var cancellable: Cancellable?
-	var accumulatedTime: Int = 0
+//	var accumulatedTime: Int = 0
 
 	//	MARK: - Life Cycle
 	override func awake(withContext context: Any?) {

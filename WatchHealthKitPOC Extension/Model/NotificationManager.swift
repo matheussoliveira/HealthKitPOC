@@ -16,7 +16,6 @@ import Combine
 
 class NotificationManager {
 	func singleNotification() {
-		print("single notification pressed")
 		let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
 		let content = UNMutableNotificationContent()
 		content.title = NSLocalizedString("Beba Água", comment: "Local Notification Title")
