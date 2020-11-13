@@ -64,11 +64,11 @@ class HomeTableViewController: UITableViewController {
 //            }
 //        }
         
-//
-//        pedometer.startUpdates(from: Date()) { (data, error) in
+
+        pedometer.startUpdates(from: Date()) { (data, error) in
 //            print(data)
-//            self.userName.text = "\(data?.numberOfSteps)"
-//        }
+            self.userName.text = "\(data?.numberOfSteps ?? 0)"
+        }
 	}
     
     private func loadAndDisplayAgeSexAndBloodType() {

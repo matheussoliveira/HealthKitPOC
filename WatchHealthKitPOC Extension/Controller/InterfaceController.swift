@@ -46,6 +46,7 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate, HKLi
 	var accumulatedTime: Int = 0
     
     let pedometer = CMPedometer()
+    var steps: Int = 0
 
 	//	MARK: - Life Cycle
 	override func awake(withContext context: Any?) {
@@ -66,6 +67,7 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate, HKLi
         
         pedometer.startUpdates(from: Date()) { (data, error) in
             self.stepCounter.setText("\(data?.numberOfSteps ?? 0) passos")
+//            self.steps = Int(data?.numberOfSteps ?? 0)
         }
 	}
 
@@ -295,6 +297,7 @@ class InterfaceController: WKInterfaceController, HKWorkoutSessionDelegate, HKLi
 		activeCaloriesLabel.setText("\(activeCalories) cal")
 		distanceLabel.setText("\(distance) m")
 		timerLabel.setText(secondsToHoursMinutesSeconds(seconds: elapsedSeconds))
+//        stepCounter.setText("\(steps) passos")
 	}
 
 	func workoutBuilderDidCollectEvent(_ workoutBuilder: HKLiveWorkoutBuilder) { }
