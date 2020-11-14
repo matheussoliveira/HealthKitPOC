@@ -9,6 +9,9 @@ import UIKit
 import HealthKit
 import UserNotifications
 import WatchConnectivity
+import CoreMotion
+    
+class HomeTableViewController: UITableViewController {
 
 private enum ProfileDataError: Error {
   
@@ -45,24 +48,26 @@ class HomeTableViewController: UITableViewController, WCSessionDelegate, UNUserN
 
 	}
 
-	func sessionDidBecomeInactive(_ session: WCSession) {
+//	MARK: - Variables
 
-	}
+    private let userHealthProfile: UserHealthProfile = UserHealthProfile()
 
-	func sessionDidDeactivate(_ session: WCSession) {
+    let name = "Matheus Oliveira"
+    
+    
+    let pedometer = CMPedometer()
 
-	}
+	var wcSession : WCSession! = nil
 
-	@IBAction func notificationAction(_ sender: Any) {
-		print("notificação mandada")
-		// Create Notification Content
-		let notificationContent = UNMutableNotificationContent()
+//	MARK: - LifeCycle
+	override func viewDidLoad() {
+		super.viewDidLoad()
 
-		// Configure Notification Content
-		notificationContent.title = "TITLE"
-		notificationContent.subtitle = "Subtitle"
-		notificationContent.body = "Body"
-		notificationContent.categoryIdentifier = "app.likedislike.ios10"
+		requestHKAutorization()
+		loadAndDisplayAgeSexAndBloodType()
+		loadAndDisplayMostRecentWeight()
+		loadAndDisplayMostRecentHeight()
+		loadAndDisplayMostRecentBMI()
 
 		// Add Trigger
 		let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 1.0, repeats: false)
@@ -93,19 +98,22 @@ class HomeTableViewController: UITableViewController, WCSessionDelegate, UNUserN
 		wcSession.delegate = self
 		wcSession.activate()
 
+		// Setup Notifictions
 		UNUserNotificationCenter.current().delegate = self
-
 		authorizeNotification()
-    }
+        
+//        if CMPedometer.isStepCountingAvailable() {
+//            let calendar = Calendar.current
+//            pedometer.queryPedometerData(from: calendar.startOfDay(for: Date()), to: Date()) { (data, error) in
+//                print(data)
+//            }
+//        }
+        
 
-	func authorizeNotification() {
-		UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (success, error) in
-			if let error = error {
-				print("Error:- \(error)")
-			} else if success == true {
-				print("Permission Granted")
-			}
-		}
+        pedometer.startUpdates(from: Date()) { (data, error) in
+//            print(data)
+            self.userName.text = "\(data?.numberOfSteps ?? 0)"
+        }
 	}
     
     // MARK: - Update labels
@@ -176,6 +184,41 @@ class HomeTableViewController: UITableViewController, WCSessionDelegate, UNUserN
       
       present(alert, animated: true, completion: nil)
     }
+}
+
+//	MARK: - WCSessionDelegate Handle Extension
+extension HomeTableViewController: WCSessionDelegate {
+	func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) { }
+
+	func sessionDidBecomeInactive(_ session: WCSession) { }
+
+	func sessionDidDeactivate(_ session: WCSession) { }
+}
+
+//	MARK: - UNUserNotificationCenterDelegate Handle Extension
+extension HomeTableViewController: UNUserNotificationCenterDelegate {
+	fileprivate func sendSimpleNotification() {
+		// Create Notification Content
+		let notificationContent = UNMutableNotificationContent()
+
+		// Configure Notification Content
+		notificationContent.title = "TITLE"
+		notificationContent.subtitle = "Subtitle"
+		notificationContent.body = "Body"
+		notificationContent.categoryIdentifier = "com.poc.HealthKitPOC2"
+
+		// Add Trigger
+		let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 1.0, repeats: false)
+
+		// Create Notification Request
+		let request = UNNotificationRequest(identifier: "com.poc.HealthKitPOC2",
+											content: notificationContent, trigger: notificationTrigger)
+		UNUserNotificationCenter.current().add(request, withCompletionHandler: { (error) in
+			if let error = error {
+				print("Error \(error)")
+			}
+		})
+	}
 
 	func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
 		completionHandler([.alert])
@@ -183,7 +226,16 @@ class HomeTableViewController: UITableViewController, WCSessionDelegate, UNUserN
 
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
-		// Dispose of any resources that can be recreated.
+	}
+
+	func authorizeNotification() {
+		UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (success, error) in
+			if let error = error {
+				print("Error:- \(error)")
+			} else if success == true {
+				print("Permission Granted")
+			}
+		}
 	}
 }
 
