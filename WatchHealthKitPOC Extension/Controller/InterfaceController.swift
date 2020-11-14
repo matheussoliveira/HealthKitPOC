@@ -98,6 +98,7 @@ class InterfaceController: WKInterfaceController {
 	}
 }
 
+// MERK: - Workout Manager
 extension InterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDelegate {
 	func workoutConfiguration() -> HKWorkoutConfiguration {
 		let configuration = HKWorkoutConfiguration()
@@ -107,7 +108,6 @@ extension InterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDel
 		return configuration
 	}
 
-	//	MARK: - Workout
 	func startWorkout() {
 		setUpTimer()
 
