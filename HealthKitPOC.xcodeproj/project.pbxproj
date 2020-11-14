@@ -20,6 +20,8 @@
 		2FA669A22553105F00854180 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FA669A02553105F00854180 /* Main.storyboard */; };
 		2FA669A42553106100854180 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FA669A32553106100854180 /* Assets.xcassets */; };
 		2FA669A72553106100854180 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FA669A52553106100854180 /* LaunchScreen.storyboard */; };
+		C474C001255B99DD002F33BA /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C474C000255B99DD002F33BA /* HealthKitManager.swift */; };
+		C4CD7B0F255C4B3100A706A0 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CD7B0E255C4B3100A706A0 /* NotificationManager.swift */; };
 		C4E2AD862555B7AC0006E1BF /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4E2AD842555B7AC0006E1BF /* Interface.storyboard */; };
 		C4E2AD882555B7AE0006E1BF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4E2AD872555B7AE0006E1BF /* Assets.xcassets */; };
 		C4E2AD8F2555B7AF0006E1BF /* WatchHealthKitPOC Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C4E2AD8E2555B7AF0006E1BF /* WatchHealthKitPOC Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -91,6 +93,8 @@
 		2FA669A32553106100854180 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2FA669A62553106100854180 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2FA669A82553106100854180 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C474C000255B99DD002F33BA /* HealthKitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
+		C4CD7B0E255C4B3100A706A0 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		C4E2AD822555B7AC0006E1BF /* WatchHealthKitPOC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchHealthKitPOC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4E2AD852555B7AC0006E1BF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		C4E2AD872555B7AE0006E1BF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -103,7 +107,6 @@
 		C4E2AD9B2555B7B20006E1BF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C4E2AD9D2555B7B20006E1BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C4E2AD9E2555B7B20006E1BF /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
-		C4E2ADB62555BABF0006E1BF /* watchOS-heartrate WatchKit Extension.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "watchOS-heartrate WatchKit Extension.entitlements"; sourceTree = "<group>"; };
 		C4E2ADBA2555C1020006E1BF /* WatchHealthKitPOC Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "WatchHealthKitPOC Extension.entitlements"; sourceTree = "<group>"; };
 		C4E2ADBC2555C1030006E1BF /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS7.0.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
 		C4E2ADCA2555C3610006E1BF /* HealthKitPOC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HealthKitPOC.entitlements; sourceTree = "<group>"; };
@@ -213,6 +216,41 @@
 			path = iOS;
 			sourceTree = "<group>";
 		};
+		C46BD4ED255B92520047C9BC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C4CD7B0E255C4B3100A706A0 /* NotificationManager.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C46BD4EE255B92580047C9BC /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C46BD4EF255B925F0047C9BC /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				C4E2AD932555B7AF0006E1BF /* InterfaceController.swift */,
+				C474C000255B99DD002F33BA /* HealthKitManager.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		C46BD4F0255B92660047C9BC /* Others */ = {
+			isa = PBXGroup;
+			children = (
+				C4E2AD9E2555B7B20006E1BF /* PushNotificationPayload.apns */,
+				C4E2AD952555B7AF0006E1BF /* ExtensionDelegate.swift */,
+				C4E2AD972555B7AF0006E1BF /* NotificationController.swift */,
+				C4E2AD992555B7AF0006E1BF /* ComplicationController.swift */,
+			);
+			path = Others;
+			sourceTree = "<group>";
+		};
 		C4E2AD832555B7AC0006E1BF /* WatchHealthKitPOC */ = {
 			isa = PBXGroup;
 			children = (
@@ -226,15 +264,13 @@
 		C4E2AD922555B7AF0006E1BF /* WatchHealthKitPOC Extension */ = {
 			isa = PBXGroup;
 			children = (
+				C46BD4F0255B92660047C9BC /* Others */,
+				C46BD4EF255B925F0047C9BC /* Controller */,
+				C46BD4EE255B92580047C9BC /* View */,
+				C46BD4ED255B92520047C9BC /* Model */,
 				C4E2ADBA2555C1020006E1BF /* WatchHealthKitPOC Extension.entitlements */,
-				C4E2ADB62555BABF0006E1BF /* watchOS-heartrate WatchKit Extension.entitlements */,
-				C4E2AD932555B7AF0006E1BF /* InterfaceController.swift */,
-				C4E2AD952555B7AF0006E1BF /* ExtensionDelegate.swift */,
-				C4E2AD972555B7AF0006E1BF /* NotificationController.swift */,
-				C4E2AD992555B7AF0006E1BF /* ComplicationController.swift */,
 				C4E2AD9B2555B7B20006E1BF /* Assets.xcassets */,
 				C4E2AD9D2555B7B20006E1BF /* Info.plist */,
-				C4E2AD9E2555B7B20006E1BF /* PushNotificationPayload.apns */,
 			);
 			path = "WatchHealthKitPOC Extension";
 			sourceTree = "<group>";
@@ -245,6 +281,14 @@
 				C4E2ADBC2555C1030006E1BF /* HealthKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C4E2ADF92555D45F0006E1BF /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				2F53042F2553389C00680A70 /* HealthKit.framework */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -394,8 +438,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4CD7B0F255C4B3100A706A0 /* NotificationManager.swift in Sources */,
 				C4E2AD982555B7AF0006E1BF /* NotificationController.swift in Sources */,
 				C4E2AD9A2555B7AF0006E1BF /* ComplicationController.swift in Sources */,
+				C474C001255B99DD002F33BA /* HealthKitManager.swift in Sources */,
 				C4E2AD962555B7AF0006E1BF /* ExtensionDelegate.swift in Sources */,
 				C4E2AD942555B7AF0006E1BF /* InterfaceController.swift in Sources */,
 			);
