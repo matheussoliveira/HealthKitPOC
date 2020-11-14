@@ -9,30 +9,31 @@
         <!--Interface Controller-->
         <scene sceneID="OpN-aT-ngB">
             <objects>
-                <controller id="3Sc-v4-Gw2" customClass="InterfaceController" customModule="WatchHealthKitPOC" customModuleProvider="target">
+                <controller id="3Sc-v4-Gw2" customClass="InterfaceController" customModule="watchOS_heartrate_WatchKit_App" customModuleProvider="target">
                     <items>
-                        <group width="1" alignment="left" layout="vertical" id="NhG-hf-SDs">
+                        <imageView width="30" height="30" alignment="left" image="heart.fill" catalog="system" contentMode="scaleAspectFit" id="xbb-QA-zE0">
+                            <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        </imageView>
+                        <group width="1" alignment="center" verticalAlignment="center" id="HBA-bo-jrt">
                             <items>
-                                <label alignment="left" text="0.0 bpm" id="lne-R0-ddR"/>
-                                <label alignment="left" text="0.0 cal" id="fVd-gB-tKk"/>
-                                <label alignment="left" text="0.0 m" id="Xqi-mc-hyK"/>
-                                <label alignment="left" text="0 passos" id="WmN-Tw-Ddc"/>
-                                <label alignment="left" text="00:00:00" id="Z5X-KY-4TJ"/>
+                                <label alignment="center" verticalAlignment="center" textAlignment="center" id="JUx-dm-sLj">
+                                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <fontDescription key="font" style="UICTFontTextStyleBody"/>
+                                </label>
+                                <label alignment="right" verticalAlignment="bottom" text="bpm" textAlignment="right" id="iH7-TH-hty">
+                                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </label>
                             </items>
-                            <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="20"/>
                         </group>
-                        <button width="1" alignment="left" title="Notificação" id="9Kg-Nh-FyO">
+                        <button width="1" alignment="center" verticalAlignment="bottom" title="Start" id="TCJ-FT-fKX">
                             <connections>
-                                <action selector="requestLocalNotification" destination="3Sc-v4-Gw2" id="dB0-ng-kcs"/>
+                                <action selector="btnTapped" destination="3Sc-v4-Gw2" id="dw8-Au-XVb"/>
                             </connections>
                         </button>
                     </items>
                     <connections>
-                        <outlet property="activeCaloriesLabel" destination="fVd-gB-tKk" id="fJW-nl-7RC"/>
-                        <outlet property="distanceLabel" destination="Xqi-mc-hyK" id="xWH-Yv-0ff"/>
-                        <outlet property="heartrateLabel" destination="lne-R0-ddR" id="Sfl-7U-PMz"/>
-                        <outlet property="stepCounter" destination="WmN-Tw-Ddc" id="dZS-YU-3mz"/>
-                        <outlet property="timerLabel" destination="Z5X-KY-4TJ" id="inE-oe-VfV"/>
+                        <outlet property="button" destination="TCJ-FT-fKX" id="Dwm-3T-TqT"/>
+                        <outlet property="label" destination="JUx-dm-sLj" id="ewu-an-5iW"/>
                     </connections>
                 </controller>
             </objects>
@@ -58,16 +59,19 @@
         <!--Notification Controller-->
         <scene sceneID="dF9-8b-ECX">
             <objects>
-                <controller id="0hb-ah-Wz7" customClass="NotificationController" customModule="WatchHealthKitPOC" customModuleProvider="target"/>
+                <controller id="0hb-ah-Wz7" customClass="NotificationController" customModule="watchOS_heartrate_WatchKit_App" customModuleProvider="target"/>
             </objects>
             <point key="canvasLocation" x="468" y="643"/>
         </scene>
         <!--Notification Controller-->
         <scene sceneID="0we-9M-nY0">
             <objects>
-                <controller id="tfC-io-v4a" customClass="NotificationController" customModule="WatchHealthKitPOC" customModuleProvider="target"/>
+                <controller id="tfC-io-v4a" customClass="NotificationController" customModule="watchOS_heartrate_WatchKit_App" customModuleProvider="target"/>
             </objects>
             <point key="canvasLocation" x="468" y="345"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="heart.fill" catalog="system" width="128" height="105"/>
+    </resources>
 </document>
