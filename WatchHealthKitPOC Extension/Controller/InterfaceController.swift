@@ -21,8 +21,8 @@ class InterfaceController: WKInterfaceController {
 	@IBOutlet weak var activeCaloriesLabel: WKInterfaceLabel!
 	@IBOutlet weak var distanceLabel: WKInterfaceLabel!
 	@IBOutlet weak var timerLabel: WKInterfaceLabel!
-    @IBOutlet weak var stepCounter: WKInterfaceLabel!
-    
+	@IBOutlet weak var stepCounter: WKInterfaceLabel!
+
 	//	MARK: - IBActions
 	@IBAction func requestLocalNotification() {
 		NotificationManager().singleNotification()
@@ -40,9 +40,9 @@ class InterfaceController: WKInterfaceController {
 	var start: Date = Date()
 	var cancellable: Cancellable?
 	var accumulatedTime: Int = 0
-    
-    let pedometer = CMPedometer()
-    var steps: Int = 0
+
+	let pedometer = CMPedometer()
+	var steps: Int = 0
 
 	//	MARK: - Life Cycle
 	override func awake(withContext context: Any?) {
@@ -54,7 +54,7 @@ class InterfaceController: WKInterfaceController {
 		startWorkout()
 	}
 
-//	MARK: - HealthKit
+	//	MARK: - HealthKit
 	// Request authorization to access HealthKit.
 	func requestAuthorization() {
 		guard HKHealthStore.isHealthDataAvailable() else {
@@ -72,22 +72,18 @@ class InterfaceController: WKInterfaceController {
 			HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
 			HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
 		]
-		requestAuthorization()
-		startWorkout()
-        
-        
-        pedometer.startUpdates(from: Date()) { (data, error) in
-            self.stepCounter.setText("\(data?.numberOfSteps ?? 0) passos")
-//            self.steps = Int(data?.numberOfSteps ?? 0)
-        }
-	}
+
+		pedometer.startUpdates(from: Date()) { (data, error) in
+			self.stepCounter.setText("\(data?.numberOfSteps ?? 0) passos")
+			//            self.steps = Int(data?.numberOfSteps ?? 0)
+		}
 
 		healthStore.requestAuthorization(toShare: typesToShare, read: typesToRead) { (success, error) in
 			print(error.debugDescription)
 		}
 	}
 
-//	MARK: - Timer
+	//	MARK: - Timer
 	func setUpTimer() {
 		start = Date()
 		cancellable = Timer.publish(every: 0.1, on: .main, in: .default)
@@ -215,7 +211,7 @@ extension InterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDel
 		activeCaloriesLabel.setText("\(activeCalories) cal")
 		distanceLabel.setText("\(distance) m")
 		timerLabel.setText(secondsToHoursMinutesSeconds(seconds: elapsedSeconds))
-//        stepCounter.setText("\(steps) passos")
+		//        stepCounter.setText("\(steps) passos")
 	}
 
 	func workoutSession(_ workoutSession: HKWorkoutSession, didFailWithError error: Error) { }
