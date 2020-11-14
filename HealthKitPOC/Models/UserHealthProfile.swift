@@ -16,4 +16,5 @@ class UserHealthProfile {
     var height: Double?
     var weight: Double?
     var bodyMassIndex: Double?
+    var lastnightSleepDuration: String?
 }

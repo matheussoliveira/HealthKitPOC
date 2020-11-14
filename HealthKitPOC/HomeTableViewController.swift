@@ -13,7 +13,20 @@ import CoreMotion
     
 class HomeTableViewController: UITableViewController {
 
-//	MARK: - IBOutlets
+private enum ProfileDataError: Error {
+  
+    case missingBodyMassIndex
+  
+    var localizedDescription: String {
+        switch self {
+            case .missingBodyMassIndex:
+            return "Unable to calculate body mass index with available profile data."
+        }
+    }
+}
+
+class HomeTableViewController: UITableViewController, WCSessionDelegate, UNUserNotificationCenterDelegate {
+    
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var userAge: UILabel!
     @IBOutlet weak var userBloodType: UILabel!
@@ -21,10 +34,18 @@ class HomeTableViewController: UITableViewController {
     @IBOutlet weak var userBiologicalSex: UILabel!
     @IBOutlet weak var userWeight: UILabel!
     @IBOutlet weak var userBodyMassIndex: UILabel!
+    @IBOutlet weak var sleep: UILabel!
+    
+    private let userHealthProfile: UserHealthProfile = UserHealthProfile()
+    
+    let name = "Matheus Oliveira"
+    
+    let healthKitManager = HealthKitManager()
+    
+	var wcSession : WCSession! = nil
 
-//	MARK: - IBActions
-	@IBAction func notificationAction(_ sender: Any) {
-		sendSimpleNotification()
+	func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+
 	}
 
 //	MARK: - Variables
@@ -48,7 +69,31 @@ class HomeTableViewController: UITableViewController {
 		loadAndDisplayMostRecentHeight()
 		loadAndDisplayMostRecentBMI()
 
-		// Setup WatchConnectivity
+		// Add Trigger
+		let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 1.0, repeats: false)
+
+		// Create Notification Request
+		let request = UNNotificationRequest(identifier: "app.likedislike.ios10",
+											content: notificationContent, trigger: notificationTrigger)
+		UNUserNotificationCenter.current().add(request, withCompletionHandler: { (error) in
+			if let error = error {
+				print("Error \(error)")
+				// Something went wrong
+			}
+		})
+	}
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        userName.text = name
+        self.healthKitManager.delegate = self
+        healthKitManager.querryAgeSexAndBloodType()
+        healthKitManager.querryHeight()
+        healthKitManager.querryWeight()
+        healthKitManager.querrySleepIformation()
+        healthKitManager.querryBodyMassIndex()
+        requestHKAutorization()
 		wcSession = WCSession.default
 		wcSession.delegate = self
 		wcSession.activate()
@@ -71,153 +116,69 @@ class HomeTableViewController: UITableViewController {
         }
 	}
     
-    private func loadAndDisplayAgeSexAndBloodType() {
-        
-        do {
-            let userAgeSexAndBloodType = try ProfileDataStore.getAgeSexAndBloodType()
-            userHealthProfile.age = userAgeSexAndBloodType.age
-            userHealthProfile.biologicalSex = userAgeSexAndBloodType.biologicalSex
-            userHealthProfile.bloodType = userAgeSexAndBloodType.bloodType
-            updateLabels()
-        } catch let error {
-            self.displayAlert(for: error)
-        }
-    }
-    
-    private func loadAndDisplayMostRecentHeight() {
-        
-        guard let heightSampleType = HKSampleType.quantityType(forIdentifier: .height) else {
-            print("Height Sample Type is no longer available in HealthKit")
-            return
-        }
-            
-        ProfileDataStore.getMostRecentSample(for: heightSampleType) { (sample, error) in
-              
-            guard let sample = sample else {
-                
-                if let error = error {
-                    self.displayAlert(for: error)
-                }
-                
-                return
-            }
-              
-            let heightInMeters = sample.quantity.doubleValue(for: HKUnit.meter())
-            self.userHealthProfile.height = heightInMeters
-            self.updateLabels()
-        }
-    }
-    
-    private func loadAndDisplayMostRecentWeight() {
-        
-        guard let weightSampleType = HKSampleType.quantityType(forIdentifier: .bodyMass) else {
-            print("Body Mass Sample Type is no longer available in HealthKit")
-            return
-        }
-            
-        ProfileDataStore.getMostRecentSample(for: weightSampleType) { (sample, error) in
-              
-            guard let sample = sample else {
-                
-                if let error = error {
-                    self.displayAlert(for: error)
-                }
-                return
-            }
-              
-            let weightInKilograms = sample.quantity.doubleValue(for: HKUnit.gramUnit(with: .kilo))
-            self.userHealthProfile.weight = weightInKilograms
-            self.updateLabels()
-        }
-    }
-    
-    private func loadAndDisplayMostRecentBMI() {
-        guard let bmiSampleType = HKSampleType.quantityType(forIdentifier: .bodyMassIndex) else {
-            print("Body mass is not available")
-            return
-        }
-        
-        ProfileDataStore.getMostRecentSample(for: bmiSampleType) { (sample, error) in
-            guard let sample = sample else {
-                if let error = error {
-                    self.displayAlert(for: error)
-                }
-                return
-            }
-            let bodyMassIndex = sample.quantity.doubleValue(for: HKUnit.count())
-            self.userHealthProfile.bodyMassIndex = bodyMassIndex
-            self.updateLabels()
-            
-        }
-    }
-    
     // MARK: - Update labels
-    private func updateLabels() {
-        
-        if let age = userHealthProfile.age {
-          userAge.text = "\(age)"
+    
+    private func formatAndDisplayHeight(height: Double) {
+        let heightFormatter = LengthFormatter()
+        heightFormatter.isForPersonHeightUse = true
+        userHeight.text = heightFormatter.string(for: height)
+    }
+    
+    private func formatAndDisplayWeight(weight: Double) {
+        let weightFormatter = MassFormatter()
+        weightFormatter.isForPersonMassUse = true
+        userWeight.text = weightFormatter.string(for: weight)
+    }
+    
+    private func formatAndDisplayBMI(bodyMassIndex: Double) {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = NumberFormatter.Style.decimal
+        numberFormatter.roundingMode = NumberFormatter.RoundingMode.halfUp
+        numberFormatter.maximumFractionDigits = 2
+        userBodyMassIndex.text = numberFormatter.string(from: NSNumber(value: bodyMassIndex))
+    }
+    
+    // MARK: - Calculate BMI
+    @IBAction func calculateBMI(_ sender: Any) {
+        guard let bodyMassIndex = userHealthProfile.bodyMassIndex else {
+          displayAlert(for: ProfileDataError.missingBodyMassIndex)
+          return
         }
-
-        if let biologicalSex = userHealthProfile.biologicalSex {
-            userBiologicalSex.text = biologicalSex.stringRepresentation
-        }
-
-        if let bloodType = userHealthProfile.bloodType {
-            userBloodType.text = bloodType.stringRepresentation
-        }
-        
-        if let height = userHealthProfile.height {
-            let heightFormatter = LengthFormatter()
-            userHeight.text = heightFormatter.string(for: height)
-        }
-        
-        if let weight = userHealthProfile.weight {
-            let weightFormatter = MassFormatter()
-            weightFormatter.isForPersonMassUse = true
-            userWeight.text = weightFormatter.string(for: weight)
-        }
-        
-        if let bodyMassIndex = userHealthProfile.bodyMassIndex {
-            let numberFormatter = NumberFormatter()
-            numberFormatter.numberStyle = NumberFormatter.Style.decimal
-            numberFormatter.roundingMode = NumberFormatter.RoundingMode.halfUp
-            numberFormatter.maximumFractionDigits = 2
-            userBodyMassIndex.text = numberFormatter.string(from: NSNumber(value: bodyMassIndex))
-        }
-        
-        userName.text = name
+            
+        ProfileDataStore.saveBodyMassIndexSample(bodyMassIndex: bodyMassIndex,
+                                                 date: Date())
     }
     
     // MARK: - HealthKit authorization
     private func requestHKAutorization() {
-        
         HealthKitSetupAssistant.authorizeHealthKit { (authorized, error) in
               
-          guard authorized else {
+        guard authorized else {
                 
             let baseMessage = "HealthKit authorization failed"
                 
             if let error = error {
-              print("\(baseMessage). Reason: \(error.localizedDescription)")
+                print("\(baseMessage). Reason: \(error.localizedDescription)")
             } else {
-              print(baseMessage)
+                print(baseMessage)
             }
                 
             return
           }
               
-          print("HealthKit Successfully Authorized.")
+        print("HealthKit Successfully Authorized.")
+            
         }
     }
     
     // MARK: - Display alerts
+    
     private func displayAlert(for error: Error) {
-      
       let alert = UIAlertController(title: nil,
                                     message: error.localizedDescription,
                                     preferredStyle: .alert)
       
-      alert.addAction(UIAlertAction(title: "O.K.",
+      alert.addAction(UIAlertAction(title: "Ok",
                                     style: .default,
                                     handler: nil))
       
@@ -278,4 +239,38 @@ extension HomeTableViewController: UNUserNotificationCenterDelegate {
 	}
 }
 
-
+extension HomeTableViewController: HealthKitManagerDelegate {
+    
+    func displayError(error: Error) {
+        self.displayAlert(for: error)
+    }
+    
+    func getAgeSexAndBloodType(age: Int, biologicalSex: HKBiologicalSex, bloodType: HKBloodType) {
+        self.userHealthProfile.age = age
+        self.userHealthProfile.biologicalSex = biologicalSex
+        self.userHealthProfile.bloodType = bloodType
+        userAge.text = "\(age) anos"
+        userBiologicalSex.text = biologicalSex.stringRepresentation
+        userBloodType.text = bloodType.stringRepresentation
+    }
+    
+    func getHeight(height: Double) {
+        self.userHealthProfile.height = height
+        self.formatAndDisplayHeight(height: height)
+    }
+    
+    func getWeight(weight: Double) {
+        self.userHealthProfile.weight = weight
+        formatAndDisplayWeight(weight: weight)
+    }
+    
+    func getBodyMassIndex(bodyMassIndex: Double) {
+        self.userHealthProfile.bodyMassIndex = bodyMassIndex
+        self.formatAndDisplayBMI(bodyMassIndex: bodyMassIndex)
+    }
+    
+    func getSleepInformation(sleepInformation: String) {
+        self.userHealthProfile.lastnightSleepDuration = sleepInformation
+        sleep.text = sleepInformation
+    }
+}
