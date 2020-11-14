@@ -92,6 +92,8 @@ iOSInjectionProject/
 
 
 .DS_Store
+.AppleDouble
+.LSOverride
 
 ## Gcc Patch
 /*.gcno
