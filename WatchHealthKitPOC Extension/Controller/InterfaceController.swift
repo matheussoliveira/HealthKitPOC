@@ -13,6 +13,7 @@ import WatchConnectivity
 import Foundation
 import HealthKit
 import Combine
+import CoreMotion
 
 class InterfaceController: WKInterfaceController {
 	//	MARK: - IBOutlets
@@ -20,7 +21,8 @@ class InterfaceController: WKInterfaceController {
 	@IBOutlet weak var activeCaloriesLabel: WKInterfaceLabel!
 	@IBOutlet weak var distanceLabel: WKInterfaceLabel!
 	@IBOutlet weak var timerLabel: WKInterfaceLabel!
-
+    @IBOutlet weak var stepCounter: WKInterfaceLabel!
+    
 	//	MARK: - IBActions
 	@IBAction func requestLocalNotification() {
 		NotificationManager().singleNotification()
@@ -38,6 +40,9 @@ class InterfaceController: WKInterfaceController {
 	var start: Date = Date()
 	var cancellable: Cancellable?
 	var accumulatedTime: Int = 0
+    
+    let pedometer = CMPedometer()
+    var steps: Int = 0
 
 	//	MARK: - Life Cycle
 	override func awake(withContext context: Any?) {
@@ -67,6 +72,15 @@ class InterfaceController: WKInterfaceController {
 			HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
 			HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
 		]
+		requestAuthorization()
+		startWorkout()
+        
+        
+        pedometer.startUpdates(from: Date()) { (data, error) in
+            self.stepCounter.setText("\(data?.numberOfSteps ?? 0) passos")
+//            self.steps = Int(data?.numberOfSteps ?? 0)
+        }
+	}
 
 		healthStore.requestAuthorization(toShare: typesToShare, read: typesToRead) { (success, error) in
 			print(error.debugDescription)
@@ -201,6 +215,7 @@ extension InterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDel
 		activeCaloriesLabel.setText("\(activeCalories) cal")
 		distanceLabel.setText("\(distance) m")
 		timerLabel.setText(secondsToHoursMinutesSeconds(seconds: elapsedSeconds))
+//        stepCounter.setText("\(steps) passos")
 	}
 
 	func workoutSession(_ workoutSession: HKWorkoutSession, didFailWithError error: Error) { }

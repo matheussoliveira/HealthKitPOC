@@ -9,6 +9,7 @@ import UIKit
 import HealthKit
 import UserNotifications
 import WatchConnectivity
+import CoreMotion
     
 class HomeTableViewController: UITableViewController {
 
@@ -31,6 +32,9 @@ class HomeTableViewController: UITableViewController {
     private let userHealthProfile: UserHealthProfile = UserHealthProfile()
 
     let name = "Matheus Oliveira"
+    
+    
+    let pedometer = CMPedometer()
 
 	var wcSession : WCSession! = nil
 
@@ -52,6 +56,19 @@ class HomeTableViewController: UITableViewController {
 		// Setup Notifictions
 		UNUserNotificationCenter.current().delegate = self
 		authorizeNotification()
+        
+//        if CMPedometer.isStepCountingAvailable() {
+//            let calendar = Calendar.current
+//            pedometer.queryPedometerData(from: calendar.startOfDay(for: Date()), to: Date()) { (data, error) in
+//                print(data)
+//            }
+//        }
+        
+
+        pedometer.startUpdates(from: Date()) { (data, error) in
+//            print(data)
+            self.userName.text = "\(data?.numberOfSteps ?? 0)"
+        }
 	}
     
     private func loadAndDisplayAgeSexAndBloodType() {
