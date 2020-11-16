@@ -57,19 +57,17 @@ class HomeTableViewController: UITableViewController {
 		UNUserNotificationCenter.current().delegate = self
 		authorizeNotification()
         
-//        if CMPedometer.isStepCountingAvailable() {
-//            let calendar = Calendar.current
-//            pedometer.queryPedometerData(from: calendar.startOfDay(for: Date()), to: Date()) { (data, error) in
-//                print(data)
-//            }
-//        }
-        
-
-        pedometer.startUpdates(from: Date()) { (data, error) in
-//            print(data)
-            self.userName.text = "\(data?.numberOfSteps ?? 0)"
-        }
+        startPedometer()
 	}
+    
+    
+    private func startPedometer() {
+        pedometer.startUpdates(from: Date()) { (data, error) in
+            DispatchQueue.main.async {
+                self.userName.text = "\(data?.numberOfSteps ?? 0)"
+            }
+        }
+    }
     
     private func loadAndDisplayAgeSexAndBloodType() {
         
