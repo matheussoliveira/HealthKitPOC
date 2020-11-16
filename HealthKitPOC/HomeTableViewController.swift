@@ -9,6 +9,7 @@ import UIKit
 import HealthKit
 import UserNotifications
 import WatchConnectivity
+import CoreMotion
 
 private enum ProfileDataError: Error {
   
@@ -38,6 +39,8 @@ class HomeTableViewController: UITableViewController, WCSessionDelegate, UNUserN
     let name = "Matheus Oliveira"
     
     let healthKitManager = HealthKitManager()
+    
+    let pedometer = CMPedometer()
     
 	var wcSession : WCSession! = nil
 
@@ -96,6 +99,7 @@ class HomeTableViewController: UITableViewController, WCSessionDelegate, UNUserN
 		UNUserNotificationCenter.current().delegate = self
 
 		authorizeNotification()
+        startPedometer()
     }
 
 	func authorizeNotification() {
@@ -106,9 +110,6 @@ class HomeTableViewController: UITableViewController, WCSessionDelegate, UNUserN
 				print("Permission Granted")
 			}
 		}
-	}
-        
-        startPedometer()
 	}
     
     
