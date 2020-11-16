@@ -107,6 +107,18 @@ class HomeTableViewController: UITableViewController, WCSessionDelegate, UNUserN
 			}
 		}
 	}
+        
+        startPedometer()
+	}
+    
+    
+    private func startPedometer() {
+        pedometer.startUpdates(from: Date()) { (data, error) in
+            DispatchQueue.main.async {
+                self.userName.text = "\(data?.numberOfSteps ?? 0)"
+            }
+        }
+    }
     
     // MARK: - Update labels
     
