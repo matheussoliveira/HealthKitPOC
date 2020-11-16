@@ -4,7 +4,9 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -299,9 +301,14 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Home" id="u1C-rH-1GC">
-                        <barButtonItem key="rightBarButtonItem" title="Calcular IMC" id="FZM-At-Yeh">
+                        <barButtonItem key="leftBarButtonItem" title="Calcular IMC" id="FZM-At-Yeh">
                             <connections>
                                 <action selector="calculateBMI:" destination="f78-LP-Y8W" id="FNO-4L-Gr8"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="🏃‍♂️" id="wTk-9h-0yD">
+                            <connections>
+                                <segue destination="FDL-sE-8TV" kind="show" id="X2e-z7-vfu"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -319,6 +326,56 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kkS-aT-r4I" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1650.7246376811595" y="87.723214285714278"/>
+        </scene>
+        <!--Pedometer View Controller-->
+        <scene sceneID="ebf-QW-z2T">
+            <objects>
+                <viewController id="FDL-sE-8TV" customClass="PedometerViewController" customModule="HealthKitPOC" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="OSN-gJ-7IL">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="🏃‍♂️" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9VJ-UF-hZX">
+                                <rect key="frame" x="16" y="104" width="382" height="63"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="52"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kyp-85-HbS">
+                                <rect key="frame" x="16" y="183" width="382" height="62.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="52"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="passos" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mfJ-rG-qcl">
+                                <rect key="frame" x="16" y="245.5" width="382" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="jZp-9m-3V2"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="jZp-9m-3V2" firstAttribute="trailing" secondItem="mfJ-rG-qcl" secondAttribute="trailing" constant="16" id="F8c-HD-fpI"/>
+                            <constraint firstItem="Kyp-85-HbS" firstAttribute="top" secondItem="9VJ-UF-hZX" secondAttribute="bottom" constant="16" id="FVf-QR-2Op"/>
+                            <constraint firstItem="mfJ-rG-qcl" firstAttribute="leading" secondItem="jZp-9m-3V2" secondAttribute="leading" constant="16" id="LSD-yJ-ggC"/>
+                            <constraint firstItem="9VJ-UF-hZX" firstAttribute="leading" secondItem="jZp-9m-3V2" secondAttribute="leading" constant="16" id="RPP-U9-zbz"/>
+                            <constraint firstItem="jZp-9m-3V2" firstAttribute="trailing" secondItem="9VJ-UF-hZX" secondAttribute="trailing" constant="16" id="Sbs-eV-mKp"/>
+                            <constraint firstItem="9VJ-UF-hZX" firstAttribute="top" secondItem="jZp-9m-3V2" secondAttribute="top" constant="16" id="Vxc-nB-R0A"/>
+                            <constraint firstItem="jZp-9m-3V2" firstAttribute="trailing" secondItem="Kyp-85-HbS" secondAttribute="trailing" constant="16" id="ZdW-m3-BIy"/>
+                            <constraint firstItem="Kyp-85-HbS" firstAttribute="leading" secondItem="jZp-9m-3V2" secondAttribute="leading" constant="16" id="ajN-AD-5OP"/>
+                            <constraint firstItem="mfJ-rG-qcl" firstAttribute="top" secondItem="Kyp-85-HbS" secondAttribute="bottom" id="qTc-8p-n0W"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="zWi-X1-tXE"/>
+                    <connections>
+                        <outlet property="stepCounter" destination="Kyp-85-HbS" id="StT-0f-m42"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Tvf-xD-suN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2475" y="88"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="mQo-Rg-pIk">
@@ -339,4 +396,9 @@
             <point key="canvasLocation" x="740.57971014492762" y="87.723214285714278"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>
