@@ -23,24 +23,14 @@ class InterfaceController: WKInterfaceController {
 	@IBOutlet weak var timerLabel: WKInterfaceLabel!
 	@IBOutlet weak var stepCounter: WKInterfaceLabel!
 	@IBOutlet weak var backgroundGroup: WKInterfaceGroup!
+	@IBOutlet weak var mensureLabel: WKInterfaceLabel!
 
 	//	MARK: - IBActions
 	@IBAction func startWorkoutAction() {
 
-		let duration = 1.10
-		let delay = DispatchTime.now() + Double(Int64((duration + 0.15) * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
-
-		backgroundGroup.setBackgroundImageNamed("Progress")
-		backgroundGroup.startAnimatingWithImages(in: NSRange(location: 0, length: 11),
-												 duration: duration,
-												 repeatCount: 1)
-
-		DispatchQueue.main.asyncAfter(deadline: delay) { [weak self] in
-			self?.dismiss()
-		}
-
+		distanceLabel.setText("0.0")
+		mensureLabel.setText("metros")
 		startWorkout()
-		backgroundGroup.
 	}
 
 	//	MARK: - Variables
@@ -65,8 +55,8 @@ class InterfaceController: WKInterfaceController {
 
 		requestAuthorization()
 
-		distanceLabel.setText("")
-
+		distanceLabel.setText("Começar")
+		mensureLabel.setText("")
 	}
 
 	//	MARK: - HealthKit
@@ -120,6 +110,9 @@ class InterfaceController: WKInterfaceController {
 		let seconds = String(format: "%02d", (seconds % 3600) % 60)
 		return hours + ":" + minuts + ":" + seconds
 	}
+
+//	MARK: - Ring Manager
+
 }
 
 // MERK: - Workout Manager
@@ -225,7 +218,21 @@ extension InterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDel
 		activeCaloriesLabel.setText("\(activeCalories) cal")
 		distanceLabel.setText("\(distance)")
 		timerLabel.setText(secondsToHoursMinutesSeconds(seconds: elapsedSeconds))
-		//        stepCounter.setText("\(steps) passos")
+
+		let currentProgress = Int((distance / 30)*10)
+		print("Progress\(currentProgress)")
+
+
+		if(currentProgress >= 10) {
+			backgroundGroup.setBackgroundImageNamed("Progress10")
+			endWorkout()
+			session.end()
+			mensureLabel.setText("Parabéns!")
+			distanceLabel.setText("✓")
+		}
+		else {
+			backgroundGroup.setBackgroundImageNamed("Progress\(currentProgress)")
+		}
 	}
 
 	func workoutSession(_ workoutSession: HKWorkoutSession, didFailWithError error: Error) { }
