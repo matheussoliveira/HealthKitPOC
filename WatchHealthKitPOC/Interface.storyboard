@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="17156" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="3Sc-v4-Gw2">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="17156" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oLJ-16-NFj">
     <device id="watch38"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
@@ -11,20 +11,19 @@
             <objects>
                 <controller id="3Sc-v4-Gw2" customClass="InterfaceController" customModule="WatchHealthKitPOC" customModuleProvider="target">
                     <items>
-                        <group width="100" height="100" alignment="center" backgroundImage="Progress0" contentMode="center" layout="vertical" id="3uf-vM-Cg7">
+                        <group width="130" height="135" alignment="center" backgroundImage="Progress0" contentMode="center" layout="vertical" spacing="0.0" id="3uf-vM-Cg7">
                             <items>
                                 <button alignment="center" verticalAlignment="center" id="xLt-Mv-7Kk">
-                                    <group key="contentGroup" width="60" height="60" alignment="left" layout="vertical" radius="30" spacing="0.0" id="a7N-lC-Lxf">
+                                    <group key="contentGroup" width="60" height="60" alignment="left" layout="vertical" radius="40" spacing="0.0" id="a7N-lC-Lxf">
                                         <items>
-                                            <label height="20" alignment="center" verticalAlignment="center" text="90" textAlignment="center" baselineAdjustment="alignCenters" id="Zha-uO-qHR">
-                                                <fontDescription key="font" type="system" weight="semibold" pointSize="20"/>
+                                            <label height="20" alignment="center" verticalAlignment="center" text="90" textAlignment="center" baselineAdjustment="alignCenters" minimumScaleFactor="0.5" id="Zha-uO-qHR">
+                                                <fontDescription key="font" type="system" weight="semibold" pointSize="25"/>
                                             </label>
                                             <label height="10" alignment="center" verticalAlignment="center" text="metros" textAlignment="center" baselineAdjustment="alignCenters" id="ZoP-qQ-439">
-                                                <fontDescription key="font" type="system" weight="semibold" pointSize="10"/>
+                                                <fontDescription key="font" type="system" weight="semibold" pointSize="9"/>
                                             </label>
                                         </items>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
                                     </group>
                                     <connections>
                                         <action selector="teste" destination="3Sc-v4-Gw2" id="KbJ-Tu-lc7"/>
@@ -35,13 +34,12 @@
                         <label alignment="center" text="meta: 300m" id="d37-cF-NSg">
                             <fontDescription key="font" type="system" pointSize="12"/>
                         </label>
-                        <group width="1" widthAdjustment="-2" alignment="center" id="eH5-5b-Pmg">
+                        <group width="1" alignment="center" id="eH5-5b-Pmg">
                             <items>
-                                <imageView width="20.5" height="20" alignment="right" image="heart" id="CoC-ng-3vb"/>
-                                <label alignment="right" verticalAlignment="center" text="---" id="lne-R0-ddR">
+                                <imageView height="1" heightAdjustment="-6" alignment="right" verticalAlignment="center" image="heart" contentMode="scaleAspectFit" id="CoC-ng-3vb"/>
+                                <label width="40" alignment="right" verticalAlignment="center" text="-----" textAlignment="left" id="lne-R0-ddR">
                                     <fontDescription key="font" type="system" pointSize="14"/>
                                 </label>
-                                <group width="20" height="20" alignment="left" backgroundImage="heart" id="UdF-D4-NIr"/>
                                 <label alignment="left" verticalAlignment="center" text="00:00:00" id="Z5X-KY-4TJ">
                                     <fontDescription key="font" type="system" pointSize="14"/>
                                 </label>
@@ -70,7 +68,24 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="220" y="216"/>
+            <point key="canvasLocation" x="478" y="235"/>
+        </scene>
+        <!--Interface Controller-->
+        <scene sceneID="JGj-VN-PQV">
+            <objects>
+                <controller id="oLJ-16-NFj">
+                    <items>
+                        <button width="1" alignment="left" title="300m" id="BVm-Gj-Syk">
+                            <connections>
+                                <segue destination="3Sc-v4-Gw2" kind="push" id="iKN-5c-6Nu"/>
+                            </connections>
+                        </button>
+                        <button width="1" alignment="left" title="300 passos" id="oLN-1S-d2g"/>
+                        <button width="1" alignment="left" title="Notificação" id="LWk-Ig-fEM"/>
+                    </items>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="220" y="171"/>
         </scene>
         <!--Static Notification Interface Controller-->
         <scene sceneID="3d5-gd-ogv">
@@ -103,55 +118,9 @@
             </objects>
             <point key="canvasLocation" x="468" y="1032"/>
         </scene>
-        <!--CheckIn-->
-        <scene sceneID="KM8-Uf-EYX">
-            <objects>
-                <controller identifier="CheckIn" id="0Qu-dk-K3S" customClass="CheckInInterfaceController" customModule="Watch_Extension">
-                    <items>
-                        <group width="1" height="1" alignment="center" contentMode="center" layout="vertical" id="KbT-K5-Uyx">
-                            <items>
-                                <group height="30" alignment="center" spacing="4" id="Vaz-6D-0ow">
-                                    <items>
-                                        <label alignment="left" verticalAlignment="center" text="MEL" id="0Pm-t6-ER8">
-                                            <fontDescription key="font" type="system" weight="semibold" pointSize="20"/>
-                                        </label>
-                                        <imageView width="24" height="20" alignment="left" verticalAlignment="center" image="Plane" id="vbk-PG-xfv">
-                                            <color key="tintColor" red="0.98039215690000003" green="0.066666666669999999" blue="0.30980392159999998" alpha="1" colorSpace="calibratedRGB"/>
-                                        </imageView>
-                                        <label alignment="right" verticalAlignment="center" text="SFO" id="MN0-48-5VX">
-                                            <fontDescription key="font" type="system" weight="semibold" pointSize="20"/>
-                                        </label>
-                                    </items>
-                                </group>
-                                <button alignment="center" verticalAlignment="center" id="mqo-Ka-3mB">
-                                    <group key="contentGroup" width="78" height="78" alignment="left" radius="39" id="KLn-Rh-lh2">
-                                        <items>
-                                            <label alignment="center" verticalAlignment="center" text="Check In" id="8MF-1W-fO5">
-                                                <fontDescription key="font" type="system" weight="semibold" pointSize="16"/>
-                                            </label>
-                                        </items>
-                                        <color key="backgroundColor" red="0.98039215690000003" green="0.066666666669999999" blue="0.30980392159999998" alpha="1" colorSpace="calibratedRGB"/>
-                                    </group>
-                                    <connections>
-                                        <action selector="checkInButtonTapped" destination="0Qu-dk-K3S" id="vk0-1b-VDn"/>
-                                    </connections>
-                                </button>
-                            </items>
-                        </group>
-                    </items>
-                    <connections>
-                        <outlet property="backgroundGroup" destination="KbT-K5-Uyx" id="IRp-Ql-M8m"/>
-                        <outlet property="destinationLabel" destination="MN0-48-5VX" id="w8V-Ay-mQ5"/>
-                        <outlet property="originLabel" destination="0Pm-t6-ER8" id="j7r-ab-iW6"/>
-                    </connections>
-                </controller>
-            </objects>
-            <point key="canvasLocation" x="468" y="345"/>
-        </scene>
     </scenes>
     <resources>
-        <image name="Plane" width="30" height="25"/>
-        <image name="Progress0" width="92" height="92"/>
+        <image name="Progress0" width="125" height="125"/>
         <image name="heart" width="22" height="19"/>
     </resources>
 </document>

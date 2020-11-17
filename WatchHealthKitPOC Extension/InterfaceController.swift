@@ -22,12 +22,27 @@ class InterfaceController: WKInterfaceController {
 	@IBOutlet weak var distanceLabel: WKInterfaceLabel!
 	@IBOutlet weak var timerLabel: WKInterfaceLabel!
 	@IBOutlet weak var stepCounter: WKInterfaceLabel!
-
+	@IBOutlet weak var backgroundGroup: WKInterfaceGroup!
+	
 	//	MARK: - IBActions
 	@IBAction func requestLocalNotification() {
 		NotificationManager().singleNotification()
 	}
 
+	@IBAction func teste() {
+
+		let duration = 1.10
+		let delay = DispatchTime.now() + Double(Int64((duration + 0.15) * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+
+		backgroundGroup.setBackgroundImageNamed("Progress")
+		backgroundGroup.startAnimatingWithImages(in: NSRange(location: 0, length: 11),
+												 duration: duration,
+												 repeatCount: 1)
+
+		DispatchQueue.main.asyncAfter(deadline: delay) { [weak self] in
+			self?.dismiss()
+		}
+	}
 	//	MARK: - Variables
 	let healthStore = HKHealthStore()
 	var session: HKWorkoutSession!
@@ -52,6 +67,8 @@ class InterfaceController: WKInterfaceController {
 
 		requestAuthorization()
 		startWorkout()
+
+		backgroundGroup.setBackgroundImageNamed("Progress")
 	}
 
 	//	MARK: - HealthKit
@@ -105,26 +122,6 @@ class InterfaceController: WKInterfaceController {
 		let minuts = String(format: "%02d", (seconds % 3600) / 60)
 		let seconds = String(format: "%02d", (seconds % 3600) % 60)
 		return hours + ":" + minuts + ":" + seconds
-	}
-
-	@IBOutlet weak var backgroundGroup: WKInterfaceGroup!
-	@IBOutlet weak var currentProgressLabel: WKInterfaceLabel!
-
-	@IBAction func teste() {
-//		currentProgressLabel.setText("90\nmetros")
-
-		let duration = 0.35
-		let delay = DispatchTime.now() + Double(Int64((duration + 0.15) * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
-
-		backgroundGroup.setBackgroundImageNamed("Progress")
-		backgroundGroup.startAnimatingWithImages(in: NSRange(location: 0, length: 10),
-												 duration: duration,
-												 repeatCount: 1)
-
-		DispatchQueue.main.asyncAfter(deadline: delay) { [weak self] in
-			//      self?.flight?.checkedIn = true
-			self?.dismiss()
-		}
 	}
 }
 
