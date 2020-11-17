@@ -11,12 +11,17 @@ import CoreMotion
 class PedometerViewController: UIViewController {
 
     @IBOutlet weak var stepCounter: UILabel!
+    @IBOutlet weak var button: UIButton!
+    @IBOutlet weak var timerLabel: UILabel!
     
     let pedometer = CMPedometer()
     var backgroundMode: Bool = false
+    var didPressedStart: Bool = false
+    var startDate: Date = Date()
+    var timer: Timer = Timer()
     var counter: Int = 0 {
         didSet {
-            if !backgroundMode {
+            if backgroundMode == false {
                 DispatchQueue.main.async {
                     self.stepCounter.text = String(self.counter)
                 }
@@ -47,11 +52,6 @@ class PedometerViewController: UIViewController {
     }
     
     private func startPedometer() {
-        DispatchQueue.background {
-            self.pedometer.startUpdates(from: Date()) { (data, error) in
-                self.counter = Int(truncating: data?.numberOfSteps ?? 0)
-            }
-        }
     }
     
     @objc func didEnterBackground() {
@@ -61,6 +61,41 @@ class PedometerViewController: UIViewController {
     @objc func didResumeApp() {
         self.backgroundMode = false
     }
+    
+    @IBAction func startButton(_ sender: Any) {
+        
+        self.didPressedStart = !self.didPressedStart
+        
+        if didPressedStart {
+            self.button.setTitle("Parar", for: .normal)
+            self.startDate = Date()
+            self.timer = Timer.scheduledTimer(timeInterval: 1.0,
+                                              target: self,
+                                              selector: #selector(updateTimerLabel),
+                                              userInfo: nil,
+                                              repeats: true)
+            DispatchQueue.background {
+                self.pedometer.startUpdates(from: self.startDate) { (data, error) in
+                    self.counter = Int(truncating: data?.numberOfSteps ?? 0)
+                }
+            }
+        }
+        else {
+            self.button.setTitle("Iniciar", for: .normal)
+            self.timer.invalidate()
+            self.pedometer.stopUpdates()
+        }
+    }
+    
+    @objc func updateTimerLabel() {
+        let interval = -Int(startDate.timeIntervalSinceNow)
+        let hours = interval / 3600
+        let minutes = interval / 60 % 60
+        let seconds = interval % 60
+
+        timerLabel.text = String(format:"%02i:%02i:%02i", hours, minutes, seconds)
+    }
+    
 }
 
 extension DispatchQueue {
