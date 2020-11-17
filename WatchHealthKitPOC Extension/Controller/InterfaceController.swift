@@ -23,13 +23,9 @@ class InterfaceController: WKInterfaceController {
 	@IBOutlet weak var timerLabel: WKInterfaceLabel!
 	@IBOutlet weak var stepCounter: WKInterfaceLabel!
 	@IBOutlet weak var backgroundGroup: WKInterfaceGroup!
-	
-	//	MARK: - IBActions
-	@IBAction func requestLocalNotification() {
-		NotificationManager().singleNotification()
-	}
 
-	@IBAction func teste() {
+	//	MARK: - IBActions
+	@IBAction func startWorkoutAction() {
 
 		let duration = 1.10
 		let delay = DispatchTime.now() + Double(Int64((duration + 0.15) * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
@@ -42,7 +38,11 @@ class InterfaceController: WKInterfaceController {
 		DispatchQueue.main.asyncAfter(deadline: delay) { [weak self] in
 			self?.dismiss()
 		}
+
+		startWorkout()
+		backgroundGroup.
 	}
+
 	//	MARK: - Variables
 	let healthStore = HKHealthStore()
 	var session: HKWorkoutSession!
@@ -63,12 +63,10 @@ class InterfaceController: WKInterfaceController {
 	override func awake(withContext context: Any?) {
 		super.awake(withContext: context)
 
-		NotificationManager().setupNotifications()
-
 		requestAuthorization()
-		startWorkout()
 
-		backgroundGroup.setBackgroundImageNamed("Progress")
+		distanceLabel.setText("")
+
 	}
 
 	//	MARK: - HealthKit
@@ -92,7 +90,6 @@ class InterfaceController: WKInterfaceController {
 
 		pedometer.startUpdates(from: Date()) { (data, error) in
 			self.stepCounter.setText("\(data?.numberOfSteps ?? 0) passos")
-			//            self.steps = Int(data?.numberOfSteps ?? 0)
 		}
 
 		healthStore.requestAuthorization(toShare: typesToShare, read: typesToRead) { (success, error) in

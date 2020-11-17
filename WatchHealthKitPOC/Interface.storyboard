@@ -9,14 +9,14 @@
         <!--Interface Controller-->
         <scene sceneID="OpN-aT-ngB">
             <objects>
-                <controller id="3Sc-v4-Gw2" customClass="InterfaceController" customModule="WatchHealthKitPOC" customModuleProvider="target">
+                <controller id="3Sc-v4-Gw2" customClass="InterfaceController" customModule="WatchHealthKitPOC_Extension">
                     <items>
                         <group width="130" height="135" alignment="center" backgroundImage="Progress0" contentMode="center" layout="vertical" spacing="0.0" id="3uf-vM-Cg7">
                             <items>
                                 <button alignment="center" verticalAlignment="center" id="xLt-Mv-7Kk">
-                                    <group key="contentGroup" width="60" height="60" alignment="left" layout="vertical" radius="40" spacing="0.0" id="a7N-lC-Lxf">
+                                    <group key="contentGroup" width="60" height="60" alignment="left" backgroundImage="playButton" layout="vertical" radius="0.0" spacing="0.0" id="a7N-lC-Lxf">
                                         <items>
-                                            <label height="20" alignment="center" verticalAlignment="center" text="90" textAlignment="center" baselineAdjustment="alignCenters" minimumScaleFactor="0.5" id="Zha-uO-qHR">
+                                            <label height="20" alignment="center" verticalAlignment="center" text="300" textAlignment="center" baselineAdjustment="alignCenters" minimumScaleFactor="0.5" id="Zha-uO-qHR">
                                                 <fontDescription key="font" type="system" weight="semibold" pointSize="25"/>
                                             </label>
                                             <label height="10" alignment="center" verticalAlignment="center" text="metros" textAlignment="center" baselineAdjustment="alignCenters" id="ZoP-qQ-439">
@@ -26,7 +26,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </group>
                                     <connections>
-                                        <action selector="teste" destination="3Sc-v4-Gw2" id="KbJ-Tu-lc7"/>
+                                        <action selector="startWorkoutAction" destination="3Sc-v4-Gw2" id="PP3-BH-dv3"/>
                                     </connections>
                                 </button>
                             </items>
@@ -45,11 +45,6 @@
                                 </label>
                             </items>
                         </group>
-                        <button width="1" alignment="left" title="Notificação" id="9Kg-Nh-FyO">
-                            <connections>
-                                <action selector="requestLocalNotification" destination="3Sc-v4-Gw2" id="dB0-ng-kcs"/>
-                            </connections>
-                        </button>
                         <group width="1" alignment="left" layout="vertical" id="NhG-hf-SDs">
                             <items>
                                 <label alignment="left" text="0.0 cal" id="fVd-gB-tKk"/>
@@ -70,10 +65,10 @@
             </objects>
             <point key="canvasLocation" x="478" y="235"/>
         </scene>
-        <!--Interface Controller-->
+        <!--Options Controller-->
         <scene sceneID="JGj-VN-PQV">
             <objects>
-                <controller id="oLJ-16-NFj">
+                <controller id="oLJ-16-NFj" customClass="OptionsController" customModule="WatchHealthKitPOC_Extension">
                     <items>
                         <button width="1" alignment="left" title="300m" id="BVm-Gj-Syk">
                             <connections>
@@ -81,7 +76,11 @@
                             </connections>
                         </button>
                         <button width="1" alignment="left" title="300 passos" id="oLN-1S-d2g"/>
-                        <button width="1" alignment="left" title="Notificação" id="LWk-Ig-fEM"/>
+                        <button width="1" alignment="left" title="Notificação" id="LWk-Ig-fEM">
+                            <connections>
+                                <action selector="requestLocalNotification" destination="oLJ-16-NFj" id="O6x-cN-CTu"/>
+                            </connections>
+                        </button>
                     </items>
                 </controller>
             </objects>
@@ -122,5 +121,6 @@
     <resources>
         <image name="Progress0" width="125" height="125"/>
         <image name="heart" width="22" height="19"/>
+        <image name="playButton" width="512" height="512"/>
     </resources>
 </document>

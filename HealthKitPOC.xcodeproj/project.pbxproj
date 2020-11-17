@@ -21,6 +21,7 @@
 		2FA669A42553106100854180 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FA669A32553106100854180 /* Assets.xcassets */; };
 		2FA669A72553106100854180 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FA669A52553106100854180 /* LaunchScreen.storyboard */; };
 		C469FD9A255F68D100B0948E /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C469FD99255F68D100B0948E /* Interface.storyboard */; };
+		C48A93D4256433E000878ACE /* OptionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48A93D3256433E000878ACE /* OptionsController.swift */; };
 		C4E2AD882555B7AE0006E1BF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4E2AD872555B7AE0006E1BF /* Assets.xcassets */; };
 		C4E2AD8F2555B7AF0006E1BF /* WatchHealthKitPOC Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C4E2AD8E2555B7AF0006E1BF /* WatchHealthKitPOC Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C4E2AD942555B7AF0006E1BF /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E2AD932555B7AF0006E1BF /* InterfaceController.swift */; };
@@ -93,6 +94,7 @@
 		2FA669A62553106100854180 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2FA669A82553106100854180 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C469FD99255F68D100B0948E /* Interface.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Interface.storyboard; sourceTree = "<group>"; };
+		C48A93D3256433E000878ACE /* OptionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsController.swift; sourceTree = "<group>"; };
 		C4E2AD822555B7AC0006E1BF /* WatchHealthKitPOC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchHealthKitPOC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4E2AD872555B7AE0006E1BF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C4E2AD892555B7AE0006E1BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -215,6 +217,26 @@
 			path = iOS;
 			sourceTree = "<group>";
 		};
+		C48A93D1256433A900878ACE /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				C4E2AD932555B7AF0006E1BF /* InterfaceController.swift */,
+				C48A93D3256433E000878ACE /* OptionsController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		C48A93D2256433B400878ACE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C4E2AD952555B7AF0006E1BF /* ExtensionDelegate.swift */,
+				C4E2AD972555B7AF0006E1BF /* NotificationController.swift */,
+				C4E2AD992555B7AF0006E1BF /* ComplicationController.swift */,
+				C4FC20BC25635F49008DA952 /* CheckInInterfaceController.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		C4E2AD832555B7AC0006E1BF /* WatchHealthKitPOC */ = {
 			isa = PBXGroup;
 			children = (
@@ -230,11 +252,8 @@
 			children = (
 				C4E2ADBA2555C1020006E1BF /* WatchHealthKitPOC Extension.entitlements */,
 				C4E2ADB62555BABF0006E1BF /* watchOS-heartrate WatchKit Extension.entitlements */,
-				C4E2AD932555B7AF0006E1BF /* InterfaceController.swift */,
-				C4E2AD952555B7AF0006E1BF /* ExtensionDelegate.swift */,
-				C4E2AD972555B7AF0006E1BF /* NotificationController.swift */,
-				C4E2AD992555B7AF0006E1BF /* ComplicationController.swift */,
-				C4FC20BC25635F49008DA952 /* CheckInInterfaceController.swift */,
+				C48A93D2256433B400878ACE /* Model */,
+				C48A93D1256433A900878ACE /* Controller */,
 				C4E2AD9B2555B7B20006E1BF /* Assets.xcassets */,
 				C4E2AD9D2555B7B20006E1BF /* Info.plist */,
 				C4E2AD9E2555B7B20006E1BF /* PushNotificationPayload.apns */,
@@ -401,6 +420,7 @@
 				C4E2AD9A2555B7AF0006E1BF /* ComplicationController.swift in Sources */,
 				C4E2AD962555B7AF0006E1BF /* ExtensionDelegate.swift in Sources */,
 				C4E2AD942555B7AF0006E1BF /* InterfaceController.swift in Sources */,
+				C48A93D4256433E000878ACE /* OptionsController.swift in Sources */,
 				C4FC20BD25635F49008DA952 /* CheckInInterfaceController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
