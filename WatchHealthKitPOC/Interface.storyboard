@@ -14,7 +14,7 @@
                         <group width="130" height="135" alignment="center" backgroundImage="Progress0" contentMode="center" layout="vertical" spacing="0.0" id="3uf-vM-Cg7">
                             <items>
                                 <button alignment="center" verticalAlignment="center" id="xLt-Mv-7Kk">
-                                    <group key="contentGroup" width="60" height="60" alignment="left" backgroundImage="playButton" layout="vertical" radius="0.0" spacing="0.0" id="a7N-lC-Lxf">
+                                    <group key="contentGroup" width="60" height="60" alignment="left" layout="vertical" radius="0.0" spacing="0.0" id="a7N-lC-Lxf">
                                         <items>
                                             <label height="20" alignment="center" verticalAlignment="center" text="300" textAlignment="center" baselineAdjustment="alignCenters" minimumScaleFactor="0.5" id="Zha-uO-qHR">
                                                 <fontDescription key="font" type="system" weight="semibold" pointSize="25"/>
@@ -121,6 +121,5 @@
     <resources>
         <image name="Progress0" width="125" height="125"/>
         <image name="heart" width="22" height="19"/>
-        <image name="playButton" width="512" height="512"/>
     </resources>
 </document>
