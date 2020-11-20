@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="17156" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oLJ-16-NFj">
+    <device id="watch38"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="17035"/>
+    </dependencies>
+    <scenes>
+        <!--Interface Controller-->
+        <scene sceneID="OpN-aT-ngB">
+            <objects>
+                <controller id="3Sc-v4-Gw2" customClass="InterfaceController" customModule="WatchHealthKitPOC_Extension">
+                    <items>
+                        <group width="130" height="135" alignment="center" backgroundImage="Progress0" contentMode="center" layout="vertical" spacing="0.0" id="3uf-vM-Cg7">
+                            <items>
+                                <button alignment="center" verticalAlignment="center" id="xLt-Mv-7Kk">
+                                    <group key="contentGroup" width="60" height="60" alignment="left" layout="vertical" radius="0.0" spacing="0.0" id="a7N-lC-Lxf">
+                                        <items>
+                                            <label height="20" alignment="center" verticalAlignment="center" text="30" textAlignment="center" baselineAdjustment="alignCenters" minimumScaleFactor="0.5" id="Zha-uO-qHR">
+                                                <fontDescription key="font" type="system" weight="semibold" pointSize="25"/>
+                                            </label>
+                                            <label height="10" alignment="center" verticalAlignment="center" text="metros" textAlignment="center" baselineAdjustment="alignCenters" id="ZoP-qQ-439">
+                                                <fontDescription key="font" type="system" weight="semibold" pointSize="9"/>
+                                            </label>
+                                        </items>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </group>
+                                    <connections>
+                                        <action selector="startWorkoutAction" destination="3Sc-v4-Gw2" id="PP3-BH-dv3"/>
+                                    </connections>
+                                </button>
+                            </items>
+                        </group>
+                        <label alignment="center" text="meta: 30m" id="d37-cF-NSg">
+                            <fontDescription key="font" type="system" pointSize="12"/>
+                        </label>
+                        <group width="1" alignment="center" id="eH5-5b-Pmg">
+                            <items>
+                                <imageView height="1" heightAdjustment="-6" alignment="right" verticalAlignment="center" image="heart" contentMode="scaleAspectFit" id="CoC-ng-3vb"/>
+                                <label width="40" alignment="right" verticalAlignment="center" text="-----" textAlignment="left" id="lne-R0-ddR">
+                                    <fontDescription key="font" type="system" pointSize="14"/>
+                                </label>
+                                <label alignment="left" verticalAlignment="center" text="00:00:00" id="Z5X-KY-4TJ">
+                                    <fontDescription key="font" type="system" pointSize="14"/>
+                                </label>
+                            </items>
+                        </group>
+                        <group width="1" alignment="left" layout="vertical" id="NhG-hf-SDs">
+                            <items>
+                                <label alignment="left" text="0.0 cal" id="fVd-gB-tKk"/>
+                                <label alignment="left" alpha="0.0" text="0 passos" id="WmN-Tw-Ddc"/>
+                            </items>
+                            <edgeInsets key="margins" left="0.0" right="0.0" top="20" bottom="0.0"/>
+                        </group>
+                    </items>
+                    <connections>
+                        <outlet property="activeCaloriesLabel" destination="fVd-gB-tKk" id="fJW-nl-7RC"/>
+                        <outlet property="backgroundGroup" destination="3uf-vM-Cg7" id="OKq-6l-xR7"/>
+                        <outlet property="distanceLabel" destination="Zha-uO-qHR" id="GG6-Jq-rDv"/>
+                        <outlet property="heartrateLabel" destination="lne-R0-ddR" id="Sfl-7U-PMz"/>
+                        <outlet property="mensureLabel" destination="ZoP-qQ-439" id="MXE-Be-3SC"/>
+                        <outlet property="stepCounter" destination="WmN-Tw-Ddc" id="dZS-YU-3mz"/>
+                        <outlet property="timerLabel" destination="Z5X-KY-4TJ" id="inE-oe-VfV"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="478" y="235"/>
+        </scene>
+        <!--Options Controller-->
+        <scene sceneID="JGj-VN-PQV">
+            <objects>
+                <controller id="oLJ-16-NFj" customClass="OptionsController" customModule="WatchHealthKitPOC_Extension">
+                    <items>
+                        <button width="1" alignment="left" title="Andar 30m" id="BVm-Gj-Syk">
+                            <connections>
+                                <segue destination="3Sc-v4-Gw2" kind="push" id="iKN-5c-6Nu"/>
+                            </connections>
+                        </button>
+                        <button width="1" alignment="left" title="300 passos" id="oLN-1S-d2g"/>
+                        <button width="1" alignment="left" title="Notificação" id="LWk-Ig-fEM">
+                            <connections>
+                                <action selector="requestLocalNotification" destination="oLJ-16-NFj" id="O6x-cN-CTu"/>
+                            </connections>
+                        </button>
+                    </items>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="220" y="171"/>
+        </scene>
+        <!--Static Notification Interface Controller-->
+        <scene sceneID="3d5-gd-ogv">
+            <objects>
+                <notificationController id="wXS-gp-y2R">
+                    <items>
+                        <label alignment="left" text="Alert Label" numberOfLines="0" id="xAz-OT-VQx"/>
+                    </items>
+                    <notificationCategory key="notificationCategory" identifier="myCategory" id="T42-m9-8CC"/>
+                    <connections>
+                        <outlet property="notificationAlertLabel" destination="xAz-OT-VQx" id="egQ-Lp-Y4N"/>
+                        <segue destination="0hb-ah-Wz7" kind="relationship" relationship="dynamicNotificationInterface" id="o7o-b3-rgz"/>
+                        <segue destination="tfC-io-v4a" kind="relationship" relationship="dynamicInteractiveNotificationInterface" id="Meq-8M-Mzs"/>
+                    </connections>
+                </notificationController>
+            </objects>
+            <point key="canvasLocation" x="220" y="643"/>
+        </scene>
+        <!--Notification Controller-->
+        <scene sceneID="dF9-8b-ECX">
+            <objects>
+                <controller id="0hb-ah-Wz7" customClass="NotificationController" customModule="WatchHealthKitPOC" customModuleProvider="target"/>
+            </objects>
+            <point key="canvasLocation" x="468" y="643"/>
+        </scene>
+        <!--Notification Controller-->
+        <scene sceneID="0we-9M-nY0">
+            <objects>
+                <controller id="tfC-io-v4a" customClass="NotificationController" customModule="WatchHealthKitPOC" customModuleProvider="target"/>
+            </objects>
+            <point key="canvasLocation" x="468" y="1032"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Progress0" width="125" height="125"/>
+        <image name="heart" width="22" height="19"/>
+    </resources>
+</document>
