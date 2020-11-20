@@ -24,12 +24,16 @@ class InterfaceController: WKInterfaceController {
 	@IBOutlet weak var stepCounter: WKInterfaceLabel!
 	@IBOutlet weak var backgroundGroup: WKInterfaceGroup!
 	@IBOutlet weak var mensureLabel: WKInterfaceLabel!
+	@IBOutlet weak var target: WKInterfaceLabel!
 
 	//	MARK: - IBActions
 	@IBAction func startWorkoutAction() {
 
-		distanceLabel.setText("0.0")
-		mensureLabel.setText("metros")
+
+		let startLabels = TypeExerciseManager().initialLabels(train: train)
+		distanceLabel.setText(startLabels.distance)
+		mensureLabel.setText(startLabels.mensure)
+
 		startWorkout()
 	}
 
@@ -49,6 +53,9 @@ class InterfaceController: WKInterfaceController {
 	let pedometer = CMPedometer()
 	var steps: Int = 0
 
+	var train = Train(type: .distance, targuet: 100)
+
+
 	//	MARK: - Life Cycle
 	override func awake(withContext context: Any?) {
 		super.awake(withContext: context)
@@ -57,6 +64,24 @@ class InterfaceController: WKInterfaceController {
 
 		distanceLabel.setText("Começar")
 		mensureLabel.setText("")
+
+		if let getTrain = context as? Train {
+			train = Train(type: getTrain.type, targuet: getTrain.targuet)
+		}
+
+		switch train.type {
+
+			case TrainType.time:
+				let time = TimerManager().secondsToHoursMinutesSeconds (seconds : train.targuet)
+				target.setText("meta: \(time)")
+
+			case TrainType.paces:
+				target.setText("meta: \(train.targuet) passos")
+
+			default: //distance
+				target.setText("meta: \(train.targuet)m")
+		}
+
 	}
 
 	//	MARK: - HealthKit
@@ -102,28 +127,10 @@ class InterfaceController: WKInterfaceController {
 		let runningTime: Int = Int(-1 * (self.start.timeIntervalSinceNow))
 		return self.accumulatedTime + runningTime
 	}
-
-	func secondsToHoursMinutesSeconds (seconds : Int) -> String {
-
-		let hours = String(format: "%02d", seconds / 3600)
-		let minuts = String(format: "%02d", (seconds % 3600) / 60)
-		let seconds = String(format: "%02d", (seconds % 3600) % 60)
-		return hours + ":" + minuts + ":" + seconds
-	}
-
-//	MARK: - Ring Manager
-
 }
 
 // MERK: - Workout Manager
 extension InterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDelegate {
-	func workoutConfiguration() -> HKWorkoutConfiguration {
-		let configuration = HKWorkoutConfiguration()
-		configuration.activityType = .running
-		configuration.locationType = .outdoor
-
-		return configuration
-	}
 
 	func startWorkout() {
 		setUpTimer()
@@ -131,7 +138,7 @@ extension InterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDel
 		self.running = true
 
 		do {
-			session = try HKWorkoutSession(healthStore: healthStore, configuration: workoutConfiguration())
+			session = try HKWorkoutSession(healthStore: healthStore, configuration: TimerManager().workoutConfiguration())
 			builder = session.associatedWorkoutBuilder()
 		} catch {
 			return
@@ -141,7 +148,7 @@ extension InterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDel
 		builder.delegate = self
 
 		builder.dataSource = HKLiveWorkoutDataSource(healthStore: healthStore,
-													 workoutConfiguration: workoutConfiguration())
+													 workoutConfiguration: TimerManager().workoutConfiguration())
 
 		session.startActivity(with: Date())
 		builder.beginCollection(withStart: Date()) { (success, error) in
@@ -217,10 +224,9 @@ extension InterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDel
 		heartrateLabel.setText("\(heartrate)")
 		activeCaloriesLabel.setText("\(activeCalories) cal")
 		distanceLabel.setText("\(distance)")
-		timerLabel.setText(secondsToHoursMinutesSeconds(seconds: elapsedSeconds))
+		timerLabel.setText(TimerManager().secondsToHoursMinutesSeconds(seconds: elapsedSeconds))
 
-		let currentProgress = Int((distance / 30)*10)
-		print("Progress\(currentProgress)")
+		let currentProgress = Int((distance / Double(train.targuet))*10)
 
 
 		if(currentProgress >= 10) {

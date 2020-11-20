@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="17156" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oLJ-16-NFj">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="17506" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oLJ-16-NFj">
     <device id="watch38"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="17035"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="17500"/>
     </dependencies>
     <scenes>
-        <!--Interface Controller-->
+        <!--InterfaceController-->
         <scene sceneID="OpN-aT-ngB">
             <objects>
-                <controller id="3Sc-v4-Gw2" customClass="InterfaceController" customModule="WatchHealthKitPOC_Extension">
+                <controller identifier="InterfaceController" id="3Sc-v4-Gw2" customClass="InterfaceController" customModule="WatchHealthKitPOC_Extension">
                     <items>
                         <group width="130" height="135" alignment="center" backgroundImage="Progress0" contentMode="center" layout="vertical" spacing="0.0" id="3uf-vM-Cg7">
                             <items>
@@ -60,23 +60,33 @@
                         <outlet property="heartrateLabel" destination="lne-R0-ddR" id="Sfl-7U-PMz"/>
                         <outlet property="mensureLabel" destination="ZoP-qQ-439" id="MXE-Be-3SC"/>
                         <outlet property="stepCounter" destination="WmN-Tw-Ddc" id="dZS-YU-3mz"/>
+                        <outlet property="target" destination="d37-cF-NSg" id="BbD-Hy-kpa"/>
                         <outlet property="timerLabel" destination="Z5X-KY-4TJ" id="inE-oe-VfV"/>
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="478" y="235"/>
+            <point key="canvasLocation" x="477" y="217"/>
         </scene>
-        <!--Options Controller-->
+        <!--OptionsController-->
         <scene sceneID="JGj-VN-PQV">
             <objects>
-                <controller id="oLJ-16-NFj" customClass="OptionsController" customModule="WatchHealthKitPOC_Extension">
+                <controller identifier="OptionsController" id="oLJ-16-NFj" customClass="OptionsController" customModule="WatchHealthKitPOC_Extension">
                     <items>
                         <button width="1" alignment="left" title="Andar 30m" id="BVm-Gj-Syk">
                             <connections>
-                                <segue destination="3Sc-v4-Gw2" kind="push" id="iKN-5c-6Nu"/>
+                                <action selector="walk30m" destination="oLJ-16-NFj" id="ovu-iU-eBv"/>
                             </connections>
                         </button>
-                        <button width="1" alignment="left" title="300 passos" id="oLN-1S-d2g"/>
+                        <button width="1" alignment="left" title="Andar 100m" id="sJ0-r7-d05">
+                            <connections>
+                                <action selector="walk100m" destination="oLJ-16-NFj" id="86e-nk-dw6"/>
+                            </connections>
+                        </button>
+                        <button width="1" alignment="left" title="300 passos" id="oLN-1S-d2g">
+                            <connections>
+                                <action selector="walk300paces" destination="oLJ-16-NFj" id="TRL-ZO-19G"/>
+                            </connections>
+                        </button>
                         <button width="1" alignment="left" title="Notificação" id="LWk-Ig-fEM">
                             <connections>
                                 <action selector="requestLocalNotification" destination="oLJ-16-NFj" id="O6x-cN-CTu"/>

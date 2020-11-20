@@ -15,6 +15,17 @@ import HealthKit
 import Combine
 import CoreMotion
 
+enum TrainType {
+	case paces //units
+	case distance //meters
+	case time //seconds
+}
+
+struct Train {
+	var type: TrainType
+	var targuet: Int
+}
+
 class OptionsController: WKInterfaceController {
 
 	//	MARK: - IBActions
@@ -22,12 +33,31 @@ class OptionsController: WKInterfaceController {
 		NotificationManager().singleNotification()
 	}
 
+	@IBAction func walk30m() {
+		let train = Train(type: .distance, targuet: 30)
+		pushController(withName: "InterfaceController", context: train)
+
+	}
+
+	@IBAction func walk100m() {
+		let train = Train(type: .distance, targuet: 100)
+		pushController(withName:"InterfaceController", context: train)
+
+	}
+
+	@IBAction func walk300paces() {
+		let train = Train(type: .paces, targuet: 300)
+		pushController(withName:"InterfaceController", context: train)
+
+	}
+
+
 	//	MARK: - Life Cycle
 	override func awake(withContext context: Any?) {
 		super.awake(withContext: context)
-
 		NotificationManager().setupNotifications()
 
 	}
+
 	
 }
