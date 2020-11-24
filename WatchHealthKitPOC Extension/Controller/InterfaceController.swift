@@ -29,12 +29,16 @@ class InterfaceController: WKInterfaceController {
 	//	MARK: - IBActions
 	@IBAction func startWorkoutAction() {
 
+		if running {
+			// to do: pause
+		}
+		else {
+			let startLabels = TypeExerciseManager().initialLabels(train: train)
+			distanceLabel.setText(startLabels.distance)
+			mensureLabel.setText(startLabels.mensure)
 
-		let startLabels = TypeExerciseManager().initialLabels(train: train)
-		distanceLabel.setText(startLabels.distance)
-		mensureLabel.setText(startLabels.mensure)
-
-		startWorkout()
+			startWorkout()
+		}
 	}
 
 	//	MARK: - Variables
@@ -105,6 +109,25 @@ class InterfaceController: WKInterfaceController {
 
 		pedometer.startUpdates(from: Date()) { (data, error) in
 			self.stepCounter.setText("\(data?.numberOfSteps ?? 0) passos")
+			if(self.train.type == .paces) {
+				self.distanceLabel.setText("\(data?.numberOfSteps ?? 0) passos")
+
+
+				let numberOfSteps = data?.numberOfSteps ?? 0
+				let currentProgress = Int((Double(truncating: numberOfSteps) / Double(self.train.targuet))*10)
+
+
+				if(currentProgress >= 10) {
+					self.backgroundGroup.setBackgroundImageNamed("Progress10")
+					self.endWorkout()
+					self.session.end()
+					self.mensureLabel.setText("Parabéns!")
+					self.distanceLabel.setText("✓")
+				}
+				else {
+					self.backgroundGroup.setBackgroundImageNamed("Progress\(currentProgress)")
+				}
+			}
 		}
 
 		healthStore.requestAuthorization(toShare: typesToShare, read: typesToRead) { (success, error) in
@@ -211,6 +234,7 @@ extension InterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDel
 	}
 
 	func workoutBuilder(_ workoutBuilder: HKLiveWorkoutBuilder, didCollectDataOf collectedTypes: Set<HKSampleType>) {
+
 		for type in collectedTypes {
 			guard let quantityType = type as? HKQuantityType else {
 				return
@@ -223,21 +247,24 @@ extension InterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDel
 
 		heartrateLabel.setText("\(heartrate)")
 		activeCaloriesLabel.setText("\(activeCalories) cal")
-		distanceLabel.setText("\(distance)")
 		timerLabel.setText(TimerManager().secondsToHoursMinutesSeconds(seconds: elapsedSeconds))
 
-		let currentProgress = Int((distance / Double(train.targuet))*10)
+		if(train.type == .distance) {
+			distanceLabel.setText("\(distance)")
+
+			let currentProgress = Int((distance / Double(train.targuet))*10)
 
 
-		if(currentProgress >= 10) {
-			backgroundGroup.setBackgroundImageNamed("Progress10")
-			endWorkout()
-			session.end()
-			mensureLabel.setText("Parabéns!")
-			distanceLabel.setText("✓")
-		}
-		else {
-			backgroundGroup.setBackgroundImageNamed("Progress\(currentProgress)")
+			if(currentProgress >= 10) {
+				backgroundGroup.setBackgroundImageNamed("Progress10")
+				endWorkout()
+				session.end()
+				mensureLabel.setText("Parabéns!")
+				distanceLabel.setText("✓")
+			}
+			else {
+				backgroundGroup.setBackgroundImageNamed("Progress\(currentProgress)")
+			}
 		}
 	}
 

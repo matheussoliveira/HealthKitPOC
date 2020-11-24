@@ -48,7 +48,7 @@
                         <group width="1" alignment="left" layout="vertical" id="NhG-hf-SDs">
                             <items>
                                 <label alignment="left" text="0.0 cal" id="fVd-gB-tKk"/>
-                                <label alignment="left" alpha="0.0" text="0 passos" id="WmN-Tw-Ddc"/>
+                                <label alignment="left" text="0 passos" id="WmN-Tw-Ddc"/>
                             </items>
                             <edgeInsets key="margins" left="0.0" right="0.0" top="20" bottom="0.0"/>
                         </group>

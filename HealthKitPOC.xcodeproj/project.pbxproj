@@ -23,11 +23,12 @@
 		2FA669A72553106100854180 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FA669A52553106100854180 /* LaunchScreen.storyboard */; };
 		C469FD9A255F68D100B0948E /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C469FD99255F68D100B0948E /* Interface.storyboard */; };
 		C48A93D4256433E000878ACE /* OptionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48A93D3256433E000878ACE /* OptionsController.swift */; };
+		C4A373C8256C8A60003E419F /* Train.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A373C7256C8A60003E419F /* Train.swift */; };
 		C4E2AD882555B7AE0006E1BF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4E2AD872555B7AE0006E1BF /* Assets.xcassets */; };
 		C4E2AD8F2555B7AF0006E1BF /* WatchHealthKitPOC Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C4E2AD8E2555B7AF0006E1BF /* WatchHealthKitPOC Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C4E2AD942555B7AF0006E1BF /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E2AD932555B7AF0006E1BF /* InterfaceController.swift */; };
 		C4E2AD962555B7AF0006E1BF /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E2AD952555B7AF0006E1BF /* ExtensionDelegate.swift */; };
-		C4E2AD982555B7AF0006E1BF /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E2AD972555B7AF0006E1BF /* NotificationController.swift */; };
+		C4E2AD982555B7AF0006E1BF /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E2AD972555B7AF0006E1BF /* Notification.swift */; };
 		C4E2AD9A2555B7AF0006E1BF /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E2AD992555B7AF0006E1BF /* ComplicationController.swift */; };
 		C4E2AD9C2555B7B20006E1BF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4E2AD9B2555B7B20006E1BF /* Assets.xcassets */; };
 		C4E2ADA12555B7B20006E1BF /* WatchHealthKitPOC.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = C4E2AD822555B7AC0006E1BF /* WatchHealthKitPOC.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -97,13 +98,14 @@
 		2FA669A82553106100854180 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C469FD99255F68D100B0948E /* Interface.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Interface.storyboard; sourceTree = "<group>"; };
 		C48A93D3256433E000878ACE /* OptionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsController.swift; sourceTree = "<group>"; };
+		C4A373C7256C8A60003E419F /* Train.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Train.swift; sourceTree = "<group>"; };
 		C4E2AD822555B7AC0006E1BF /* WatchHealthKitPOC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchHealthKitPOC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4E2AD872555B7AE0006E1BF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C4E2AD892555B7AE0006E1BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C4E2AD8E2555B7AF0006E1BF /* WatchHealthKitPOC Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WatchHealthKitPOC Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4E2AD932555B7AF0006E1BF /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
 		C4E2AD952555B7AF0006E1BF /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
-		C4E2AD972555B7AF0006E1BF /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
+		C4E2AD972555B7AF0006E1BF /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		C4E2AD992555B7AF0006E1BF /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
 		C4E2AD9B2555B7B20006E1BF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C4E2AD9D2555B7B20006E1BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -223,6 +225,8 @@
 		C48A93D1256433A900878ACE /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				C4E2AD992555B7AF0006E1BF /* ComplicationController.swift */,
+				C4FC20BC25635F49008DA952 /* CheckInInterfaceController.swift */,
 				C4E2AD932555B7AF0006E1BF /* InterfaceController.swift */,
 				C48A93D3256433E000878ACE /* OptionsController.swift */,
 			);
@@ -233,9 +237,8 @@
 			isa = PBXGroup;
 			children = (
 				C4E2AD952555B7AF0006E1BF /* ExtensionDelegate.swift */,
-				C4E2AD972555B7AF0006E1BF /* NotificationController.swift */,
-				C4E2AD992555B7AF0006E1BF /* ComplicationController.swift */,
-				C4FC20BC25635F49008DA952 /* CheckInInterfaceController.swift */,
+				C4A373C7256C8A60003E419F /* Train.swift */,
+				C4E2AD972555B7AF0006E1BF /* Notification.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -420,8 +423,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4E2AD982555B7AF0006E1BF /* NotificationController.swift in Sources */,
+				C4E2AD982555B7AF0006E1BF /* Notification.swift in Sources */,
 				C4E2AD9A2555B7AF0006E1BF /* ComplicationController.swift in Sources */,
+				C4A373C8256C8A60003E419F /* Train.swift in Sources */,
 				C4E2AD962555B7AF0006E1BF /* ExtensionDelegate.swift in Sources */,
 				C4E2AD942555B7AF0006E1BF /* InterfaceController.swift in Sources */,
 				C48A93D4256433E000878ACE /* OptionsController.swift in Sources */,

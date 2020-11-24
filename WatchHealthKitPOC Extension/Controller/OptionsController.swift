@@ -15,17 +15,6 @@ import HealthKit
 import Combine
 import CoreMotion
 
-enum TrainType {
-	case paces //units
-	case distance //meters
-	case time //seconds
-}
-
-struct Train {
-	var type: TrainType
-	var targuet: Int
-}
-
 class OptionsController: WKInterfaceController {
 
 	//	MARK: - IBActions
