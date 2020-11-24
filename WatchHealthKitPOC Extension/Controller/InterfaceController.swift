@@ -73,23 +73,10 @@ class InterfaceController: WKInterfaceController {
 			train = Train(type: getTrain.type, targuet: getTrain.targuet)
 		}
 
-		switch train.type {
-
-			case TrainType.time:
-				let time = TimerManager().secondsToHoursMinutesSeconds (seconds : train.targuet)
-				target.setText("meta: \(time)")
-
-			case TrainType.paces:
-				target.setText("meta: \(train.targuet) passos")
-
-			default: //distance
-				target.setText("meta: \(train.targuet)m")
-		}
-
+		target.setText("meta: \(TypeExerciseManager().populateTargetLabel(train: train))")
 	}
 
 	//	MARK: - HealthKit
-	// Request authorization to access HealthKit.
 	func requestAuthorization() {
 		guard HKHealthStore.isHealthDataAvailable() else {
 			heartrateLabel.setText("HealthKit is not available ")
@@ -107,28 +94,7 @@ class InterfaceController: WKInterfaceController {
 			HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
 		]
 
-		pedometer.startUpdates(from: Date()) { (data, error) in
-			self.stepCounter.setText("\(data?.numberOfSteps ?? 0) passos")
-			if(self.train.type == .paces) {
-				self.distanceLabel.setText("\(data?.numberOfSteps ?? 0) passos")
-
-
-				let numberOfSteps = data?.numberOfSteps ?? 0
-				let currentProgress = Int((Double(truncating: numberOfSteps) / Double(self.train.targuet))*10)
-
-
-				if(currentProgress >= 10) {
-					self.backgroundGroup.setBackgroundImageNamed("Progress10")
-					self.endWorkout()
-					self.session.end()
-					self.mensureLabel.setText("Parabéns!")
-					self.distanceLabel.setText("✓")
-				}
-				else {
-					self.backgroundGroup.setBackgroundImageNamed("Progress\(currentProgress)")
-				}
-			}
-		}
+		startPedometer()
 
 		healthStore.requestAuthorization(toShare: typesToShare, read: typesToRead) { (success, error) in
 			print(error.debugDescription)
@@ -252,18 +218,57 @@ extension InterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDel
 		if(train.type == .distance) {
 			distanceLabel.setText("\(distance)")
 
-			let currentProgress = Int((distance / Double(train.targuet))*10)
+			let currentProgress = Int((distance / Double(train.targuet))*100)
 
-
-			if(currentProgress >= 10) {
-				backgroundGroup.setBackgroundImageNamed("Progress10")
+			if(currentProgress >= 100) {
+				backgroundGroup.setBackgroundImageNamed("Progress-101")
 				endWorkout()
 				session.end()
 				mensureLabel.setText("Parabéns!")
 				distanceLabel.setText("✓")
 			}
 			else {
-				backgroundGroup.setBackgroundImageNamed("Progress\(currentProgress)")
+				backgroundGroup.setBackgroundImageNamed("Progress-\(currentProgress)")
+			}
+		}
+
+		if(train.type == .time) {
+			distanceLabel.setText(TimerManager().secondsToHoursMinutesSeconds(seconds: elapsedSeconds))
+
+			let currentProgress = Int((Double(elapsedSeconds) / Double(train.targuet))*100)
+
+			if(currentProgress >= 100) {
+				backgroundGroup.setBackgroundImageNamed("Progress-101")
+				endWorkout()
+				session.end()
+				mensureLabel.setText("Parabéns!")
+				distanceLabel.setText("✓")
+			}
+			else {
+				backgroundGroup.setBackgroundImageNamed("Progress-\(currentProgress)")
+			}
+		}
+	}
+
+	func startPedometer() {
+		pedometer.startUpdates(from: Date()) { (data, error) in
+			self.stepCounter.setText("\(data?.numberOfSteps ?? 0) passos")
+			if(self.train.type == .paces) {
+				self.distanceLabel.setText("\(data?.numberOfSteps ?? 0) passos")
+
+				let numberOfSteps = data?.numberOfSteps ?? 0
+				let currentProgress = Int((Double(truncating: numberOfSteps) / Double(self.train.targuet))*100)
+
+				if(currentProgress >= 100) {
+					self.backgroundGroup.setBackgroundImageNamed("Progress-101")
+					self.endWorkout()
+					self.session.end()
+					self.mensureLabel.setText("Parabéns!")
+					self.distanceLabel.setText("✓")
+				}
+				else {
+					self.backgroundGroup.setBackgroundImageNamed("Progress-\(currentProgress)")
+				}
 			}
 		}
 	}

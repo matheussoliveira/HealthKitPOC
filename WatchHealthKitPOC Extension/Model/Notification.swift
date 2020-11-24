@@ -113,4 +113,22 @@ class TypeExerciseManager {
 		return (distance, mensure)
 
 	}
+
+	func populateTargetLabel(train: Train) -> String {
+
+		switch train.type {
+
+			case TrainType.time:
+				let time = TimerManager().secondsToHoursMinutesSeconds (seconds : train.targuet)
+				return time
+
+			case TrainType.paces:
+				return "\(train.targuet) passos"
+
+			default: //distance
+				return "\(train.targuet)m"
+		}
+	}
+
+
 }

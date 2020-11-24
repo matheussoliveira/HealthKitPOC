@@ -21,6 +21,7 @@
 		2FA669A22553105F00854180 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FA669A02553105F00854180 /* Main.storyboard */; };
 		2FA669A42553106100854180 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FA669A32553106100854180 /* Assets.xcassets */; };
 		2FA669A72553106100854180 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FA669A52553106100854180 /* LaunchScreen.storyboard */; };
+		C44171B4256D86040033D729 /* RowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44171B3256D86040033D729 /* RowController.swift */; };
 		C469FD9A255F68D100B0948E /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C469FD99255F68D100B0948E /* Interface.storyboard */; };
 		C48A93D4256433E000878ACE /* OptionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48A93D3256433E000878ACE /* OptionsController.swift */; };
 		C4A373C8256C8A60003E419F /* Train.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A373C7256C8A60003E419F /* Train.swift */; };
@@ -96,6 +97,7 @@
 		2FA669A32553106100854180 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2FA669A62553106100854180 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2FA669A82553106100854180 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C44171B3256D86040033D729 /* RowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowController.swift; sourceTree = "<group>"; };
 		C469FD99255F68D100B0948E /* Interface.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Interface.storyboard; sourceTree = "<group>"; };
 		C48A93D3256433E000878ACE /* OptionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsController.swift; sourceTree = "<group>"; };
 		C4A373C7256C8A60003E419F /* Train.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Train.swift; sourceTree = "<group>"; };
@@ -222,6 +224,14 @@
 			path = iOS;
 			sourceTree = "<group>";
 		};
+		C44171AC256D829E0033D729 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C44171B3256D86040033D729 /* RowController.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		C48A93D1256433A900878ACE /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -258,6 +268,7 @@
 			children = (
 				C4E2ADBA2555C1020006E1BF /* WatchHealthKitPOC Extension.entitlements */,
 				C4E2ADB62555BABF0006E1BF /* watchOS-heartrate WatchKit Extension.entitlements */,
+				C44171AC256D829E0033D729 /* Views */,
 				C48A93D2256433B400878ACE /* Model */,
 				C48A93D1256433A900878ACE /* Controller */,
 				C4E2AD9B2555B7B20006E1BF /* Assets.xcassets */,
@@ -425,6 +436,7 @@
 			files = (
 				C4E2AD982555B7AF0006E1BF /* Notification.swift in Sources */,
 				C4E2AD9A2555B7AF0006E1BF /* ComplicationController.swift in Sources */,
+				C44171B4256D86040033D729 /* RowController.swift in Sources */,
 				C4A373C8256C8A60003E419F /* Train.swift in Sources */,
 				C4E2AD962555B7AF0006E1BF /* ExtensionDelegate.swift in Sources */,
 				C4E2AD942555B7AF0006E1BF /* InterfaceController.swift in Sources */,
