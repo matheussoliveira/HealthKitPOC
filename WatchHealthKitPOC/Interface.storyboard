@@ -44,27 +44,18 @@
                                 </label>
                             </items>
                         </group>
-                        <group width="1" alignment="left" layout="vertical" id="NhG-hf-SDs">
-                            <items>
-                                <label alignment="left" text="0.0 cal" id="fVd-gB-tKk"/>
-                                <label alignment="left" text="0 passos" id="WmN-Tw-Ddc"/>
-                            </items>
-                            <edgeInsets key="margins" left="0.0" right="0.0" top="20" bottom="0.0"/>
-                        </group>
                     </items>
                     <connections>
-                        <outlet property="activeCaloriesLabel" destination="fVd-gB-tKk" id="fJW-nl-7RC"/>
                         <outlet property="backgroundGroup" destination="3uf-vM-Cg7" id="OKq-6l-xR7"/>
                         <outlet property="distanceLabel" destination="Zha-uO-qHR" id="GG6-Jq-rDv"/>
                         <outlet property="heartrateLabel" destination="lne-R0-ddR" id="Sfl-7U-PMz"/>
                         <outlet property="mensureLabel" destination="ZoP-qQ-439" id="MXE-Be-3SC"/>
-                        <outlet property="stepCounter" destination="WmN-Tw-Ddc" id="dZS-YU-3mz"/>
                         <outlet property="target" destination="d37-cF-NSg" id="BbD-Hy-kpa"/>
                         <outlet property="timerLabel" destination="Z5X-KY-4TJ" id="inE-oe-VfV"/>
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="477" y="180"/>
+            <point key="canvasLocation" x="453" y="171"/>
         </scene>
         <!--OptionsController-->
         <scene sceneID="JGj-VN-PQV">
