@@ -34,7 +34,6 @@
 		C4E2AD9C2555B7B20006E1BF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4E2AD9B2555B7B20006E1BF /* Assets.xcassets */; };
 		C4E2ADA12555B7B20006E1BF /* WatchHealthKitPOC.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = C4E2AD822555B7AC0006E1BF /* WatchHealthKitPOC.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C4E2ADBD2555C1030006E1BF /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4E2ADBC2555C1030006E1BF /* HealthKit.framework */; };
-		C4FC20BD25635F49008DA952 /* CheckInInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FC20BC25635F49008DA952 /* CheckInInterfaceController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,7 +115,6 @@
 		C4E2ADBA2555C1020006E1BF /* WatchHealthKitPOC Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "WatchHealthKitPOC Extension.entitlements"; sourceTree = "<group>"; };
 		C4E2ADBC2555C1030006E1BF /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS7.0.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
 		C4E2ADCA2555C3610006E1BF /* HealthKitPOC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HealthKitPOC.entitlements; sourceTree = "<group>"; };
-		C4FC20BC25635F49008DA952 /* CheckInInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckInInterfaceController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -236,7 +234,6 @@
 			isa = PBXGroup;
 			children = (
 				C4E2AD992555B7AF0006E1BF /* ComplicationController.swift */,
-				C4FC20BC25635F49008DA952 /* CheckInInterfaceController.swift */,
 				C4E2AD932555B7AF0006E1BF /* InterfaceController.swift */,
 				C48A93D3256433E000878ACE /* OptionsController.swift */,
 			);
@@ -441,7 +438,6 @@
 				C4E2AD962555B7AF0006E1BF /* ExtensionDelegate.swift in Sources */,
 				C4E2AD942555B7AF0006E1BF /* InterfaceController.swift in Sources */,
 				C48A93D4256433E000878ACE /* OptionsController.swift in Sources */,
-				C4FC20BD25635F49008DA952 /* CheckInInterfaceController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
