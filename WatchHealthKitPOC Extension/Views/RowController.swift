@@ -9,5 +9,7 @@ import WatchKit
 
 class RowController: NSObject {
 
-	@IBOutlet weak var title: WKInterfaceLabel!
+	@IBOutlet weak var titleLabel: WKInterfaceLabel!
+
+	@IBOutlet weak var subtitleLabel: WKInterfaceLabel!
 }

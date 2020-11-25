@@ -16,4 +16,6 @@ enum TrainType {
 struct Train {
 	var type: TrainType
 	var targuet: Int
+	var title: String
+	var subtitle: String
 }

@@ -17,13 +17,15 @@ import CoreMotion
 
 class OptionsController: WKInterfaceController {
 
+	//	MARK: - Variables
 	var trains = [
-		Train(type: .distance, targuet: 30),
-		Train(type: .distance, targuet: 100),
-		Train(type: .paces, targuet: 300),
-		Train(type: .time, targuet: 60)
+		Train(type: .distance, targuet: 30, title: "Vida em movimento", subtitle: "Ande 30 metros"),
+		Train(type: .distance, targuet: 100, title: "Vida em movimento", subtitle: "Ande 100 metros"),
+		Train(type: .paces, targuet: 300, title: "Vida em movimento", subtitle: "Ande 300 passos"),
+		Train(type: .time, targuet: 60, title: "Vida em movimento", subtitle: "Corra 1 minuto"),
 	]
 
+	//	MARK: - IBOutlet
 	@IBOutlet weak var trainsTable: WKInterfaceTable!
 
 	//	MARK: - IBActions
@@ -31,48 +33,23 @@ class OptionsController: WKInterfaceController {
 		NotificationManager().singleNotification()
 	}
 
-	@IBAction func walk30m() {
-		let train = Train(type: .distance, targuet: 30)
-		pushController(withName: "InterfaceController", context: train)
-
-	}
-
-	@IBAction func walk100m() {
-		let train = Train(type: .distance, targuet: 100)
-		pushController(withName:"InterfaceController", context: train)
-
-	}
-
-	@IBAction func walk300paces() {
-		let train = Train(type: .paces, targuet: 300)
-		pushController(withName:"InterfaceController", context: train)
-	}
-
-	@IBAction func run5min() {
-		let train = Train(type: .time, targuet: 60)
-		pushController(withName:"InterfaceController", context: train)
-	}
-
-	
-
 	//	MARK: - Life Cycle
 	override func awake(withContext context: Any?) {
 		super.awake(withContext: context)
 		NotificationManager().setupNotifications()
 
-		trainsTable.setNumberOfRows(1, withRowType: "TrainRow")
+		trainsTable.setNumberOfRows(trains.count, withRowType: "RowController")
 
-		for index in 0..<trainsTable.numberOfRows {
-			print("1")
-			guard let controller = trainsTable.rowController(at: index) as? RowController else { continue }
-
-			print("2")
-			controller.title.setText(String(trains[index].targuet))
+		for index in 0...(trains.count-1) {
+			if let row = trainsTable.rowController(at: index) as? RowController {
+				row.titleLabel.setText(trains[index].title)
+				row.subtitleLabel.setText(trains[index].subtitle)
+			}
 		}
 	}
 
-//	override func table(_ table: WKInterfaceTable, didSelectRowAt rowIndex: Int) {
-//		let flight = flights[rowIndex]
-//		presentController(withName: "Flight", context: flight)
-//	}
+	override func table(_ table: WKInterfaceTable, didSelectRowAt rowIndex: Int) {
+		pushController(withName: "InterfaceController", context: trains[rowIndex])
+	}
 }
+

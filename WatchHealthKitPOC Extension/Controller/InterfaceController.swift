@@ -57,7 +57,7 @@ class InterfaceController: WKInterfaceController {
 	let pedometer = CMPedometer()
 	var steps: Int = 0
 
-	var train = Train(type: .distance, targuet: 100)
+	var train = Train(type: .distance, targuet: 1, title: "----", subtitle: "----")
 
 
 	//	MARK: - Life Cycle
@@ -70,7 +70,7 @@ class InterfaceController: WKInterfaceController {
 		mensureLabel.setText("")
 
 		if let getTrain = context as? Train {
-			train = Train(type: getTrain.type, targuet: getTrain.targuet)
+			train = getTrain
 		}
 
 		target.setText("meta: \(TypeExerciseManager().populateTargetLabel(train: train))")
