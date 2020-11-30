@@ -11,7 +11,7 @@
             <objects>
                 <controller identifier="InterfaceController" id="3Sc-v4-Gw2" customClass="InterfaceController" customModule="WatchHealthKitPOC_Extension">
                     <items>
-                        <group width="110" height="110" alignment="center" backgroundImage="Progress-0" contentMode="redraw" layout="vertical" spacing="0.0" id="3uf-vM-Cg7">
+                        <group width="110" height="110" alignment="center" backgroundImage="Progress-0" contentMode="redraw" layout="vertical" spacing="6" id="3uf-vM-Cg7">
                             <items>
                                 <button alignment="center" verticalAlignment="center" id="xLt-Mv-7Kk">
                                     <group key="contentGroup" width="60" height="60" alignment="left" layout="vertical" radius="0.0" spacing="0.0" id="a7N-lC-Lxf">
@@ -44,6 +44,7 @@
                                 </label>
                             </items>
                         </group>
+                        <table alignment="left" id="qAC-lW-iof"/>
                     </items>
                     <connections>
                         <outlet property="backgroundGroup" destination="3uf-vM-Cg7" id="OKq-6l-xR7"/>
@@ -55,7 +56,19 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="453" y="171"/>
+            <point key="canvasLocation" x="669" y="259"/>
+        </scene>
+        <!--TrainOptionsController-->
+        <scene sceneID="vgf-ba-8LG">
+            <objects>
+                <controller identifier="TrainOptionsController" id="QYO-r0-7CY" customClass="TrainOptionsController" customModule="WatchHealthKitPOC_Extension">
+                    <items>
+                        <button width="1" alignment="left" title="Pause" id="DGs-QC-bjb"/>
+                        <button width="1" alignment="left" title="Finalizar" id="MeE-gX-0Vv"/>
+                    </items>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="944" y="259"/>
         </scene>
         <!--OptionsController-->
         <scene sceneID="JGj-VN-PQV">
@@ -94,7 +107,7 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="220" y="171"/>
+            <point key="canvasLocation" x="389" y="259"/>
         </scene>
         <!--Static Notification Interface Controller-->
         <scene sceneID="3d5-gd-ogv">

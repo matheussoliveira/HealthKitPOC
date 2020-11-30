@@ -30,7 +30,7 @@ class OptionsController: WKInterfaceController {
 
 	//	MARK: - IBActions
 	@IBAction func requestLocalNotification() {
-		NotificationManager().singleNotification()
+		NotificationManager().singleNotification(title: "Beba agua", text: "Lembre-se de tomar 2 litros de água diariamente")
 	}
 
 	//	MARK: - Life Cycle
@@ -49,7 +49,7 @@ class OptionsController: WKInterfaceController {
 	}
 
 	override func table(_ table: WKInterfaceTable, didSelectRowAt rowIndex: Int) {
-		pushController(withName: "InterfaceController", context: trains[rowIndex])
+		WKInterfaceController.reloadRootPageControllers(withNames: ["TrainOptionsController", "InterfaceController"], contexts: [trains[rowIndex],trains[rowIndex]], orientation: .horizontal, pageIndex: 1)
 	}
 }
 

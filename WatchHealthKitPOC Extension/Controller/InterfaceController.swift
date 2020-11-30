@@ -31,6 +31,7 @@ class InterfaceController: WKInterfaceController {
 			// to do: pause
 		}
 		else {
+			running = true
 			let startLabels = TypeExerciseManager().initialLabels(train: train)
 			distanceLabel.setText(startLabels.distance)
 			mensureLabel.setText(startLabels.mensure)
@@ -118,17 +119,13 @@ class InterfaceController: WKInterfaceController {
 		timerCounter += 1
 		timerLabel.setText(TimerManager().secondsToHoursMinutesSeconds(seconds: timerCounter))
 
-		if(train.type == .time) {
+		if(train.type == .time && running) {
 			distanceLabel.setText(TimerManager().secondsToHoursMinutesSeconds(seconds: timerCounter))
 
 			let currentProgress = Int((Double(timerCounter) / Double(train.targuet))*100)
 
 			if(currentProgress >= 100) {
-				backgroundGroup.setBackgroundImageNamed("Progress-101")
-				endWorkout()
-				session.end()
-				mensureLabel.setText("Parabéns!")
-				distanceLabel.setText("✓")
+				finishTrain()
 			}
 			else {
 				backgroundGroup.setBackgroundImageNamed("Progress-\(currentProgress)")
@@ -141,8 +138,6 @@ class InterfaceController: WKInterfaceController {
 extension InterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDelegate {
 
 	func startWorkout() {
-		self.running = true
-
 		do {
 			session = try HKWorkoutSession(healthStore: healthStore, configuration: TimerManager().workoutConfiguration())
 			builder = session.associatedWorkoutBuilder()
@@ -236,11 +231,7 @@ extension InterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDel
 			let currentProgress = Int((distance / Double(train.targuet))*100)
 
 			if(currentProgress >= 100) {
-				backgroundGroup.setBackgroundImageNamed("Progress-101")
-				endWorkout()
-				session.end()
-				mensureLabel.setText("Parabéns!")
-				distanceLabel.setText("✓")
+				finishTrain()
 			}
 			else {
 				backgroundGroup.setBackgroundImageNamed("Progress-\(currentProgress)")
@@ -259,17 +250,23 @@ extension InterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDel
 				let currentProgress = Int((Double(truncating: numberOfSteps) / Double(self.train.targuet))*100)
 
 				if(currentProgress >= 100) {
-					self.backgroundGroup.setBackgroundImageNamed("Progress-101")
-					self.endWorkout()
-					self.session.end()
-					self.mensureLabel.setText("Parabéns!")
-					self.distanceLabel.setText("✓")
+					self.finishTrain()
 				}
 				else {
 					self.backgroundGroup.setBackgroundImageNamed("Progress-\(currentProgress)")
 				}
 			}
 		}
+	}
+
+	func finishTrain() {
+		backgroundGroup.setBackgroundImageNamed("Progress-101")
+		endWorkout()
+		session.end()
+		mensureLabel.setText("Parabéns!")
+		distanceLabel.setText("✓")
+		timer.invalidate()
+		NotificationManager().singleNotification(title: "Treino concluído!",text: train.title + train.subtitle)
 	}
 
 	func workoutSession(_ workoutSession: HKWorkoutSession, didFailWithError error: Error) { }

@@ -23,6 +23,7 @@
 		2FA669A72553106100854180 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FA669A52553106100854180 /* LaunchScreen.storyboard */; };
 		C44171B4256D86040033D729 /* RowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44171B3256D86040033D729 /* RowController.swift */; };
 		C469FD9A255F68D100B0948E /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C469FD99255F68D100B0948E /* Interface.storyboard */; };
+		C487F9CC2574854D00DB9EC8 /* TrainOptionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C487F9CB2574854D00DB9EC8 /* TrainOptionsController.swift */; };
 		C48A93D4256433E000878ACE /* OptionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48A93D3256433E000878ACE /* OptionsController.swift */; };
 		C4A373C8256C8A60003E419F /* Train.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A373C7256C8A60003E419F /* Train.swift */; };
 		C4E2AD882555B7AE0006E1BF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4E2AD872555B7AE0006E1BF /* Assets.xcassets */; };
@@ -98,6 +99,7 @@
 		2FA669A82553106100854180 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C44171B3256D86040033D729 /* RowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowController.swift; sourceTree = "<group>"; };
 		C469FD99255F68D100B0948E /* Interface.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Interface.storyboard; sourceTree = "<group>"; };
+		C487F9CB2574854D00DB9EC8 /* TrainOptionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainOptionsController.swift; sourceTree = "<group>"; };
 		C48A93D3256433E000878ACE /* OptionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsController.swift; sourceTree = "<group>"; };
 		C4A373C7256C8A60003E419F /* Train.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Train.swift; sourceTree = "<group>"; };
 		C4E2AD822555B7AC0006E1BF /* WatchHealthKitPOC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchHealthKitPOC.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -236,6 +238,7 @@
 				C4E2AD992555B7AF0006E1BF /* ComplicationController.swift */,
 				C4E2AD932555B7AF0006E1BF /* InterfaceController.swift */,
 				C48A93D3256433E000878ACE /* OptionsController.swift */,
+				C487F9CB2574854D00DB9EC8 /* TrainOptionsController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -436,6 +439,7 @@
 				C44171B4256D86040033D729 /* RowController.swift in Sources */,
 				C4A373C8256C8A60003E419F /* Train.swift in Sources */,
 				C4E2AD962555B7AF0006E1BF /* ExtensionDelegate.swift in Sources */,
+				C487F9CC2574854D00DB9EC8 /* TrainOptionsController.swift in Sources */,
 				C4E2AD942555B7AF0006E1BF /* InterfaceController.swift in Sources */,
 				C48A93D4256433E000878ACE /* OptionsController.swift in Sources */,
 			);
