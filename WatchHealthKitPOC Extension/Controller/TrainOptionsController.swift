@@ -9,4 +9,10 @@ import WatchKit
 
 class TrainOptionsController: WKInterfaceController {
 
+	@IBAction func playPauseAction() {
+	}
+
+	@IBAction func finishTrainAction() {
+
+	}
 }

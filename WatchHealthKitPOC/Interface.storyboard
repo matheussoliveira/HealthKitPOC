@@ -63,12 +63,20 @@
             <objects>
                 <controller identifier="TrainOptionsController" id="QYO-r0-7CY" customClass="TrainOptionsController" customModule="WatchHealthKitPOC_Extension">
                     <items>
-                        <button width="1" alignment="left" title="Pause" id="DGs-QC-bjb"/>
-                        <button width="1" alignment="left" title="Finalizar" id="MeE-gX-0Vv"/>
+                        <button width="1" alignment="left" title="Pause" id="DGs-QC-bjb">
+                            <connections>
+                                <action selector="playPauseAction" destination="QYO-r0-7CY" id="aV5-Sr-Xhz"/>
+                            </connections>
+                        </button>
+                        <button width="1" alignment="left" title="Finalizar" id="MeE-gX-0Vv">
+                            <connections>
+                                <action selector="finishTrainAction" destination="QYO-r0-7CY" id="eq2-FB-2Az"/>
+                            </connections>
+                        </button>
                     </items>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="944" y="259"/>
+            <point key="canvasLocation" x="884" y="259"/>
         </scene>
         <!--OptionsController-->
         <scene sceneID="JGj-VN-PQV">
