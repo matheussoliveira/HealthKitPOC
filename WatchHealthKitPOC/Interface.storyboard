@@ -65,7 +65,7 @@
                     <items>
                         <button width="1" alignment="left" title="Pause" id="DGs-QC-bjb">
                             <connections>
-                                <action selector="playPauseAction" destination="QYO-r0-7CY" id="aV5-Sr-Xhz"/>
+                                <action selector="playPauseAction" destination="QYO-r0-7CY" id="3KM-v4-rN7"/>
                             </connections>
                         </button>
                         <button width="1" alignment="left" title="Finalizar" id="MeE-gX-0Vv">
@@ -74,6 +74,9 @@
                             </connections>
                         </button>
                     </items>
+                    <connections>
+                        <outlet property="playPauseButton" destination="DGs-QC-bjb" id="aSD-bp-sfC"/>
+                    </connections>
                 </controller>
             </objects>
             <point key="canvasLocation" x="884" y="259"/>

@@ -60,8 +60,8 @@ class InterfaceController: WKInterfaceController {
 
 	let pedometer = CMPedometer()
 	var steps: Int = 0
-
-	var train = Train(type: .distance, targuet: 1, title: "----", subtitle: "----")
+	
+	var train = Train(type: .distance, targuet: 1, title: "----", subtitle: "----", currentProgress: 0, currentTime: 0, isPaused: false)
 
 
 	//	MARK: - Life Cycle
@@ -84,6 +84,23 @@ class InterfaceController: WKInterfaceController {
 		}
 
 		startWorkout()
+	}
+
+	override func willDisappear() {
+
+		let team = Team(
+			currentProgress: Int((distance / Double(train.targuet))*100),
+			type: TypeExerciseManager().trainTypeToString(type: train.type),
+			targuet: train.targuet,
+			title: train.title,
+			subtitle: train.subtitle,
+			currentTime: timerCounter,
+			isPaused: train.isPaused)
+
+		let userDefaults = UserDefaults.standard
+		let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: team)
+		userDefaults.set(encodedData, forKey: "teams")
+		userDefaults.synchronize()
 	}
 
 	//	MARK: - HealthKit

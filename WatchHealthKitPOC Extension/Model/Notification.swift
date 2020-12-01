@@ -129,4 +129,33 @@ class TypeExerciseManager {
 				return "\(train.targuet)m"
 		}
 	}
+
+	func stringToTrainType(type: String) -> TrainType {
+		switch type {
+
+			case "time":
+				return TrainType.time
+
+			case "paces":
+				return TrainType.paces
+
+			default: //distance
+				return TrainType.distance
+		}
+	}
+
+	func trainTypeToString(type: TrainType) -> String {
+		switch type {
+
+			case TrainType.time:
+				return "time"
+
+			case TrainType.paces:
+				return "paces"
+
+			default: //distance
+				return "distance"
+		}
+	}
 }
+

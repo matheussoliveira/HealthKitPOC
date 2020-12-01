@@ -19,10 +19,10 @@ class OptionsController: WKInterfaceController {
 
 	//	MARK: - Variables
 	var trains = [
-		Train(type: .distance, targuet: 30, title: "Vida em movimento", subtitle: "Ande 30 metros"),
-		Train(type: .distance, targuet: 100, title: "Vida em movimento", subtitle: "Ande 100 metros"),
-		Train(type: .paces, targuet: 300, title: "Vida em movimento", subtitle: "Ande 300 passos"),
-		Train(type: .time, targuet: 60, title: "Vida em movimento", subtitle: "Corra 1 minuto"),
+		Train(type: .distance, targuet: 30, title: "Vida em movimento", subtitle: "Ande 30 metros", currentProgress: 0, currentTime: 0, isPaused: false),
+		Train(type: .distance, targuet: 100, title: "Vida em movimento", subtitle: "Ande 100 metros", currentProgress: 0, currentTime: 0, isPaused: false),
+		Train(type: .paces, targuet: 300, title: "Vida em movimento", subtitle: "Ande 300 passos", currentProgress: 0, currentTime: 0, isPaused: false),
+		Train(type: .time, targuet: 60, title: "Vida em movimento", subtitle: "Corra 1 minuto", currentProgress: 0, currentTime: 0, isPaused: false),
 	]
 
 	//	MARK: - IBOutlet
