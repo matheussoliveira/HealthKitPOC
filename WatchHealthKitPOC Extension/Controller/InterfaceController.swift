@@ -84,10 +84,20 @@ class InterfaceController: WKInterfaceController {
 		}
 
 		startWorkout()
+
+		print("---- vendo se está pausado -----")
+		if(train.isPaused) {
+			print("---- pausado -----")
+			distanceLabel.setText("pausado")
+		}
+		else {
+			print("---- noral -----")
+			distanceLabel.setText("normal")
+		}
 	}
 
 	override func willDisappear() {
-
+		print(willDisappear)
 		let team = Team(
 			currentProgress: Int((distance / Double(train.targuet))*100),
 			type: TypeExerciseManager().trainTypeToString(type: train.type),

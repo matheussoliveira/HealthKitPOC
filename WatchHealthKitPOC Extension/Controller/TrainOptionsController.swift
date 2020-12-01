@@ -17,18 +17,29 @@ class TrainOptionsController: WKInterfaceController {
 		let decoded  = userDefaults.data(forKey: "teams")
 		let decodedTeams = NSKeyedUnarchiver.unarchiveObject(with: decoded!) as! Team
 
-		print(decodedTeams)
+		let team = Team(
+			currentProgress: decodedTeams.currentProgress,
+			type: decodedTeams.type,
+			targuet: decodedTeams.targuet,
+			title: decodedTeams.title,
+			subtitle: decodedTeams.subtitle,
+			currentTime: decodedTeams.currentTime,
+			isPaused: decodedTeams.isPaused ? false : true)
 
-		if(isPaused) {
+		let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: team)
+		userDefaults.set(encodedData, forKey: "teams")
+		userDefaults.synchronize()
+
+		if (decodedTeams.isPaused) {
 			let train =
 				Train(type: TypeExerciseManager().stringToTrainType(type: decodedTeams.type),
 					  targuet: decodedTeams.targuet,
 					  title: decodedTeams.title,
-					subtitle: decodedTeams.subtitle,
+					  subtitle: decodedTeams.subtitle,
 					  currentProgress: decodedTeams.currentProgress,
 					  currentTime: decodedTeams.currentTime,
-					  isPaused: decodedTeams.isPaused
-					)
+					  isPaused: false
+				)
 
 			WKInterfaceController.reloadRootPageControllers(withNames: ["TrainOptionsController", "InterfaceController"], contexts: [train, train], orientation: .horizontal, pageIndex: 0)
 		}
@@ -40,7 +51,7 @@ class TrainOptionsController: WKInterfaceController {
 					  subtitle: decodedTeams.subtitle,
 					  currentProgress: decodedTeams.currentProgress,
 					  currentTime: decodedTeams.currentTime,
-					  isPaused: decodedTeams.isPaused
+					  isPaused: true
 				)
 
 			WKInterfaceController.reloadRootPageControllers(withNames: ["TrainOptionsController", "InterfaceController"], contexts: [train, train], orientation: .horizontal, pageIndex: 0)

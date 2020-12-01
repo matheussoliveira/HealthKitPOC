@@ -64,5 +64,8 @@ class Team: NSObject, NSCoding {
 		aCoder.encode(targuet, forKey: "targuet")
 		aCoder.encode(title, forKey: "title")
 		aCoder.encode(subtitle, forKey: "subtitle")
+		aCoder.encode(title, forKey: "title")
+		aCoder.encode(currentTime, forKey: "currentTime")
+		aCoder.encode(isPaused, forKey: "isPaused")
 	}
 }
