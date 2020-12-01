@@ -105,7 +105,8 @@ class InterfaceController: WKInterfaceController {
 			title: train.title,
 			subtitle: train.subtitle,
 			currentTime: timerCounter,
-			isPaused: train.isPaused)
+			isPaused: train.isPaused
+		)
 
 		let userDefaults = UserDefaults.standard
 		let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: team)
