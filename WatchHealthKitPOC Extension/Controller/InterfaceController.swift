@@ -71,13 +71,8 @@ class InterfaceController: WKInterfaceController {
 		target.setText("meta: \(TypeExerciseManager().populateTargetLabel(train: train))")
 		mensureLabel.setText("")
 
-
-		print("---------------")
-		print(train.currentTime)
-		print("---------------")
-
 		if(train.isPaused) {
-			distanceLabel.setText("pausado")
+			distanceLabel.setText("Pausado")
 		}
 		else if(train.currentTime == 0) {
 			distanceLabel.setText("Começar")
@@ -155,7 +150,7 @@ class InterfaceController: WKInterfaceController {
 
 	@objc func timerAction() {
 		timerCounter += 1
-		timerLabel.setText(TimerManager().secondsToHoursMinutesSeconds(seconds: timerCounter))
+		timerLabel.setText(TimerManager().secondsToHoursMinutesSeconds(seconds: timerCounter + train.currentTime))
 
 		if(train.type == .time && running) {
 			distanceLabel.setText(TimerManager().secondsToHoursMinutesSeconds(seconds: timerCounter))
@@ -166,7 +161,7 @@ class InterfaceController: WKInterfaceController {
 				finishTrain()
 			}
 			else {
-				backgroundGroup.setBackgroundImageNamed("Progress-\(currentProgress)")
+				backgroundGroup.setBackgroundImageNamed("Progress-\(currentProgress + train.currentProgress)")
 			}
 		}
 	}
@@ -272,7 +267,7 @@ extension InterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDel
 				finishTrain()
 			}
 			else {
-				backgroundGroup.setBackgroundImageNamed("Progress-\(currentProgress)")
+				backgroundGroup.setBackgroundImageNamed("Progress-\(currentProgress + train.currentProgress)")
 			}
 		}
 
@@ -291,7 +286,7 @@ extension InterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDel
 					self.finishTrain()
 				}
 				else {
-					self.backgroundGroup.setBackgroundImageNamed("Progress-\(currentProgress)")
+					self.backgroundGroup.setBackgroundImageNamed("Progress-\(currentProgress + self.train.currentProgress)")
 				}
 			}
 		}
