@@ -89,7 +89,7 @@ class InterfaceController: WKInterfaceController {
 	override func willDisappear() {
 		if !train.isPaused {
 			let team = TrainPersistenceData(
-				currentProgress: Int((distance / Double(train.targuet))*100),
+				currentProgress: distance,
 				type: TypeExerciseManager().trainTypeToString(type: train.type),
 				targuet: train.targuet,
 				title: train.title,
@@ -161,7 +161,7 @@ class InterfaceController: WKInterfaceController {
 				finishTrain()
 			}
 			else {
-				backgroundGroup.setBackgroundImageNamed("Progress-\(currentProgress + train.currentProgress)")
+				backgroundGroup.setBackgroundImageNamed("Progress-\(currentProgress)")
 			}
 		}
 	}
@@ -267,7 +267,7 @@ extension InterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDel
 				finishTrain()
 			}
 			else {
-				backgroundGroup.setBackgroundImageNamed("Progress-\(currentProgress + train.currentProgress)")
+				backgroundGroup.setBackgroundImageNamed("Progress-\(currentProgress)")
 			}
 		}
 
@@ -286,7 +286,7 @@ extension InterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDel
 					self.finishTrain()
 				}
 				else {
-					self.backgroundGroup.setBackgroundImageNamed("Progress-\(currentProgress + self.train.currentProgress)")
+					self.backgroundGroup.setBackgroundImageNamed("Progress-\(currentProgress)")
 				}
 			}
 		}
@@ -299,7 +299,7 @@ extension InterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDel
 		mensureLabel.setText("Parabéns!")
 		distanceLabel.setText("✓")
 		timer.invalidate()
-		NotificationManager().singleNotification(title: "Treino concluído!",text: train.title + train.subtitle)
+		NotificationManager().singleNotification(title: "Treino concluído!",text: train.title)
 	}
 
 	func workoutSession(_ workoutSession: HKWorkoutSession, didFailWithError error: Error) { }

@@ -39,6 +39,14 @@ class NotificationManager {
 				print(error.localizedDescription)
 			}
 		}
+
+		UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+			if success {
+				print("All set!")
+			} else if let error = error {
+				print(error.localizedDescription)
+			}
+		}
 	}
 
 	func setReminderNotification() {
@@ -51,8 +59,8 @@ class NotificationManager {
 		let now = Date()
 		var components = gregorian.dateComponents([.year, .month, .day, .hour, .minute, .second], from: now)
 
-		components.hour = 13
-		components.minute = 27
+		components.hour = 15
+		components.minute = 20
 		components.second = 0
 
 		let date = gregorian.date(from: components)!

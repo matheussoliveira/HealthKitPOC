@@ -19,14 +19,14 @@ struct TrainStruct {
 	var targuet: Int
 	var title: String
 	var subtitle: String
-	var currentProgress: Int
+	var currentProgress: Double
 	var currentTime: Int //seconds
 	var isPaused: Bool
 }
 
 /// Persistence data used in pause
 class TrainPersistenceData: NSObject, NSCoding {
-	var currentProgress: Int
+	var currentProgress: Double
 	var targuet: Int
 	var type: String
 	var title: String
@@ -34,7 +34,7 @@ class TrainPersistenceData: NSObject, NSCoding {
 	var currentTime: Int //seconds
 	var isPaused: Bool
 	
-	init(currentProgress: Int, type: String, targuet: Int, title: String, subtitle: String, currentTime: Int, isPaused: Bool) {
+	init(currentProgress: Double, type: String, targuet: Int, title: String, subtitle: String, currentTime: Int, isPaused: Bool) {
 		self.currentProgress = currentProgress
 		self.type = type
 		self.targuet = targuet
@@ -45,7 +45,7 @@ class TrainPersistenceData: NSObject, NSCoding {
 	}
 	
 	required convenience init(coder aDecoder: NSCoder) {
-		let currentProgress = aDecoder.decodeInteger(forKey: "currentProgress")
+		let currentProgress = aDecoder.decodeDouble(forKey: "currentProgress")
 		let targuet = aDecoder.decodeInteger(forKey: "targuet")
 		let currentTime = aDecoder.decodeInteger(forKey: "currentTime")
 		

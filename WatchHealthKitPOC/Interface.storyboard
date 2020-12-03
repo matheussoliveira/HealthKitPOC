@@ -109,7 +109,7 @@
                         </table>
                         <button width="1" alignment="left" title="Notificação" id="LWk-Ig-fEM">
                             <connections>
-                                <action selector="requestLocalNotification" destination="oLJ-16-NFj" id="O6x-cN-CTu"/>
+                                <action selector="requestLocalNotification" destination="oLJ-16-NFj" id="dOd-A3-VpR"/>
                             </connections>
                         </button>
                     </items>
