@@ -26,11 +26,7 @@ class InterfaceController: WKInterfaceController {
 
 	//	MARK: - IBActions
 	@IBAction func startWorkoutAction() {
-
-		if running {
-			// to do: pause
-		}
-		else {
+		if !train.isPaused {
 			running = true
 			let startLabels = TypeExerciseManager().initialLabels(train: train)
 			distanceLabel.setText(startLabels.distance)
@@ -61,8 +57,7 @@ class InterfaceController: WKInterfaceController {
 	let pedometer = CMPedometer()
 	var steps: Int = 0
 	
-	var train = Train(type: .distance, targuet: 1, title: "----", subtitle: "----", currentProgress: 0, currentTime: 0, isPaused: false)
-
+	var train = TrainStruct(type: .distance, targuet: 1, title: "----", subtitle: "----", currentProgress: 0, currentTime: 0, isPaused: false)
 
 	//	MARK: - Life Cycle
 	override func awake(withContext context: Any?) {
@@ -73,7 +68,7 @@ class InterfaceController: WKInterfaceController {
 		distanceLabel.setText("Começar")
 		mensureLabel.setText("")
 
-		if let getTrain = context as? Train {
+		if let getTrain = context as? TrainStruct {
 			train = getTrain
 		}
 
@@ -87,18 +82,15 @@ class InterfaceController: WKInterfaceController {
 
 		print("---- vendo se está pausado -----")
 		if(train.isPaused) {
-			print("---- pausado -----")
 			distanceLabel.setText("pausado")
 		}
 		else {
-			print("---- noral -----")
-			distanceLabel.setText("normal")
+			distanceLabel.setText("começar")
 		}
 	}
 
 	override func willDisappear() {
-		print(willDisappear)
-		let team = Team(
+		let team = TrainPersistenceData(
 			currentProgress: Int((distance / Double(train.targuet))*100),
 			type: TypeExerciseManager().trainTypeToString(type: train.type),
 			targuet: train.targuet,
@@ -108,10 +100,7 @@ class InterfaceController: WKInterfaceController {
 			isPaused: train.isPaused
 		)
 
-		let userDefaults = UserDefaults.standard
-		let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: team)
-		userDefaults.set(encodedData, forKey: "teams")
-		userDefaults.synchronize()
+		team.saveTrain()
 	}
 
 	//	MARK: - HealthKit
@@ -162,7 +151,7 @@ class InterfaceController: WKInterfaceController {
 	}
 }
 
-// MERK: - Workout Manager
+// MARK: - Workout Manager
 extension InterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDelegate {
 
 	func startWorkout() {

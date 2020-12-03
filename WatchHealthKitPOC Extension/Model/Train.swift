@@ -14,7 +14,7 @@ enum TrainType {
 }
 
 // caso seja necessário acrescentar um tipo de treino, é necessário aceescentá-lo também ao stringToTrainType e trainTypeToString em TypeExerciseManager
-struct Train {
+struct TrainStruct {
 	var type: TrainType
 	var targuet: Int
 	var title: String
@@ -25,7 +25,7 @@ struct Train {
 }
 
 //class persistenceData {
-class Team: NSObject, NSCoding {
+class TrainPersistenceData: NSObject, NSCoding {
 	var currentProgress: Int
 	var targuet: Int
 	var type: String
@@ -67,5 +67,12 @@ class Team: NSObject, NSCoding {
 		aCoder.encode(title, forKey: "title")
 		aCoder.encode(currentTime, forKey: "currentTime")
 		aCoder.encode(isPaused, forKey: "isPaused")
+	}
+
+	func saveTrain() {
+		let userDefaults = UserDefaults.standard
+		let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: self)
+		userDefaults.set(encodedData, forKey: "teams")
+		userDefaults.synchronize()
 	}
 }

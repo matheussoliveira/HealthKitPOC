@@ -35,6 +35,8 @@
 		C4E2AD9C2555B7B20006E1BF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4E2AD9B2555B7B20006E1BF /* Assets.xcassets */; };
 		C4E2ADA12555B7B20006E1BF /* WatchHealthKitPOC.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = C4E2AD822555B7AC0006E1BF /* WatchHealthKitPOC.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C4E2ADBD2555C1030006E1BF /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4E2ADBC2555C1030006E1BF /* HealthKit.framework */; };
+		C4F43D8F2579253B00C14EE6 /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F43D8E2579253B00C14EE6 /* TimerManager.swift */; };
+		C4F43D942579259E00C14EE6 /* TypeExerciseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F43D932579259E00C14EE6 /* TypeExerciseManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,6 +119,8 @@
 		C4E2ADBA2555C1020006E1BF /* WatchHealthKitPOC Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "WatchHealthKitPOC Extension.entitlements"; sourceTree = "<group>"; };
 		C4E2ADBC2555C1030006E1BF /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS7.0.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
 		C4E2ADCA2555C3610006E1BF /* HealthKitPOC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HealthKitPOC.entitlements; sourceTree = "<group>"; };
+		C4F43D8E2579253B00C14EE6 /* TimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerManager.swift; sourceTree = "<group>"; };
+		C4F43D932579259E00C14EE6 /* TypeExerciseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeExerciseManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -246,9 +250,10 @@
 		C48A93D2256433B400878ACE /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				C4E2AD952555B7AF0006E1BF /* ExtensionDelegate.swift */,
 				C4A373C7256C8A60003E419F /* Train.swift */,
 				C4E2AD972555B7AF0006E1BF /* Notification.swift */,
+				C4F43D8E2579253B00C14EE6 /* TimerManager.swift */,
+				C4F43D932579259E00C14EE6 /* TypeExerciseManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -268,6 +273,7 @@
 			children = (
 				C4E2ADBA2555C1020006E1BF /* WatchHealthKitPOC Extension.entitlements */,
 				C4E2ADB62555BABF0006E1BF /* watchOS-heartrate WatchKit Extension.entitlements */,
+				C4E2AD952555B7AF0006E1BF /* ExtensionDelegate.swift */,
 				C44171AC256D829E0033D729 /* Views */,
 				C48A93D2256433B400878ACE /* Model */,
 				C48A93D1256433A900878ACE /* Controller */,
@@ -435,11 +441,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4E2AD982555B7AF0006E1BF /* Notification.swift in Sources */,
+				C4F43D942579259E00C14EE6 /* TypeExerciseManager.swift in Sources */,
 				C4E2AD9A2555B7AF0006E1BF /* ComplicationController.swift in Sources */,
 				C44171B4256D86040033D729 /* RowController.swift in Sources */,
 				C4A373C8256C8A60003E419F /* Train.swift in Sources */,
 				C4E2AD962555B7AF0006E1BF /* ExtensionDelegate.swift in Sources */,
 				C487F9CC2574854D00DB9EC8 /* TrainOptionsController.swift in Sources */,
+				C4F43D8F2579253B00C14EE6 /* TimerManager.swift in Sources */,
 				C4E2AD942555B7AF0006E1BF /* InterfaceController.swift in Sources */,
 				C48A93D4256433E000878ACE /* OptionsController.swift in Sources */,
 			);

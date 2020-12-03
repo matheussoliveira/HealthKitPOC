@@ -15,47 +15,19 @@ class TrainOptionsController: WKInterfaceController {
 	@IBAction func playPauseAction() {
 		let userDefaults = UserDefaults.standard
 		let decoded  = userDefaults.data(forKey: "teams")
-		let decodedTeams = NSKeyedUnarchiver.unarchiveObject(with: decoded!) as! Team
+		let decodedTeams = NSKeyedUnarchiver.unarchiveObject(with: decoded!) as! TrainPersistenceData
 
-		let team = Team(
-			currentProgress: decodedTeams.currentProgress,
-			type: decodedTeams.type,
-			targuet: decodedTeams.targuet,
-			title: decodedTeams.title,
-			subtitle: decodedTeams.subtitle,
-			currentTime: decodedTeams.currentTime,
-			isPaused: decodedTeams.isPaused ? false : true)
+		let train =
+			TrainStruct(type: TypeExerciseManager().stringToTrainType(type: decodedTeams.type),
+						targuet: decodedTeams.targuet,
+						title: decodedTeams.title,
+						subtitle: decodedTeams.subtitle,
+						currentProgress: decodedTeams.currentProgress,
+						currentTime: decodedTeams.currentTime,
+						isPaused: decodedTeams.isPaused ? false : true
+			)
 
-		let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: team)
-		userDefaults.set(encodedData, forKey: "teams")
-		userDefaults.synchronize()
-
-		if (decodedTeams.isPaused) {
-			let train =
-				Train(type: TypeExerciseManager().stringToTrainType(type: decodedTeams.type),
-					  targuet: decodedTeams.targuet,
-					  title: decodedTeams.title,
-					  subtitle: decodedTeams.subtitle,
-					  currentProgress: decodedTeams.currentProgress,
-					  currentTime: decodedTeams.currentTime,
-					  isPaused: false
-				)
-
-			WKInterfaceController.reloadRootPageControllers(withNames: ["TrainOptionsController", "InterfaceController"], contexts: [train, train], orientation: .horizontal, pageIndex: 0)
-		}
-		else {
-			let train =
-				Train(type: TypeExerciseManager().stringToTrainType(type: decodedTeams.type),
-					  targuet: decodedTeams.targuet,
-					  title: decodedTeams.title,
-					  subtitle: decodedTeams.subtitle,
-					  currentProgress: decodedTeams.currentProgress,
-					  currentTime: decodedTeams.currentTime,
-					  isPaused: true
-				)
-
-			WKInterfaceController.reloadRootPageControllers(withNames: ["TrainOptionsController", "InterfaceController"], contexts: [train, train], orientation: .horizontal, pageIndex: 0)
-		}
+		WKInterfaceController.reloadRootPageControllers(withNames: ["TrainOptionsController", "InterfaceController"], contexts: [train, train], orientation: .horizontal, pageIndex: 0)
 	}
 
 	@IBAction func finishTrainAction() {
