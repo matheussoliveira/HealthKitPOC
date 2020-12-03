@@ -78,6 +78,24 @@ class InterfaceController: WKInterfaceController {
 			distanceLabel.setText("Começar")
 		}
 		else {
+			print("-------- RETOMANDO ---------")
+			distanceLabel.setText("\(train.currentProgress)")
+			timerLabel.setText("\(train.currentTime)")
+			print(train.currentProgress)
+			print(train.currentTime)
+
+			let currentDistance = distance + train.currentProgress
+			distanceLabel.setText("\(currentDistance)")
+
+			let currentProgress = Int((currentDistance / Double(train.targuet))*100)
+
+			if(currentProgress >= 100) {
+				finishTrain()
+			}
+			else {
+				backgroundGroup.setBackgroundImageNamed("Progress-\(currentProgress)")
+			}
+			print("-------- FIM ---------")
 			startWorkoutAction()
 		}
 
@@ -259,9 +277,10 @@ extension InterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDel
 		}
 
 		if(train.type == .distance && running) {
-			distanceLabel.setText("\(distance)")
+			let currentDistance = distance + train.currentProgress
+			distanceLabel.setText("\(currentDistance)")
 
-			let currentProgress = Int((distance / Double(train.targuet))*100)
+			let currentProgress = Int((currentDistance / Double(train.targuet))*100)
 
 			if(currentProgress >= 100) {
 				finishTrain()
