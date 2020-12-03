@@ -14,6 +14,8 @@ import Foundation
 import HealthKit
 import Combine
 
+/// Handle notifications to reminder or to alert exercise finished
+
 class NotificationManager {
 	func singleNotification(title: String, text: String) {
 		let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3, repeats: false)
@@ -60,11 +62,10 @@ class NotificationManager {
 
 
 		let request = UNNotificationRequest(identifier: "reminder", content: content, trigger: trigger)
-		print("INSIDE NOTIFICATION")
 
 		UNUserNotificationCenter.current().add(request, withCompletionHandler: {(error) in
 			if error != nil {
-				print("SOMETHING WENT WRONG")
+				print(error.debugDescription)
 			}
 		})
 	}

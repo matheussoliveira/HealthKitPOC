@@ -13,7 +13,7 @@ enum TrainType {
 	case time //seconds
 }
 
-// caso seja necessário acrescentar um tipo de treino, é necessário aceescentá-lo também ao stringToTrainType e trainTypeToString em TypeExerciseManager
+/// if you need to add a type of training, you must also add it to the stringToTrainType and trainTypeToString in TypeExerciseManager
 struct TrainStruct {
 	var type: TrainType
 	var targuet: Int
@@ -24,7 +24,7 @@ struct TrainStruct {
 	var isPaused: Bool
 }
 
-//class persistenceData {
+/// Persistence data used in pause
 class TrainPersistenceData: NSObject, NSCoding {
 	var currentProgress: Int
 	var targuet: Int
@@ -33,7 +33,7 @@ class TrainPersistenceData: NSObject, NSCoding {
 	var subtitle: String
 	var currentTime: Int //seconds
 	var isPaused: Bool
-
+	
 	init(currentProgress: Int, type: String, targuet: Int, title: String, subtitle: String, currentTime: Int, isPaused: Bool) {
 		self.currentProgress = currentProgress
 		self.type = type
@@ -43,21 +43,21 @@ class TrainPersistenceData: NSObject, NSCoding {
 		self.currentTime = currentTime
 		self.isPaused = isPaused
 	}
-
+	
 	required convenience init(coder aDecoder: NSCoder) {
 		let currentProgress = aDecoder.decodeInteger(forKey: "currentProgress")
 		let targuet = aDecoder.decodeInteger(forKey: "targuet")
 		let currentTime = aDecoder.decodeInteger(forKey: "currentTime")
-
+		
 		let isPaused = aDecoder.decodeBool(forKey: "isPaused")
-
+		
 		let type = aDecoder.decodeObject(forKey: "type") as! String
 		let subtitle = aDecoder.decodeObject(forKey: "subtitle") as! String
 		let title = aDecoder.decodeObject(forKey: "title") as! String
-
+		
 		self.init(currentProgress: currentProgress, type: type, targuet: targuet, title: title, subtitle: subtitle, currentTime: currentTime, isPaused: isPaused)
 	}
-
+	
 	func encode(with aCoder: NSCoder) {
 		aCoder.encode(currentProgress, forKey: "currentProgress")
 		aCoder.encode(type, forKey: "type")
@@ -68,7 +68,7 @@ class TrainPersistenceData: NSObject, NSCoding {
 		aCoder.encode(currentTime, forKey: "currentTime")
 		aCoder.encode(isPaused, forKey: "isPaused")
 	}
-
+	
 	func saveTrain() {
 		let userDefaults = UserDefaults.standard
 		let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: self)

@@ -5,6 +5,8 @@
 //  Created by Joao Flores on 03/12/20.
 //
 
+/// class to convert training texts to be plotted in the interface
+
 class TypeExerciseManager {
 
 	func initialLabels(train: TrainStruct) -> (distance: String, mensure: String) {
