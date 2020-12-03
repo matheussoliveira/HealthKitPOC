@@ -33,4 +33,11 @@ class TrainOptionsController: WKInterfaceController {
 	@IBAction func finishTrainAction() {
 		WKInterfaceController.reloadRootPageControllers(withNames: ["OptionsController"], contexts: [], orientation: .horizontal, pageIndex: 0)
 	}
+
+	override func awake(withContext context: Any?) {
+		if let getTrain = context as? TrainStruct { isPaused = getTrain.isPaused }
+
+		isPaused ? playPauseButton.setTitle("Play") : playPauseButton.setTitle("Pause")
+	}
 }
+//
