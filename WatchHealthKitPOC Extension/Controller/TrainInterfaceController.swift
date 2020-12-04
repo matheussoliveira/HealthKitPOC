@@ -28,9 +28,6 @@ class TrainInterfaceController: WKInterfaceController {
 	@IBAction func startWorkoutAction() {
 		if !train.isPaused {
 			running = true
-//			let startLabels = TypeExerciseManager().initialLabels(train: train)
-//			distanceLabel.setText(startLabels.distance)
-//			mensureLabel.setText(startLabels.mensure)
 
 			endWorkout()
 			startWorkout()
@@ -86,6 +83,16 @@ class TrainInterfaceController: WKInterfaceController {
 	}
 
 	override func willDisappear() {
+		print("----- salvando estado ------")
+		print(distance)
+		print(TypeExerciseManager().trainTypeToString(type: train.type))
+		print(train.targuet)
+		print(train.title)
+		print(train.subtitle)
+		print(timerCounter)
+		print(train.isPaused)
+		print("--------------------------")
+
 		if !train.isPaused {
 			let team = TrainPersistenceData(
 				currentProgress: distance,
@@ -189,6 +196,16 @@ extension TrainInterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuild
 
 	func resetWorkout() {
 		DispatchQueue.main.async {
+			print("----- chegou estado ------")
+			print(self.distance)
+			print(TypeExerciseManager().trainTypeToString(type: self.train.type))
+			print(self.train.targuet)
+			print(self.train.title)
+			print(self.train.subtitle)
+			print(self.timerCounter)
+			print(self.train.isPaused)
+			print("--------------------------")
+
 			self.distance = self.train.currentProgress
 			self.timerCounter = self.train.currentTime
 			self.timerLabel.setText(TimerManager().secondsToHoursMinutesSeconds(seconds: self.timerCounter))
