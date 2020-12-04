@@ -70,9 +70,10 @@ class TrainInterfaceController: WKInterfaceController {
 		mensureLabel.setText("")
 
 		if(train.isPaused) {
-			distanceLabel.setText("Pausado")
+			resetWorkout()
+			mensureLabel.setText("Pausado")
 		}
-		else if(train.currentTime == 0) {
+		else if(train.currentTime == 0 && train.currentTime == 0) {
 			distanceLabel.setText("Começar")
 		}
 		else {
@@ -235,26 +236,33 @@ extension TrainInterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuild
 	func workoutBuilder(_ workoutBuilder: HKLiveWorkoutBuilder, didCollectDataOf collectedTypes: Set<HKSampleType>) {
 
 		for type in collectedTypes {
-			guard let quantityType = type as? HKQuantityType else {
-				return
-			}
+			guard let quantityType = type as? HKQuantityType else { return }
 
 			let statistics = workoutBuilder.statistics(for: quantityType)
 			updateForStatistics(statistics)
 		}
 
+		updateMetersAndHeartRate()
+	}
+
+	func startPedometer() {
+		pedometer.startUpdates(from: Date()) { (data, error) in
+			self.updatePedometer(data)
+		}
+	}
+
+	func updateMetersAndHeartRate() {
 		if(train.type == .distance && running) { updateRing(currentProgress: distance, text: "\(distance)") }
 
 		heartrateLabel.setText("\(heartrate)")
 	}
 
-	func startPedometer() {
-		pedometer.startUpdates(from: Date()) { (data, error) in
-			if(self.train.type == .paces && self.running) {
+	func updatePedometer(_ data: CMPedometerData?) {
+		if(self.train.type == .paces && self.running) {
 
-				let numberOfSteps = data?.numberOfSteps ?? 0
-				self.updateRing(currentProgress: Double(truncating: numberOfSteps), text: "\(numberOfSteps)")
-			}
+			let numberOfSteps = Double(truncating:data?.numberOfSteps ?? 0)
+			let numberOfStepsCurrent = numberOfSteps + train.currentProgress
+			self.updateRing(currentProgress: numberOfStepsCurrent, text: "\(numberOfSteps)")
 		}
 	}
 
