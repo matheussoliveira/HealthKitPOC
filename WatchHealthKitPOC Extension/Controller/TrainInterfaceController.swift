@@ -34,7 +34,6 @@ class TrainInterfaceController: WKInterfaceController {
 
 			endWorkout()
 			resetWorkout()
-
 			startWorkout()
 			startTimer()
 		}
@@ -49,6 +48,7 @@ class TrainInterfaceController: WKInterfaceController {
 	var activeCalories: Double = 0
 	var distance: Double = 0
 	var timerCounter = 0
+	var steps: Int = 0
 	var timer = Timer()
 
 	var running: Bool = false
@@ -56,7 +56,6 @@ class TrainInterfaceController: WKInterfaceController {
 	var cancellable: Cancellable?
 
 	let pedometer = CMPedometer()
-	var steps: Int = 0
 	
 	var train = TrainStruct(type: .distance, targuet: 1, title: "----", subtitle: "----", currentProgress: 0, currentTime: 0, isPaused: false)
 
@@ -80,8 +79,6 @@ class TrainInterfaceController: WKInterfaceController {
 		else {
 			distanceLabel.setText("Retomando")
 		}
-
-		if (train.type == TrainType.paces) { startPedometer() }
 
 		startWorkout()
 	}
@@ -148,12 +145,27 @@ class TrainInterfaceController: WKInterfaceController {
 			}
 		}
 	}
+
+	// MARK: - Ring
+	func updateRing(currentProgress: Double) {
+		distanceLabel.setText("\(currentProgress)")
+
+		let currentPercentage = Int((currentProgress / Double(train.targuet))*100)
+
+		if(currentPercentage >= 100) {
+			finishTrain()
+		}
+		else {
+			backgroundGroup.setBackgroundImageNamed("Progress-\(currentPercentage)")
+		}
+	}
 }
 
 // MARK: - Workout Manager
 extension TrainInterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDelegate {
 
 	func startWorkout() {
+		
 		do {
 			session = try HKWorkoutSession(healthStore: healthStore, configuration: TimerManager().workoutConfiguration())
 			builder = session.associatedWorkoutBuilder()
@@ -171,6 +183,8 @@ extension TrainInterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuild
 		builder.beginCollection(withStart: Date()) { (success, error) in
 			print(error.debugDescription)
 		}
+
+		if (train.type == TrainType.paces) { startPedometer() }
 	}
 
 	func endWorkout() {
@@ -237,22 +251,10 @@ extension TrainInterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuild
 			}
 
 			let statistics = workoutBuilder.statistics(for: quantityType)
-
 			updateForStatistics(statistics)
 		}
 
-		if(train.type == .distance && running) {
-			distanceLabel.setText("\(distance)")
-
-			let currentProgress = Int((distance / Double(train.targuet))*100)
-
-			if(currentProgress >= 100) {
-				finishTrain()
-			}
-			else {
-				backgroundGroup.setBackgroundImageNamed("Progress-\(currentProgress)")
-			}
-		}
+		if(train.type == .distance && running) { updateRing(currentProgress: distance) }
 
 		heartrateLabel.setText("\(heartrate)")
 	}
@@ -260,17 +262,9 @@ extension TrainInterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuild
 	func startPedometer() {
 		pedometer.startUpdates(from: Date()) { (data, error) in
 			if(self.train.type == .paces && self.running) {
-				self.distanceLabel.setText("\(data?.numberOfSteps ?? 0)")
 
 				let numberOfSteps = data?.numberOfSteps ?? 0
-				let currentProgress = Int((Double(truncating: numberOfSteps) / Double(self.train.targuet))*100)
-
-				if(currentProgress >= 100) {
-					self.finishTrain()
-				}
-				else {
-					self.backgroundGroup.setBackgroundImageNamed("Progress-\(currentProgress)")
-				}
+				self.updateRing(currentProgress: Double(truncating: numberOfSteps))
 			}
 		}
 	}
