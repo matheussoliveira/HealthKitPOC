@@ -28,14 +28,14 @@ class TrainInterfaceController: WKInterfaceController {
 	@IBAction func startWorkoutAction() {
 		if !train.isPaused {
 			running = true
-			let startLabels = TypeExerciseManager().initialLabels(train: train)
-			distanceLabel.setText(startLabels.distance)
-			mensureLabel.setText(startLabels.mensure)
+//			let startLabels = TypeExerciseManager().initialLabels(train: train)
+//			distanceLabel.setText(startLabels.distance)
+//			mensureLabel.setText(startLabels.mensure)
 
 			endWorkout()
-			resetWorkout()
 			startWorkout()
 			startTimer()
+			resetWorkout()
 		}
 	}
 
@@ -45,7 +45,6 @@ class TrainInterfaceController: WKInterfaceController {
 	var builder: HKLiveWorkoutBuilder!
 
 	var heartrate: Double = 0
-	var activeCalories: Double = 0
 	var distance: Double = 0
 	var timerCounter = 0
 	var steps: Int = 0
@@ -77,7 +76,9 @@ class TrainInterfaceController: WKInterfaceController {
 			distanceLabel.setText("Começar")
 		}
 		else {
-			distanceLabel.setText("Retomando")
+			resetWorkout()
+			let startLabels = TypeExerciseManager().initialLabels(train: train)
+			mensureLabel.setText(startLabels.mensure)
 		}
 
 		startWorkout()
@@ -133,21 +134,14 @@ class TrainInterfaceController: WKInterfaceController {
 		timerLabel.setText(TimerManager().secondsToHoursMinutesSeconds(seconds: timerCounter))
 
 		if(train.type == .time && running) {
-			distanceLabel.setText(TimerManager().secondsToHoursMinutesSeconds(seconds: timerCounter))
 
-			let currentProgress = Int((Double(timerCounter) / Double(train.targuet))*100)
-
-			if(currentProgress >= 100) {
-				finishTrain()
+			updateRing(currentProgress: Double(timerCounter),
+					   text: TimerManager().secondsToHoursMinutesSeconds(seconds: timerCounter))
 			}
-			else {
-				backgroundGroup.setBackgroundImageNamed("Progress-\(currentProgress)")
-			}
-		}
 	}
 
 	// MARK: - Ring
-	func updateRing(currentProgress: Double) {
+	func updateRing(currentProgress: Double, text: String) {
 		distanceLabel.setText("\(currentProgress)")
 
 		let currentPercentage = Int((currentProgress / Double(train.targuet))*100)
@@ -194,9 +188,10 @@ extension TrainInterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuild
 
 	func resetWorkout() {
 		DispatchQueue.main.async {
-			self.timerCounter = 0
-			self.activeCalories = 0
-			self.distance = 0
+			self.distance = self.train.currentProgress
+			self.timerCounter = self.train.currentTime
+			self.timerLabel.setText(TimerManager().secondsToHoursMinutesSeconds(seconds: self.timerCounter))
+			self.updateRing(currentProgress: self.distance, text: "\(self.distance)")
 		}
 	}
 
@@ -213,17 +208,11 @@ extension TrainInterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuild
 					let roundedValue = Double( round( 1 * value! ) / 1 )
 					self.heartrate = roundedValue
 
-				case HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned):
-					let energyUnit = HKUnit.kilocalorie()
-					let value = statistics.sumQuantity()?.doubleValue(for: energyUnit)
-					self.activeCalories = Double( round( 1 * value! ) / 1 )
-					return
-
 				case HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning):
 					let meterUnit = HKUnit.meter()
 					let value = statistics.sumQuantity()?.doubleValue(for: meterUnit)
 					let roundedValue = Double( round( 1 * value! ) / 1 )
-					self.distance = roundedValue
+					self.distance = roundedValue + self.train.currentProgress
 					return
 
 				default:
@@ -254,7 +243,7 @@ extension TrainInterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuild
 			updateForStatistics(statistics)
 		}
 
-		if(train.type == .distance && running) { updateRing(currentProgress: distance) }
+		if(train.type == .distance && running) { updateRing(currentProgress: distance, text: "\(distance)") }
 
 		heartrateLabel.setText("\(heartrate)")
 	}
@@ -264,7 +253,7 @@ extension TrainInterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuild
 			if(self.train.type == .paces && self.running) {
 
 				let numberOfSteps = data?.numberOfSteps ?? 0
-				self.updateRing(currentProgress: Double(truncating: numberOfSteps))
+				self.updateRing(currentProgress: Double(truncating: numberOfSteps), text: "\(numberOfSteps)")
 			}
 		}
 	}
