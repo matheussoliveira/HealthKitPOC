@@ -56,6 +56,7 @@ class TrainInterfaceController: WKInterfaceController {
 	var train = TrainStruct(type: .distance, targuet: 1, title: "----", subtitle: "----", currentProgress: 0, currentTime: 0, isPaused: false)
 
 	//	MARK: - Life Cycle
+	
 	override func awake(withContext context: Any?) {
 		super.awake(withContext: context)
 
@@ -77,6 +78,7 @@ class TrainInterfaceController: WKInterfaceController {
 			resetWorkout()
 			let startLabels = TypeExerciseManager().initialLabels(train: train)
 			mensureLabel.setText(startLabels.mensure)
+			startWorkoutAction()
 		}
 
 		startWorkout()
@@ -150,8 +152,9 @@ class TrainInterfaceController: WKInterfaceController {
 
 	// MARK: - Ring
 	func updateRing(currentProgress: Double, text: String) {
+		print("--- updateRing")
 		distanceLabel.setText("\(currentProgress)")
-
+		print(currentProgress)
 		let currentPercentage = Int((currentProgress / Double(train.targuet))*100)
 
 		if(currentPercentage >= 100) {
@@ -196,6 +199,7 @@ extension TrainInterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuild
 
 	func resetWorkout() {
 		DispatchQueue.main.async {
+			print("resetWorkout()")
 			print("----- chegou estado ------")
 			print(self.distance)
 			print(TypeExerciseManager().trainTypeToString(type: self.train.type))
@@ -286,7 +290,6 @@ extension TrainInterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuild
 	func finishTrain() {
 		backgroundGroup.setBackgroundImageNamed("Progress-101")
 		endWorkout()
-		session.end()
 		mensureLabel.setText("Parabéns!")
 		distanceLabel.setText("✓")
 		timer.invalidate()
