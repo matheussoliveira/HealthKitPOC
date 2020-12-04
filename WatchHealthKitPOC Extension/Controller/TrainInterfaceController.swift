@@ -15,7 +15,7 @@ import HealthKit
 import Combine
 import CoreMotion
 
-class InterfaceController: WKInterfaceController {
+class TrainInterfaceController: WKInterfaceController {
 	//	MARK: - IBOutlets
 	@IBOutlet weak var heartrateLabel: WKInterfaceLabel!
 	@IBOutlet weak var distanceLabel: WKInterfaceLabel!
@@ -78,25 +78,7 @@ class InterfaceController: WKInterfaceController {
 			distanceLabel.setText("Começar")
 		}
 		else {
-			print("-------- RETOMANDO ---------")
-			distanceLabel.setText("\(train.currentProgress)")
-			timerLabel.setText("\(train.currentTime)")
-			print(train.currentProgress)
-			print(train.currentTime)
-
-			let currentDistance = distance + train.currentProgress
-			distanceLabel.setText("\(currentDistance)")
-
-			let currentProgress = Int((currentDistance / Double(train.targuet))*100)
-
-			if(currentProgress >= 100) {
-				finishTrain()
-			}
-			else {
-				backgroundGroup.setBackgroundImageNamed("Progress-\(currentProgress)")
-			}
-			print("-------- FIM ---------")
-			startWorkoutAction()
+			distanceLabel.setText("Retomando")
 		}
 
 		if (train.type == TrainType.paces) { startPedometer() }
@@ -114,23 +96,6 @@ class InterfaceController: WKInterfaceController {
 				subtitle: train.subtitle,
 				currentTime: timerCounter,
 				isPaused: train.isPaused
-			)
-
-			team.saveTrain()
-		}
-		else {
-			let userDefaults = UserDefaults.standard
-			let decoded  = userDefaults.data(forKey: "teams")
-			let decodedTeams = NSKeyedUnarchiver.unarchiveObject(with: decoded!) as! TrainPersistenceData
-
-			let team = TrainPersistenceData(
-				currentProgress: decodedTeams.currentProgress,
-				type: decodedTeams.type,
-				targuet: decodedTeams.targuet,
-				title: decodedTeams.title,
-				subtitle: decodedTeams.subtitle,
-				currentTime: decodedTeams.currentTime,
-				isPaused: decodedTeams.isPaused ? false : true
 			)
 
 			team.saveTrain()
@@ -168,7 +133,7 @@ class InterfaceController: WKInterfaceController {
 
 	@objc func timerAction() {
 		timerCounter += 1
-		timerLabel.setText(TimerManager().secondsToHoursMinutesSeconds(seconds: timerCounter + train.currentTime))
+		timerLabel.setText(TimerManager().secondsToHoursMinutesSeconds(seconds: timerCounter))
 
 		if(train.type == .time && running) {
 			distanceLabel.setText(TimerManager().secondsToHoursMinutesSeconds(seconds: timerCounter))
@@ -186,7 +151,7 @@ class InterfaceController: WKInterfaceController {
 }
 
 // MARK: - Workout Manager
-extension InterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDelegate {
+extension TrainInterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDelegate {
 
 	func startWorkout() {
 		do {
@@ -277,10 +242,9 @@ extension InterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuilderDel
 		}
 
 		if(train.type == .distance && running) {
-			let currentDistance = distance + train.currentProgress
-			distanceLabel.setText("\(currentDistance)")
+			distanceLabel.setText("\(distance)")
 
-			let currentProgress = Int((currentDistance / Double(train.targuet))*100)
+			let currentProgress = Int((distance / Double(train.targuet))*100)
 
 			if(currentProgress >= 100) {
 				finishTrain()

@@ -15,7 +15,7 @@ import HealthKit
 import Combine
 import CoreMotion
 
-class OptionsController: WKInterfaceController {
+class TrainListController: WKInterfaceController {
 	
 	//	MARK: - Variables
 	var trains = [
