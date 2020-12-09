@@ -23,46 +23,44 @@ class NotificationManager {
 		content.title = NSLocalizedString(title, comment: "title")
 		content.body = NSLocalizedString(text, comment: "text")
 		content.categoryIdentifier = "Local"
-
+		
 		let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-
 		UNUserNotificationCenter.current().add(request)
 	}
-
+	
 	func setupNotifications() {
 		UNUserNotificationCenter.current()
-
+		
 		let center = UNUserNotificationCenter.current()
 		center.requestAuthorization(options: [.alert, .sound, .badge, .provisional]) { granted, error in
-
 			if let error = error {
 				print(error.localizedDescription)
 			}
 		}
 	}
-
-	func setReminderNotification() {
+	
+	func setReminderNotification(hour: Int, minuts: Int, seconds: Int, title: String, text: String) {
 		let content = UNMutableNotificationContent()
-		content.title = "Beba Água"
-		content.body = "Atalinha recomenda 2 litros de água diariamente"
+		content.title = title
+		content.body = text
 		content.sound = UNNotificationSound.default
-
+		
 		let gregorian = Calendar(identifier: .gregorian)
 		let now = Date()
 		var components = gregorian.dateComponents([.year, .month, .day, .hour, .minute, .second], from: now)
-
-		components.hour = 15
-		components.minute = 20
-		components.second = 0
-
+		
+		components.hour = hour
+		components.minute = minuts
+		components.second = seconds
+		
 		let date = gregorian.date(from: components)!
-
+		
 		let triggerDaily = Calendar.current.dateComponents([.hour,.minute,.second,], from: date)
 		let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDaily, repeats: true)
-
-
+		
+		
 		let request = UNNotificationRequest(identifier: "reminder", content: content, trigger: trigger)
-
+		
 		UNUserNotificationCenter.current().add(request, withCompletionHandler: {(error) in
 			if error != nil {
 				print(error.debugDescription)
