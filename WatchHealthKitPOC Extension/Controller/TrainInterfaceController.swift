@@ -18,6 +18,10 @@ import CoreMotion
 class TrainInterfaceController: WKInterfaceController {
 
 	//	MARK: - Variables
+
+	var timerCounterAnimation = 0
+	var timerAnimation = Timer()
+
 	let healthStore = HKHealthStore()
 	var session: HKWorkoutSession!
 	var builder: HKLiveWorkoutBuilder!
@@ -115,6 +119,7 @@ class TrainInterfaceController: WKInterfaceController {
 	}
 	
 	@objc func timerAction() {
+		print("--------222222---------")
 		timerCounter += 1
 		timerLabel.setText(TimerManager().secondsToHoursMinutesSeconds(seconds: timerCounter))
 		
@@ -123,6 +128,19 @@ class TrainInterfaceController: WKInterfaceController {
 			updateRing(currentProgress: Double(timerCounter),
 					   text: TimerManager().secondsToHoursMinutesSeconds(seconds: timerCounter))
 		}
+	}
+
+	func startTimerAnimation() {
+		print("--------111111---------")
+		timerCounterAnimation = 0
+		timer.invalidate()
+		timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
+	}
+
+	@objc func timerActionAnimation() {
+		print("--------222222---------")
+		timerCounterAnimation += 1
+		backgroundGroup.setBackgroundImageNamed("DoneAnimation\(timerCounterAnimation)")
 	}
 	
 	// MARK: - Ring
@@ -243,7 +261,10 @@ extension TrainInterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuild
 		timer.invalidate()
 		NotificationManager().singleNotification(title: "Treino concluído!",text: train.title)
 		finished = true
+		startTimerAnimation()
 	}
+
+
 	
 	func workoutSession(_ workoutSession: HKWorkoutSession, didFailWithError error: Error) { }
 	func workoutBuilderDidCollectEvent(_ workoutBuilder: HKLiveWorkoutBuilder) { }
