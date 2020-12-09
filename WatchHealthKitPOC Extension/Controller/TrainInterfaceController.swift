@@ -74,13 +74,15 @@ class TrainInterfaceController: WKInterfaceController {
 		}
 		else if(train.currentTime == 0 && train.currentTime == 0) {
 			distanceLabel.setText("Começar")
+			let startLabels = TypeExerciseManager().initialLabels(train: train)
+			mensureLabel.setText(startLabels.mensure)
 			startWorkout()
 		}
 		else {
 			resetWorkout()
 			let startLabels = TypeExerciseManager().initialLabels(train: train)
 			mensureLabel.setText(startLabels.mensure)
-//			startWorkoutAction()
+			startWorkoutAction()
 		}
 	}
 
