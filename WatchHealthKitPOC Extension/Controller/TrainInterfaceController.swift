@@ -26,7 +26,7 @@ class TrainInterfaceController: WKInterfaceController {
 
 	//	MARK: - IBActions
 	@IBAction func startWorkoutAction() {
-		if !train.isPaused {
+		if !train.isPaused && !running {
 			running = true
 
 			endWorkout()
@@ -70,18 +70,18 @@ class TrainInterfaceController: WKInterfaceController {
 		if(train.isPaused) {
 			resetWorkout()
 			mensureLabel.setText("Pausado")
+			startWorkout()
 		}
 		else if(train.currentTime == 0 && train.currentTime == 0) {
 			distanceLabel.setText("Começar")
+			startWorkout()
 		}
 		else {
 			resetWorkout()
 			let startLabels = TypeExerciseManager().initialLabels(train: train)
 			mensureLabel.setText(startLabels.mensure)
-			startWorkoutAction()
+//			startWorkoutAction()
 		}
-
-		startWorkout()
 	}
 
 	override func willDisappear() {
@@ -245,13 +245,13 @@ extension TrainInterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuild
 
 	func workoutSession(_ workoutSession: HKWorkoutSession, didChangeTo toState: HKWorkoutSessionState,
 						from fromState: HKWorkoutSessionState, date: Date) {
-		if toState == .ended {
-			builder.endCollection(withEnd: Date()) { (success, error) in
-				self.builder.finishWorkout { (workout, error) in
-					self.resetWorkout()
-				}
-			}
-		}
+//		if toState == .ended {
+//			builder.endCollection(withEnd: Date()) { (success, error) in
+//				self.builder.finishWorkout { (workout, error) in
+//					self.resetWorkout()
+//				}
+//			}
+//		}
 	}
 
 	func workoutBuilder(_ workoutBuilder: HKLiveWorkoutBuilder, didCollectDataOf collectedTypes: Set<HKSampleType>) {

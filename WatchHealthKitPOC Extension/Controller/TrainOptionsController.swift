@@ -13,11 +13,12 @@ class TrainOptionsController: WKInterfaceController {
 
 	@IBOutlet weak var playPauseButton: WKInterfaceButton!
 	@IBAction func playPauseAction() {
+
 		let userDefaults = UserDefaults.standard
 		let decoded  = userDefaults.data(forKey: "teams")
 		let decodedTeams = NSKeyedUnarchiver.unarchiveObject(with: decoded!) as! TrainPersistenceData
 
-		let train =
+		var train =
 			TrainStruct(type: TypeExerciseManager().stringToTrainType(type: decodedTeams.type),
 						targuet: decodedTeams.targuet,
 						title: decodedTeams.title,
@@ -27,6 +28,15 @@ class TrainOptionsController: WKInterfaceController {
 						isPaused: decodedTeams.isPaused ? false : true
 			)
 
+		if(UserDefaults.standard.bool(forKey: "Paused")) {
+			UserDefaults.standard.set(false, forKey: "Paused")
+			train.isPaused = false
+		}
+		else {
+			UserDefaults.standard.set(true, forKey: "Paused")
+			train.isPaused = true
+		}
+
 		WKInterfaceController.reloadRootPageControllers(withNames: ["TrainOptionsController", "InterfaceController"], contexts: [train, train], orientation: .horizontal, pageIndex: 0)
 	}
 
@@ -35,9 +45,8 @@ class TrainOptionsController: WKInterfaceController {
 	}
 
 	override func awake(withContext context: Any?) {
-		if let getTrain = context as? TrainStruct { isPaused = getTrain.isPaused }
-
-		isPaused ? playPauseButton.setTitle("Play") : playPauseButton.setTitle("Pause")
+		UserDefaults.standard.bool(forKey: "Paused") ?
+			playPauseButton.setTitle("Play") : playPauseButton.setTitle("Pause")
 	}
 }
 //
