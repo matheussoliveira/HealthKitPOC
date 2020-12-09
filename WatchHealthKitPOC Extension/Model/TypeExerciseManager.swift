@@ -7,6 +7,16 @@
 
 /// class to convert training texts to be plotted in the interface
 
+import WatchKit
+import Foundation
+import HealthKit
+import UserNotifications
+import WatchConnectivity
+import Foundation
+import HealthKit
+import Combine
+import CoreMotion
+
 class TypeExerciseManager {
 
 	func initialLabels(train: TrainStruct) -> (distance: String, mensure: String) {
@@ -74,5 +84,26 @@ class TypeExerciseManager {
 			default: //distance
 				return "distance"
 		}
+	}
+}
+
+func requestAuthorization() {
+	let healthStore = HKHealthStore()
+	
+	guard HKHealthStore.isHealthDataAvailable() else {
+//		heartrateLabel.setText("HealthKit is not available ")
+		return
+	}
+
+	let typesToShare: Set = [ HKQuantityType.workoutType() ]
+
+	let typesToRead: Set = [
+		HKQuantityType.quantityType(forIdentifier: .heartRate)!,
+		HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
+		HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
+	]
+
+	healthStore.requestAuthorization(toShare: typesToShare, read: typesToRead) { (success, error) in
+		print(error.debugDescription)
 	}
 }

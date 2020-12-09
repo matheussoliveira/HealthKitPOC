@@ -16,6 +16,28 @@ import Combine
 import CoreMotion
 
 class TrainInterfaceController: WKInterfaceController {
+
+	//	MARK: - Variables
+	let healthStore = HKHealthStore()
+	var session: HKWorkoutSession!
+	var builder: HKLiveWorkoutBuilder!
+
+	var heartrate: Double = 0
+	var distance: Double = 0
+	var timerCounter = 0
+	var steps: Int = 0
+	var timer = Timer()
+
+	var running: Bool = false
+	var finished: Bool = false
+
+	var start: Date = Date()
+	var cancellable: Cancellable?
+
+	let pedometer = CMPedometer()
+
+	var train = TrainStruct(type: .distance, targuet: 0, title: "----", subtitle: "----", currentProgress: 0, currentTime: 0, isPaused: false)
+
 	//	MARK: - IBOutlets
 	@IBOutlet weak var heartrateLabel: WKInterfaceLabel!
 	@IBOutlet weak var distanceLabel: WKInterfaceLabel!
@@ -38,26 +60,7 @@ class TrainInterfaceController: WKInterfaceController {
 			resetWorkout()
 		}
 	}
-	
-	//	MARK: - Variables
-	let healthStore = HKHealthStore()
-	var session: HKWorkoutSession!
-	var builder: HKLiveWorkoutBuilder!
-	
-	var heartrate: Double = 0
-	var distance: Double = 0
-	var timerCounter = 0
-	var steps: Int = 0
-	var timer = Timer()
-	
-	var running: Bool = false
-	var start: Date = Date()
-	var cancellable: Cancellable?
-	
-	let pedometer = CMPedometer()
-	
-	var train = TrainStruct(type: .distance, targuet: 0, title: "----", subtitle: "----", currentProgress: 0, currentTime: 0, isPaused: false)
-	
+
 	//	MARK: - Life Cycle
 	
 	override func awake(withContext context: Any?) {
@@ -72,7 +75,7 @@ class TrainInterfaceController: WKInterfaceController {
 		
 		if(train.isPaused) {
 			resetWorkout()
-			mensureLabel.setText("Pausado")
+			mensureLabel.setText("Pause")
 			startWorkout()
 		}
 		else if(train.currentTime == 0 && train.currentTime == 0) {
@@ -104,28 +107,6 @@ class TrainInterfaceController: WKInterfaceController {
 		}
 	}
 	
-	//	MARK: - HealthKit
-	func requestAuthorization() {
-		guard HKHealthStore.isHealthDataAvailable() else {
-			heartrateLabel.setText("HealthKit is not available ")
-			return
-		}
-		
-		let typesToShare: Set = [
-			HKQuantityType.workoutType()
-		]
-		
-		let typesToRead: Set = [
-			HKQuantityType.quantityType(forIdentifier: .heartRate)!,
-			HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
-			HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
-		]
-		
-		healthStore.requestAuthorization(toShare: typesToShare, read: typesToRead) { (success, error) in
-			print(error.debugDescription)
-		}
-	}
-	
 	//	MARK: - Timer
 	func startTimer() {
 		timer.invalidate()
@@ -146,7 +127,6 @@ class TrainInterfaceController: WKInterfaceController {
 	
 	// MARK: - Ring
 	func updateRing(currentProgress: Double, text: String) {
-		print("--- updateRing")
 		distanceLabel.setText("\(currentProgress)")
 		print(currentProgress)
 		let currentPercentage = Int((currentProgress / Double(train.targuet))*100)
@@ -243,12 +223,12 @@ extension TrainInterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuild
 	}
 	
 	func updateMetersAndHeartRate() {
-		if(train.type == .distance && running) { updateRing(currentProgress: distance, text: "\(distance)") }
+		if(train.type == .distance && running && !self.finished) { updateRing(currentProgress: distance, text: "\(distance)") }
 		heartrateLabel.setText("\(heartrate)")
 	}
 	
 	func updatePedometer(_ data: CMPedometerData?) {
-		if(self.train.type == .paces && self.running) {
+		if(self.train.type == .paces && self.running && !self.finished) {
 			let numberOfSteps = Double(truncating:data?.numberOfSteps ?? 0)
 			let numberOfStepsCurrent = numberOfSteps + train.currentProgress
 			self.updateRing(currentProgress: numberOfStepsCurrent, text: "\(numberOfSteps)")
@@ -262,6 +242,7 @@ extension TrainInterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuild
 		distanceLabel.setText("✓")
 		timer.invalidate()
 		NotificationManager().singleNotification(title: "Treino concluído!",text: train.title)
+		finished = true
 	}
 	
 	func workoutSession(_ workoutSession: HKWorkoutSession, didFailWithError error: Error) { }
