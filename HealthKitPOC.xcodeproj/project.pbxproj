@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -21,6 +21,7 @@
 		2FA669A22553105F00854180 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FA669A02553105F00854180 /* Main.storyboard */; };
 		2FA669A42553106100854180 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FA669A32553106100854180 /* Assets.xcassets */; };
 		2FA669A72553106100854180 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FA669A52553106100854180 /* LaunchScreen.storyboard */; };
+		C42316F425811F9800C6FB6A /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42316F325811F9800C6FB6A /* HealthKitManager.swift */; };
 		C44171B4256D86040033D729 /* RowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44171B3256D86040033D729 /* RowController.swift */; };
 		C469FD9A255F68D100B0948E /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C469FD99255F68D100B0948E /* Interface.storyboard */; };
 		C487F9CC2574854D00DB9EC8 /* TrainOptionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C487F9CB2574854D00DB9EC8 /* TrainOptionsController.swift */; };
@@ -99,6 +100,7 @@
 		2FA669A32553106100854180 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2FA669A62553106100854180 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2FA669A82553106100854180 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C42316F325811F9800C6FB6A /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
 		C44171B3256D86040033D729 /* RowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowController.swift; sourceTree = "<group>"; };
 		C469FD99255F68D100B0948E /* Interface.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Interface.storyboard; sourceTree = "<group>"; };
 		C487F9CB2574854D00DB9EC8 /* TrainOptionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainOptionsController.swift; sourceTree = "<group>"; };
@@ -124,6 +126,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1CE9E1AB97E70837C66429E2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2FA669942553105F00854180 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -254,6 +263,7 @@
 				C4E2AD972555B7AF0006E1BF /* Notification.swift */,
 				C4F43D8E2579253B00C14EE6 /* TimerManager.swift */,
 				C4F43D932579259E00C14EE6 /* TypeExerciseManager.swift */,
+				C42316F325811F9800C6FB6A /* HealthKitManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -320,6 +330,7 @@
 			buildPhases = (
 				C4E2AD802555B7AC0006E1BF /* Resources */,
 				C4E2ADA52555B7B20006E1BF /* Embed App Extensions */,
+				1CE9E1AB97E70837C66429E2 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -448,6 +459,7 @@
 				C4E2AD962555B7AF0006E1BF /* ExtensionDelegate.swift in Sources */,
 				C487F9CC2574854D00DB9EC8 /* TrainOptionsController.swift in Sources */,
 				C4F43D8F2579253B00C14EE6 /* TimerManager.swift in Sources */,
+				C42316F425811F9800C6FB6A /* HealthKitManager.swift in Sources */,
 				C4E2AD942555B7AF0006E1BF /* TrainInterfaceController.swift in Sources */,
 				C48A93D4256433E000878ACE /* TrainListController.swift in Sources */,
 			);

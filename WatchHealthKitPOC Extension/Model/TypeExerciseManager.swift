@@ -86,24 +86,3 @@ class TypeExerciseManager {
 		}
 	}
 }
-
-func requestAuthorization() {
-	let healthStore = HKHealthStore()
-	
-	guard HKHealthStore.isHealthDataAvailable() else {
-//		heartrateLabel.setText("HealthKit is not available ")
-		return
-	}
-
-	let typesToShare: Set = [ HKQuantityType.workoutType() ]
-
-	let typesToRead: Set = [
-		HKQuantityType.quantityType(forIdentifier: .heartRate)!,
-		HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
-		HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
-	]
-
-	healthStore.requestAuthorization(toShare: typesToShare, read: typesToRead) { (success, error) in
-		print(error.debugDescription)
-	}
-}

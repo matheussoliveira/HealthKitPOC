@@ -66,8 +66,8 @@ class TrainInterfaceController: WKInterfaceController {
 	override func awake(withContext context: Any?) {
 		super.awake(withContext: context)
 		
-		requestAuthorization()
-		
+		if let errorMsg = HealthKitManager().requestAuthorization() { heartrateLabel.setText(errorMsg) }
+
 		if let getTrain = context as? TrainStruct { train = getTrain }
 		
 		target.setText("meta: \(TypeExerciseManager().populateTargetLabel(train: train))")
