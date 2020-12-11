@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -23,6 +23,7 @@
 		2FA669A72553106100854180 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FA669A52553106100854180 /* LaunchScreen.storyboard */; };
 		C42316F425811F9800C6FB6A /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42316F325811F9800C6FB6A /* HealthKitManager.swift */; };
 		C44171B4256D86040033D729 /* RowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44171B3256D86040033D729 /* RowController.swift */; };
+		C45351212583E06600A1FCD2 /* TrainsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45351202583E06600A1FCD2 /* TrainsListViewController.swift */; };
 		C469FD9A255F68D100B0948E /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C469FD99255F68D100B0948E /* Interface.storyboard */; };
 		C487F9CC2574854D00DB9EC8 /* TrainOptionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C487F9CB2574854D00DB9EC8 /* TrainOptionsController.swift */; };
 		C48A93D4256433E000878ACE /* TrainListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48A93D3256433E000878ACE /* TrainListController.swift */; };
@@ -102,6 +103,7 @@
 		2FA669A82553106100854180 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C42316F325811F9800C6FB6A /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
 		C44171B3256D86040033D729 /* RowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowController.swift; sourceTree = "<group>"; };
+		C45351202583E06600A1FCD2 /* TrainsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainsListViewController.swift; sourceTree = "<group>"; };
 		C469FD99255F68D100B0948E /* Interface.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Interface.storyboard; sourceTree = "<group>"; };
 		C487F9CB2574854D00DB9EC8 /* TrainOptionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainOptionsController.swift; sourceTree = "<group>"; };
 		C48A93D3256433E000878ACE /* TrainListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainListController.swift; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 		2FA669992553105F00854180 /* HealthKitPOC */ = {
 			isa = PBXGroup;
 			children = (
+				C453511F2583E04400A1FCD2 /* TrainsController */,
 				C4E2ADCA2555C3610006E1BF /* HealthKitPOC.entitlements */,
 				2F9687842554615700EC0EF6 /* Models */,
 				2F5304282553360F00680A70 /* HealthKit */,
@@ -243,6 +246,14 @@
 				C44171B3256D86040033D729 /* RowController.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		C453511F2583E04400A1FCD2 /* TrainsController */ = {
+			isa = PBXGroup;
+			children = (
+				C45351202583E06600A1FCD2 /* TrainsListViewController.swift */,
+			);
+			path = TrainsController;
 			sourceTree = "<group>";
 		};
 		C48A93D1256433A900878ACE /* Controller */ = {
@@ -437,6 +448,7 @@
 				2FA6699F2553105F00854180 /* HomeTableViewController.swift in Sources */,
 				2F968791255467A900EC0EF6 /* HKBloodType.swift in Sources */,
 				2F530433255338BC00680A70 /* ProfileDataStore.swift in Sources */,
+				C45351212583E06600A1FCD2 /* TrainsListViewController.swift in Sources */,
 				2F968786255461A600EC0EF6 /* UserHealthProfile.swift in Sources */,
 				2F53042A2553362500680A70 /* HealthKitSetupAssistant.swift in Sources */,
 				2FA6699B2553105F00854180 /* AppDelegate.swift in Sources */,

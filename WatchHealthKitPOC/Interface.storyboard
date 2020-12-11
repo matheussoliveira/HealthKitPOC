@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="17506" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oLJ-16-NFj">
+    <device id="watch38"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="17500"/>
@@ -85,6 +86,7 @@
             <objects>
                 <controller identifier="OptionsController" id="oLJ-16-NFj" customClass="TrainListController" customModule="WatchHealthKitPOC_Extension">
                     <items>
+                        <label alignment="left" text="Label" id="43S-jS-Vm9"/>
                         <table alignment="left" id="6mj-2R-lDL">
                             <items>
                                 <tableRow identifier="RowController" id="dqU-Bz-yap" customClass="RowController" customModule="WatchHealthKitPOC_Extension">
@@ -113,6 +115,7 @@
                         </button>
                     </items>
                     <connections>
+                        <outlet property="textLabel" destination="43S-jS-Vm9" id="OyA-UZ-UR1"/>
                         <outlet property="trainsTable" destination="6mj-2R-lDL" id="NFY-MR-Ip9"/>
                     </connections>
                 </controller>

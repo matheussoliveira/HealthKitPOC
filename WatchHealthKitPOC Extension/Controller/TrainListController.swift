@@ -15,7 +15,7 @@ import HealthKit
 import Combine
 import CoreMotion
 
-class TrainListController: WKInterfaceController {
+class TrainListController: WKInterfaceController, WCSessionDelegate {
 	
 	//	MARK: - Variables
 	var trains = [
@@ -52,6 +52,41 @@ class TrainListController: WKInterfaceController {
 	override func table(_ table: WKInterfaceTable, didSelectRowAt rowIndex: Int) {
 		UserDefaults.standard.set(false, forKey: "Paused")
 		WKInterfaceController.reloadRootPageControllers(withNames: ["TrainOptionsController", "InterfaceController"], contexts: [trains[rowIndex],trains[rowIndex]], orientation: .horizontal, pageIndex: 1)
+	}
+
+//	MARK: - WatchConnectivity
+
+	@IBOutlet weak var textLabel: WKInterfaceLabel!
+
+	// MARK: Variables
+
+	var wcSession : WCSession!
+
+	override func willActivate() {
+		super.willActivate()
+
+		wcSession = WCSession.default
+		wcSession.delegate = self
+		wcSession.activate()
+
+	}
+
+	override func didDeactivate() {
+		super.didDeactivate()
+	}
+
+	// MARK: WCSession Methods
+
+	func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+
+		let text = message["message"] as! String
+
+		textLabel.setText(text)
+
+	}
+
+	func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+
 	}
 }
 
