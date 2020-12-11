@@ -19,7 +19,7 @@ class TrainInterfaceController: WKInterfaceController {
 
 	//	MARK: - Variables
 
-	var timerCounterAnimation = 0
+	var timerCounterAnimation = 90
 	var timerAnimation = Timer()
 
 	let healthStore = HKHealthStore()
@@ -128,19 +128,6 @@ class TrainInterfaceController: WKInterfaceController {
 			updateRing(currentProgress: Double(timerCounter),
 					   text: TimerManager().secondsToHoursMinutesSeconds(seconds: timerCounter))
 		}
-	}
-
-	func startTimerAnimation() {
-		print("--------111111---------")
-		timerCounterAnimation = 0
-		timer.invalidate()
-		timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
-	}
-
-	@objc func timerActionAnimation() {
-		print("--------222222---------")
-		timerCounterAnimation += 1
-		backgroundGroup.setBackgroundImageNamed("DoneAnimation\(timerCounterAnimation)")
 	}
 	
 	// MARK: - Ring
@@ -256,15 +243,30 @@ extension TrainInterfaceController: HKWorkoutSessionDelegate, HKLiveWorkoutBuild
 	func finishTrain() {
 		backgroundGroup.setBackgroundImageNamed("Progress-101")
 		endWorkout()
-		mensureLabel.setText("Parabéns!")
-		distanceLabel.setText("✓")
+		mensureLabel.setText("")
+		distanceLabel.setText("")
 		timer.invalidate()
 		NotificationManager().singleNotification(title: "Treino concluído!",text: train.title)
 		finished = true
-		startTimerAnimation()
+
+		DispatchQueue.main.async {
+			self.timerAnimation = Timer.scheduledTimer(timeInterval: 0.01,
+													   target: self,
+													   selector: #selector(self.update123),
+													   userInfo: nil,
+													   repeats: true)
+		}
 	}
 
-
+	@objc func update123() {
+		timerCounterAnimation -= 1
+		if(timerCounterAnimation <= 0) {
+			timerAnimation.invalidate()
+		}
+		else {
+			backgroundGroup.setBackgroundImageNamed("DoneAnimation\(timerCounterAnimation)")
+		}
+	}
 	
 	func workoutSession(_ workoutSession: HKWorkoutSession, didFailWithError error: Error) { }
 	func workoutBuilderDidCollectEvent(_ workoutBuilder: HKLiveWorkoutBuilder) { }
