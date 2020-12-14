@@ -7,62 +7,51 @@
 
 import UIKit
 import WatchConnectivity
+import SwiftyJSON
 
 class TrainsListViewController: UIViewController, WCSessionDelegate {
 
-	// MARK: Outlets
-
+	// MARK: - Outlets
 	@IBOutlet weak var textField: UITextField!
 
-	// MARK: Variables
-
+	// MARK: - Variables
 	var wcSession : WCSession! = nil
 
-	// MARK: Overrides
-
+	// MARK: - Lifecycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
 		wcSession = WCSession.default
 		wcSession.delegate = self
 		wcSession.activate()
-
 	}
 
-	// MARK: Button Actions
-
+	// MARK: - Button Actions
 	@IBAction func sendText(_ sender: Any) {
+		let jsonObject: [Any]  = [
+			[
+				"type_id": "oi",
+				"model_id": "oi",
+				"transfer": "oi",
+				"hourly": "oi",
+				"custom": "oi",
+				"device_type":"iOS"
+			]
+		]
 
-//		let txt = textField.text!
-		let message = ["message":"isso er um tester"]
+		print("--- enviando")
+		let message = ["message" : jsonObject]
 
 		wcSession.sendMessage(message, replyHandler: nil) { (error) in
-
 			print(error.localizedDescription)
-
 		}
 
 	}
 
-	// MARK: WCSession Methods
+	// MARK: - WCSession Methods
+	func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) { }
 
-	func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+	func sessionDidBecomeInactive(_ session: WCSession) { }
 
-		// Code
-
-	}
-
-	func sessionDidBecomeInactive(_ session: WCSession) {
-
-		// Code
-
-	}
-
-	func sessionDidDeactivate(_ session: WCSession) {
-
-		// Code
-
-	}
-
+	func sessionDidDeactivate(_ session: WCSession) { }
 }
-

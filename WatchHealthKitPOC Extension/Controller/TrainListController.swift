@@ -14,9 +14,12 @@ import Foundation
 import HealthKit
 import Combine
 import CoreMotion
+import SwiftyJSON
 
 class TrainListController: WKInterfaceController, WCSessionDelegate {
-	
+
+	var lastMessage: CFAbsoluteTime = 0
+
 	//	MARK: - Variables
 	var trains = [
 		TrainStruct(type: .distance, targuet: 30, title: "Vida em movimento", subtitle: "Ande 30 metros", currentProgress: 0.0, currentTime: 0, isPaused: false),
@@ -55,11 +58,9 @@ class TrainListController: WKInterfaceController, WCSessionDelegate {
 	}
 
 //	MARK: - WatchConnectivity
-
 	@IBOutlet weak var textLabel: WKInterfaceLabel!
 
 	// MARK: Variables
-
 	var wcSession : WCSession!
 
 	override func willActivate() {
@@ -68,25 +69,27 @@ class TrainListController: WKInterfaceController, WCSessionDelegate {
 		wcSession = WCSession.default
 		wcSession.delegate = self
 		wcSession.activate()
-
 	}
 
-	override func didDeactivate() {
-		super.didDeactivate()
-	}
-
-	// MARK: WCSession Methods
-
+	// MARK: - WCSession Methods
 	func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
 
-		let text = message["message"] as! String
+		print("---aqui")
 
-		textLabel.setText(text)
+		let text = message["message"] as! [[String : Any]]
 
+		for x in text {
+			print(x["type_id"])
+		}
+
+		print(message["message"])
+
+		print("------------------------")
+//		print(text[0]["type_id"] as! String)
+		print("------------------------")
+//		textLabel.setText(text["type_id"] as! String)
 	}
 
-	func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-
-	}
+	func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) { }
 }
 
