@@ -23,9 +23,12 @@ class TrainListController: WKInterfaceController, WCSessionDelegate {
 	//	MARK: - Variables
 	var trains = [
 		TrainStruct(type: .distance, targuet: 30, title: "Vida em movimento", subtitle: "Ande 30 metros", currentProgress: 0.0, currentTime: 0, isPaused: false),
-		TrainStruct(type: .distance, targuet: 100, title: "Vida em movimento", subtitle: "Ande 100 metros", currentProgress: 0.0, currentTime: 0, isPaused: false),
-		TrainStruct(type: .paces, targuet: 300, title: "Vida em movimento", subtitle: "Ande 300 passos", currentProgress: 10.0, currentTime: 0, isPaused: false),
-		TrainStruct(type: .time, targuet: 60, title: "Vida em movimento", subtitle: "Corra 1 minuto", currentProgress: 0.0, currentTime: 0, isPaused: false),
+
+//		TrainStruct(type: .distance, targuet: 100, title: "Vida em movimento", subtitle: "Ande 100 metros", currentProgress: 0.0, currentTime: 0, isPaused: false),
+//
+//		TrainStruct(type: .paces, targuet: 300, title: "Vida em movimento", subtitle: "Ande 300 passos", currentProgress: 10.0, currentTime: 0, isPaused: false),
+//
+//		TrainStruct(type: .time, targuet: 60, title: "Vida em movimento", subtitle: "Corra 1 minuto", currentProgress: 0.0, currentTime: 0, isPaused: false),
 	]
 	
 	//	MARK: - IBOutlet
@@ -79,15 +82,25 @@ class TrainListController: WKInterfaceController, WCSessionDelegate {
 		let text = message["message"] as! [[String : Any]]
 
 		for x in text {
-			print(x["type_id"])
+			print(x["type"] as! String)
+			print(x["targuet"] as! Int)
+			print(x["title"] as! String)
+			print(x["subtitle"] as! String)
+			print("-------")
+
+			trains.append(
+				TrainStruct(type: .distance, targuet: x["targuet"] as! Int, title: x["title"] as! String, subtitle: x["subtitle"] as! String, currentProgress: 0.0, currentTime: 0, isPaused: false)
+			)
 		}
 
-		print(message["message"])
+		trainsTable.setNumberOfRows(trains.count, withRowType: "RowController")
 
-		print("------------------------")
-//		print(text[0]["type_id"] as! String)
-		print("------------------------")
-//		textLabel.setText(text["type_id"] as! String)
+		for index in 0...(trains.count-1) {
+			if let row = trainsTable.rowController(at: index) as? RowController {
+				row.titleLabel.setText(trains[index].title)
+				row.subtitleLabel.setText(trains[index].subtitle)
+			}
+		}
 	}
 
 	func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) { }

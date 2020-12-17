@@ -30,12 +30,28 @@ class TrainsListViewController: UIViewController, WCSessionDelegate {
 	@IBAction func sendText(_ sender: Any) {
 		let jsonObject: [Any]  = [
 			[
-				"type_id": "oi",
-				"model_id": "oi",
-				"transfer": "oi",
-				"hourly": "oi",
-				"custom": "oi",
-				"device_type":"iOS"
+				"type": "distance",
+				"targuet": 30,
+				"title": "Vida em movimento",
+				"subtitle": "Ande 30 metros",
+			],
+			[
+				"type": "distance",
+				"targuet": 100,
+				"title": "Vida em movimento",
+				"subtitle": "Ande 100 metros",
+			],
+			[
+				"type": "paces",
+				"targuet": 300,
+				"title": "Vida em movimento",
+				"subtitle": "Ande 300 passos",
+			],
+			[
+				"type": "time",
+				"targuet": 60,
+				"title": "Vida em movimento",
+				"subtitle": "Corra 1 minuto",
 			]
 		]
 
@@ -45,7 +61,6 @@ class TrainsListViewController: UIViewController, WCSessionDelegate {
 		wcSession.sendMessage(message, replyHandler: nil) { (error) in
 			print(error.localizedDescription)
 		}
-
 	}
 
 	// MARK: - WCSession Methods
