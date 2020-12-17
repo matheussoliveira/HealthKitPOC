@@ -55,7 +55,6 @@ class TrainsListViewController: UIViewController, WCSessionDelegate {
 			]
 		]
 
-		print("--- enviando")
 		let message = ["message" : jsonObject]
 
 		wcSession.sendMessage(message, replyHandler: nil) { (error) in

@@ -77,8 +77,6 @@ class TrainListController: WKInterfaceController, WCSessionDelegate {
 	// MARK: - WCSession Methods
 	func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
 
-		print("---aqui")
-
 		let text = message["message"] as! [[String : Any]]
 
 		for x in text {
