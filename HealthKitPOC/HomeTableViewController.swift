@@ -87,7 +87,7 @@ class HomeTableViewController: UITableViewController, WCSessionDelegate, UNUserN
         healthKitManager.querryHeight()
         healthKitManager.querryWeight()
         healthKitManager.querrySleepIformation()
-        healthKitManager.querryBodyMassIndex()
+//        healthKitManager.querryBodyMassIndex()
         requestHKAutorization()
 		wcSession = WCSession.default
 		wcSession.delegate = self
@@ -132,11 +132,11 @@ class HomeTableViewController: UITableViewController, WCSessionDelegate, UNUserN
     
     // MARK: - Calculate BMI
     @IBAction func calculateBMI(_ sender: Any) {
-        guard let bodyMassIndex = userHealthProfile.bodyMassIndex else {
-          displayAlert(for: ProfileDataError.missingBodyMassIndex)
-          return
-        }
-            
+        guard let weight = self.userHealthProfile.weight,
+              let height = self.userHealthProfile.height else { return }
+        var bodyMassIndex = weight / (height * height)
+        bodyMassIndex = round(100*bodyMassIndex)/100 // Rounding to 2 decimal places
+        userBodyMassIndex.text = String(bodyMassIndex)
         ProfileDataStore.saveBodyMassIndexSample(bodyMassIndex: bodyMassIndex,
                                                  date: Date())
     }

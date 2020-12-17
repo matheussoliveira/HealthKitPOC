@@ -1,0 +1,71 @@
+//
+//  NotificationManager.swift
+//  WatchHealthKitPOC Extension
+//
+//  Created by Joao Flores on 11/11/20.
+//
+
+import WatchKit
+import Foundation
+import HealthKit
+import UserNotifications
+import WatchConnectivity
+import Foundation
+import HealthKit
+import Combine
+
+/// Handle notifications to reminder or to alert exercise finished
+
+class NotificationManager {
+	func singleNotification(title: String, text: String) {
+		let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3, repeats: false)
+		let content = UNMutableNotificationContent()
+		content.title = NSLocalizedString(title, comment: "title")
+		content.body = NSLocalizedString(text, comment: "text")
+		content.categoryIdentifier = "Local"
+		
+		let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+		UNUserNotificationCenter.current().add(request)
+	}
+	
+	func setupNotifications() {
+		UNUserNotificationCenter.current()
+		
+		let center = UNUserNotificationCenter.current()
+		center.requestAuthorization(options: [.alert, .sound, .badge, .provisional]) { granted, error in
+			if let error = error {
+				print(error.localizedDescription)
+			}
+		}
+	}
+	
+	func setReminderNotification(hour: Int, minuts: Int, seconds: Int, title: String, text: String) {
+		let content = UNMutableNotificationContent()
+		content.title = title
+		content.body = text
+		content.sound = UNNotificationSound.default
+		
+		let gregorian = Calendar(identifier: .gregorian)
+		let now = Date()
+		var components = gregorian.dateComponents([.year, .month, .day, .hour, .minute, .second], from: now)
+		
+		components.hour = hour
+		components.minute = minuts
+		components.second = seconds
+		
+		let date = gregorian.date(from: components)!
+		
+		let triggerDaily = Calendar.current.dateComponents([.hour,.minute,.second,], from: date)
+		let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDaily, repeats: true)
+		
+		
+		let request = UNNotificationRequest(identifier: "reminder", content: content, trigger: trigger)
+		
+		UNUserNotificationCenter.current().add(request, withCompletionHandler: {(error) in
+			if error != nil {
+				print(error.debugDescription)
+			}
+		})
+	}
+}
+
