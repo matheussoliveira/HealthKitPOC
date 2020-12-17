@@ -33,6 +33,7 @@ class TrainListController: WKInterfaceController, WCSessionDelegate {
 	
 	//	MARK: - IBOutlet
 	@IBOutlet weak var trainsTable: WKInterfaceTable!
+	@IBOutlet weak var textLabel: WKInterfaceLabel!
 	
 	//	MARK: - IBActions
 	@IBAction func requestLocalNotification() {
@@ -53,6 +54,8 @@ class TrainListController: WKInterfaceController, WCSessionDelegate {
 				row.subtitleLabel.setText(trains[index].subtitle)
 			}
 		}
+
+		textLabel.setText(String(UserDefaults.standard.integer(forKey: "lastUpdate")))
 	}
 	
 	override func table(_ table: WKInterfaceTable, didSelectRowAt rowIndex: Int) {
@@ -61,7 +64,6 @@ class TrainListController: WKInterfaceController, WCSessionDelegate {
 	}
 
 //	MARK: - WatchConnectivity
-	@IBOutlet weak var textLabel: WKInterfaceLabel!
 
 	// MARK: Variables
 	var wcSession : WCSession!
@@ -99,6 +101,16 @@ class TrainListController: WKInterfaceController, WCSessionDelegate {
 				row.subtitleLabel.setText(trains[index].subtitle)
 			}
 		}
+
+		let date = Date()
+		let calendar = Calendar.current
+//		let hour = calendar.component(.hour, from: date)
+		let minutes = calendar.component(.minute, from: date)
+
+		print(minutes)
+
+		UserDefaults.standard.set(minutes,forKey: "lastUpdate")
+		textLabel.setText(String(UserDefaults.standard.integer(forKey: "lastUpdate")))
 	}
 
 	func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) { }

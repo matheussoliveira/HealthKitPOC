@@ -119,7 +119,6 @@ class TrainInterfaceController: WKInterfaceController {
 	}
 	
 	@objc func timerAction() {
-		print("--------222222---------")
 		timerCounter += 1
 		timerLabel.setText(TimerManager().secondsToHoursMinutesSeconds(seconds: timerCounter))
 		
