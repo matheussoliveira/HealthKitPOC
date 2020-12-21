@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -117,6 +117,7 @@
 		C487F9CB2574854D00DB9EC8 /* TrainOptionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainOptionsController.swift; sourceTree = "<group>"; };
 		C48A93D3256433E000878ACE /* TrainListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainListController.swift; sourceTree = "<group>"; };
 		C4A373C7256C8A60003E419F /* Train.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Train.swift; sourceTree = "<group>"; };
+		C4C16C1F2590EDB400757090 /* WatchHealthKitPOC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WatchHealthKitPOC.entitlements; sourceTree = "<group>"; };
 		C4E2AD822555B7AC0006E1BF /* WatchHealthKitPOC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchHealthKitPOC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4E2AD872555B7AE0006E1BF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C4E2AD892555B7AE0006E1BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -266,7 +267,6 @@
 				CB6B4E6F73E5759A7A35D7E8 /* Pods-WatchHealthKitPOC Extension.debug.xcconfig */,
 				296FD40442D4DBD98CA49CDC /* Pods-WatchHealthKitPOC Extension.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -312,6 +312,7 @@
 		C4E2AD832555B7AC0006E1BF /* WatchHealthKitPOC */ = {
 			isa = PBXGroup;
 			children = (
+				C4C16C1F2590EDB400757090 /* WatchHealthKitPOC.entitlements */,
 				C469FD99255F68D100B0948E /* Interface.storyboard */,
 				C4E2AD872555B7AE0006E1BF /* Assets.xcassets */,
 				C4E2AD892555B7AE0006E1BF /* Info.plist */,
@@ -818,6 +819,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = WatchHealthKitPOC/WatchHealthKitPOC.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NZC6LC8NWM;
 				IBSC_MODULE = WatchHealthKitPOC_Extension;
@@ -839,6 +841,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = WatchHealthKitPOC/WatchHealthKitPOC.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NZC6LC8NWM;
 				IBSC_MODULE = WatchHealthKitPOC_Extension;

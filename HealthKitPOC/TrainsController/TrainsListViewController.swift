@@ -60,6 +60,8 @@ class TrainsListViewController: UIViewController, WCSessionDelegate {
 		wcSession.sendMessage(message, replyHandler: nil) { (error) in
 			print(error.localizedDescription)
 		}
+
+//		wcSession.update(applicationContext: message, completion: nil)
 	}
 
 	// MARK: - WCSession Methods
